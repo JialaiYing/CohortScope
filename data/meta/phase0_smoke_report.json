@@ -1,0 +1,209 @@
+{
+  "filter_variants": [
+    {
+      "params": {
+        "imageAvailable": "true",
+        "type": "painting",
+        "creator": "Rembrandt",
+        "material": "oil paint"
+      },
+      "total": 24
+    },
+    {
+      "params": {
+        "imageAvailable": "true",
+        "type": "painting",
+        "creator": "Rembrandt",
+        "material": "olieverf"
+      },
+      "total": 24
+    },
+    {
+      "params": {
+        "imageAvailable": "true",
+        "type": "painting",
+        "creator": "Rembrandt",
+        "material": "canvas"
+      },
+      "total": 10
+    },
+    {
+      "params": {
+        "imageAvailable": "true",
+        "type": "painting",
+        "creator": "Rembrandt",
+        "material": "doek"
+      },
+      "total": 10
+    },
+    {
+      "params": {
+        "imageAvailable": "true",
+        "type": "painting",
+        "creator": "Rembrandt"
+      },
+      "total": 24
+    },
+    {
+      "params": {
+        "imageAvailable": "true",
+        "type": "schilderij",
+        "creator": "Rembrandt",
+        "material": "olieverf"
+      },
+      "total": 24
+    }
+  ],
+  "preferred": {
+    "params": {
+      "imageAvailable": "true",
+      "type": "painting",
+      "material": "oil paint",
+      "creator": "Rembrandt van Rijn"
+    },
+    "total": 24
+  },
+  "sample": {
+    "uri": "https://id.rijksmuseum.nl/200106038",
+    "object_number": "SK-A-1935",
+    "title": "Landschap met stenen brug",
+    "creators": [
+      "Rijn, Rembrandt van",
+      "Rembrandt van Rijn (mentioned on object)",
+      "Rembrandt van Rijn (vermeld op object)"
+    ],
+    "iiif_id": "hodeb",
+    "image_path": "C:\\Users\\jiala\\Developer\\CohortScope\\data\\images\\smoke_hodeb.jpg",
+    "image_bytes": 236690
+  },
+  "creator_counts": {
+    "Rembrandt van Rijn": 17,
+    "Rijn, Rembrandt van": 7,
+    "Rembrandt van Rijn (mentioned on object)": 4,
+    "Rembrandt van Rijn (vermeld op object)": 4,
+    "attributed to Rembrandt van Rijn": 1,
+    "toegeschreven aan Rembrandt van Rijn": 1,
+    "Rembrandt van Rijn (signed by artist)": 2,
+    "Rembrandt van Rijn (eigenhandig gesigneerd)": 2
+  },
+  "validation_hits": [
+    {
+      "uri": "https://id.rijksmuseum.nl/200107939",
+      "object_number": "SK-A-3934",
+      "title": "Borstbeeld van een lachende jonge man",
+      "creators": [
+        "omgeving van Rembrandt van Rijn",
+        "circle of Rembrandt van Rijn"
+      ],
+      "from_description": "workshop of Rembrandt",
+      "validation_candidate": true
+    },
+    {
+      "uri": "https://id.rijksmuseum.nl/200109432",
+      "object_number": "SK-C-1598",
+      "title": "Portret van Rembrandt",
+      "creators": [
+        "Jan Lievens"
+      ],
+      "from_description": "workshop of Rembrandt",
+      "validation_candidate": false
+    },
+    {
+      "uri": "https://id.rijksmuseum.nl/20028190",
+      "object_number": "SK-A-1627",
+      "title": "Simson en Delila",
+      "creators": [
+        "Jan Lievens"
+      ],
+      "from_description": "workshop of Rembrandt",
+      "validation_candidate": false
+    },
+    {
+      "uri": "https://id.rijksmuseum.nl/200109287",
+      "object_number": "SK-C-371",
+      "title": "Officieren en andere schutters van wijk XVIII in Amsterdam onder leiding van kapitein Albert Dircksz Bas en luitenant Lucas Pietersz Conijn",
+      "creators": [
+        "Govert Flinck",
+        "Govert Flinck (signed by artist)",
+        "Govert Flinck (eigenhandig gesigneerd)"
+      ],
+      "from_description": "circle of Rembrandt",
+      "validation_candidate": false
+    },
+    {
+      "uri": "https://id.rijksmuseum.nl/20026156",
+      "object_number": "SK-A-3982",
+      "title": "Portret van Dr. Ephraïm Bueno",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "from_description": "circle of Rembrandt",
+      "validation_candidate": false
+    },
+    {
+      "uri": "https://id.rijksmuseum.nl/200109435",
+      "object_number": "SK-A-4096",
+      "title": "Simson en Delila",
+      "creators": [
+        "Rijn, Rembrandt van",
+        "attributed to Rembrandt van Rijn",
+        "toegeschreven aan Rembrandt van Rijn"
+      ],
+      "from_description": "school of Rembrandt",
+      "validation_candidate": true
+    },
+    {
+      "uri": "https://id.rijksmuseum.nl/20026794",
+      "object_number": "SK-A-3035",
+      "title": "Portret van een edelman in harnas",
+      "creators": [
+        "anonymous",
+        "anoniem"
+      ],
+      "from_description": "school of Rembrandt",
+      "validation_candidate": false
+    },
+    {
+      "uri": "https://id.rijksmuseum.nl/2009322",
+      "object_number": "SK-A-3014",
+      "title": "Madonna and Child with the Infant John the Baptist and Saints Peter and Anthony",
+      "creators": [
+        "anonymous",
+        "anoniem"
+      ],
+      "from_description": "school of Rembrandt",
+      "validation_candidate": false
+    },
+    {
+      "uri": "https://id.rijksmuseum.nl/200107937",
+      "object_number": "SK-A-3138",
+      "title": "Titus in monniksdracht",
+      "creators": [
+        "Rijn, Rembrandt van",
+        "Rembrandt van Rijn (mentioned on object)",
+        "Rembrandt van Rijn (vermeld op object)"
+      ],
+      "from_description": "omgeving van Rembrandt",
+      "validation_candidate": false
+    }
+  ],
+  "locked": {
+    "filters": {
+      "imageAvailable": "true",
+      "type": "painting",
+      "material": "oil paint"
+    },
+    "main_creator_query": "Rembrandt van Rijn",
+    "validation_description_queries": [
+      "workshop of Rembrandt",
+      "circle of Rembrandt",
+      "school of Rembrandt",
+      "school van Rembrandt",
+      "atelier van Rembrandt",
+      "omgeving van Rembrandt"
+    ],
+    "iiif_max_edge": 1500,
+    "backbone": "resnet50",
+    "technique_search": "disabled — technique terms are painter-role labels, not medium"
+  }
+}

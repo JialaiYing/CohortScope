@@ -1,0 +1,86 @@
+# Decisions — Cohortscope
+
+Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
+To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
+
+Last updated: 2026-08-05 (T018 PASS; datathon deliverables locked D25; T019 cleanup next)
+
+---
+
+## Locked
+
+| ID | Decision | Rationale | Locked |
+|---|---|---|---|
+| D01 | Museum = Rijksmuseum only | Single imaging pipeline; avoid cross-museum confounds | briefing |
+| D02 | Paintings only, Rembrandt focus | Brushstroke features don't transfer to prints/drawings | briefing |
+| D03 | Main cohort = currently attributed Rembrandt van Rijn | Defines the statistical "normal" | briefing |
+| D04 | Primary validation = circle / workshop / school / omgeving / atelier held out | Method only "works" if these look anomalous vs cohort | briefing; refined 2026-08-05 |
+| D05 | Two signals: ResNet50 embeddings + hand-built texture/color | Decomposable flags required; no opaque single score | briefing + Phase 0 |
+| D06 | ML framework = PyTorch | Briefing | briefing |
+| D07 | Frontend deferred; Gradio later if needed | Prove method first; demo may be static results + short UI only if time | briefing |
+| D08 | No FastAPI / backend API for now | Premature before method validated | 2026-08-05 |
+| D09 | Env = mamba `CohortScope`, Python 3.13, Windows + CUDA | User setup; RTX 3050 4GB | Phase 0 |
+| D10 | Search filters: `type=painting`, `material=oil paint`, `imageAvailable=true` | English terms verified; Dutch same counts | Phase 0 |
+| D11 | Do **not** use `technique` as a search filter | API technique ≈ role ("painter"), not medium | Phase 0 |
+| D12 | Image size = IIIF long-edge **1500px** | Quality vs &lt;5 GB budget; ~237 KB/sample | Phase 0 |
+| D13 | Backbone = **ResNet50** (`IMAGENET1K_V2`) | Fits 4GB VRAM; DINOv2 only if ResNet50 signal fails | Phase 0 |
+| D14 | Validation acquisition via **description** probes, then label filter | `creator=` workshop/circle phrases return 0 hits | Phase 0 |
+| D15 | Project layout = minimal flat Python modules | User preference | Phase 0 |
+| D16 | Working name = Cohortscope (placeholder OK) | Nothing depends on final name | briefing |
+| D17 | Buffer days 12–13 treated as already spent | Do not plan work into buffer | briefing |
+| D18 | Start date = 2026-08-04 (Day 1) | User confirmed | Phase 0 |
+| D19 | Split enum = `cohort` \| `validation` \| `ambiguous` \| `excluded` | Stats T017; Data T010; human approved 2026-08-05 | 2026-08-05 |
+| D20 | Split assignment = priority rules in `results/phase1_experimental_design.md` §1.2 | First match wins; probes are discovery only | 2026-08-05 |
+| D21 | O05: *attributed to / toegeschreven aan Rembrandt* (incl. SK-A-4096) → `ambiguous` | Never fit normals; never count in T043; score exploratorily | 2026-08-05 |
+| D22 | Phase 1 storage = SQLite `data/cohortscope.sqlite`, table `works` per T010 §1 | Human approved schema | 2026-08-05 |
+| D23 | Phase 1 modules = `rijks_api.py` + `acquire.py`; `smoke_api.py` **removed** in T019 | Duplicate HTTP stack deleted | 2026-08-05 |
+| D24 | After each successful phase: **cleanup pass** before starting the next | Delete obsolete scripts, smoke leftovers, superseded drafts; keep canonical docs + final artifacts | 2026-08-05 |
+| D25 | Datathon submission pack (in-repo, excluding demo video) | See § Datathon below | 2026-08-05 |
+
+## Datathon submission mapping (D25)
+
+Track expects: repo + dataset link in README + report + demo video. We control the first three; **demo video is human-owned** (orchestrator will list suggested footage late, not produce the video).
+
+| Requirement | Our plan | Owner phase |
+|---|---|---|
+| Code repository | Public GitHub (or similar) with clear run instructions | Phase 5 + human publish |
+| Dataset link in README | Document Rijksmuseum open collection + how to reproduce via `acquire.py`; optional zenodo/release of `data/` snapshot if GitHub LFS awkward | Phase 1 inventory already; README in Phase 5 (stub earlier OK) |
+| Report | Methodology, decisions, results, evaluation honesty (tiny-N) | Literature Phase 5; Stats results feed |
+| Demo video | **Out of agent control** — human records; suggest screen-capture of ranked results + inventory | Human; after Phase 4 |
+
+**Method framing (do not warp the science to match “train a Kaggle model” wording):**  
+This project uses a **pretrained** ResNet50 (no finetune by default) + handcrafted features + cohort anomaly scoring. Report language: “model/pipeline evaluation,” not “we trained a classifier from scratch on Kaggle.” Dataset remains Rijksmuseum (D01), not a forced Kaggle swap.
+
+## Provisional (use until overturned)
+
+| ID | Decision | Notes |
+|---|---|---|
+| P01 | Storage = SQLite at `data/cohortscope.sqlite` | **Locked for Phase 1 as D22** |
+| P02 | Main cohort query creator = `Rembrandt van Rijn` | ~24 oil paintings with images |
+| P03 | Exclude attributed/circle labels from cohort **statistics** even if they appear in Rembrandt search | Reinforced by D19–D21 |
+| P04 | Agent roster = Project Manager + 6 specialists (see `docs/agents/`, launch via `docs/launch/`) | Manager routes; specialists execute |
+| P05 | Description probes may omit `material` for discovery; exclude if known non-oil after resolve | Aligns Phase 0 smoke with D10 intent |
+
+## Open
+
+| ID | Question | Owner | Needed by |
+|---|---|---|---|
+| O01 | Final project display name | Human | write-up |
+| O02 | Exact outlier combination rule (z-score sum vs max vs rank fusion) | Statistics agent | Days 8–9 |
+| O03 | Which hand-built features ship in v1 (shortlist) | Feature Engineering | Days 5–7 |
+| O04 | Success bar for validation (count/tail language, not AUC) | Human + Stats | Days 8–9 |
+
+## Explicitly deferred
+
+- Gradio / any UI beyond CSV/ranked tables — revisit after Days 8–9 validation passes
+- FastAPI / service layer — same gate as Gradio
+- DINOv2 / alternate backbones — only if ResNet50 validation is weak
+- Multi-artist / multi-museum — sustainability claim in write-up only this cycle
+
+## Rejected / do not reopen without strong reason
+
+- Training a custom backbone from scratch
+- Mixing other museums into the Rembrandt cohort
+- Single opaque anomaly score as the only output
+- Folding attributed-to Rembrandt into primary validation by default (inflates N, mixes hypotheses)
+- Random holdout of firm Rembrandt as “validation” (does not test D04)

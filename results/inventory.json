@@ -1,0 +1,463 @@
+{
+  "generated_at": "2026-08-05T07:23:03+00:00",
+  "filters": {
+    "imageAvailable": "true",
+    "type": "painting",
+    "material": "oil paint"
+  },
+  "iiif_max_edge": 1500,
+  "db_path": "data/cohortscope.sqlite",
+  "counts": {
+    "cohort": 23,
+    "validation": 1,
+    "ambiguous": 1,
+    "excluded": 5,
+    "total": 30,
+    "with_image": 30,
+    "missing_image": 0
+  },
+  "disk_bytes_images": 11304527,
+  "disk_budget_note": "11,304,527 bytes of production images; budget < 5 GB",
+  "expected_validation_n_note": "Primary validation N is expected to be tiny (1–3). Do not claim AUC or large-sample rates (T017 §3). T043 success counts only split=validation; ambiguous is exploratory only (D21).",
+  "works": [
+    {
+      "object_number": "SK-A-4096",
+      "title": "Simson en Delila",
+      "split": "ambiguous",
+      "split_reason": "attributed_o05",
+      "creator_label_family": "attributed",
+      "creators": [
+        "Rijn, Rembrandt van",
+        "attributed to Rembrandt van Rijn",
+        "toegeschreven aan Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-4096.jpg",
+      "iiif_id": "oOHEj"
+    },
+    {
+      "object_number": "SK-A-1935",
+      "title": "Landschap met stenen brug",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-1935.jpg",
+      "iiif_id": "hodeb"
+    },
+    {
+      "object_number": "SK-A-3066",
+      "title": "Oude lezende vrouw, waarschijnlijk de profetes Hanna",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rijn, Rembrandt van",
+        "Rembrandt van Rijn (vermeld op object)",
+        "Rembrandt van Rijn (mentioned on object)"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-3066.jpg",
+      "iiif_id": "CNSQg"
+    },
+    {
+      "object_number": "SK-A-3137",
+      "title": "De verloochening van Petrus",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rijn, Rembrandt van",
+        "Rembrandt van Rijn (mentioned on object)",
+        "Rembrandt van Rijn (vermeld op object)"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-3137.jpg",
+      "iiif_id": "bAqDD"
+    },
+    {
+      "object_number": "SK-A-3138",
+      "title": "Titus in monniksdracht",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rijn, Rembrandt van",
+        "Rembrandt van Rijn (mentioned on object)",
+        "Rembrandt van Rijn (vermeld op object)"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-3138.jpg",
+      "iiif_id": "OzDjp"
+    },
+    {
+      "object_number": "SK-A-3276",
+      "title": "Jeremiah Lamenting the Destruction of Jerusalem",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rijn, Rembrandt van",
+        "Rembrandt van Rijn (vermeld op object)",
+        "Rembrandt van Rijn (mentioned on object)"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-3276.jpg",
+      "iiif_id": "zQBxS"
+    },
+    {
+      "object_number": "SK-A-3340",
+      "title": "Borstbeeld van een man in oosterse kleding",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-3340.jpg",
+      "iiif_id": "VzuFK"
+    },
+    {
+      "object_number": "SK-A-3477",
+      "title": "Joseph telling his dreams",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rijn, Rembrandt van",
+        "Rembrandt van Rijn (signed by artist)",
+        "Rembrandt van Rijn (eigenhandig gesigneerd)"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-3477.jpg",
+      "iiif_id": "tKyHp"
+    },
+    {
+      "object_number": "SK-A-3981",
+      "title": "Stilleven met pauwen",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-3981.jpg",
+      "iiif_id": "vBXKy"
+    },
+    {
+      "object_number": "SK-A-3982",
+      "title": "Portret van Dr. Ephraïm Bueno",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-3982.jpg",
+      "iiif_id": "sRVhF"
+    },
+    {
+      "object_number": "SK-A-4050",
+      "title": "Self Portrait as the Apostle Paul",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-4050.jpg",
+      "iiif_id": "wqcDn"
+    },
+    {
+      "object_number": "SK-A-4057",
+      "title": "Young Woman in Fantasy Costume",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-4057.jpg",
+      "iiif_id": "ryBbQ"
+    },
+    {
+      "object_number": "SK-A-4674",
+      "title": "Musical Company",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-4674.jpg",
+      "iiif_id": "hdvov"
+    },
+    {
+      "object_number": "SK-A-4691",
+      "title": "Self Portrait",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-4691.jpg",
+      "iiif_id": "YfhED"
+    },
+    {
+      "object_number": "SK-A-4717",
+      "title": "Tobit and Anna with the Kid",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-4717.jpg",
+      "iiif_id": "myXdn"
+    },
+    {
+      "object_number": "SK-A-4833",
+      "title": "Portrait van Haesje Jacobsdr van Cleyburgh",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-4833.jpg",
+      "iiif_id": "pNusU"
+    },
+    {
+      "object_number": "SK-A-4885",
+      "title": "Portrait of Johannes Wtenbogaert",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-4885.jpg",
+      "iiif_id": "vWfAy"
+    },
+    {
+      "object_number": "SK-A-5033",
+      "title": "Portrait of Marten Soolmans",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-5033.jpg",
+      "iiif_id": "ydvFQ"
+    },
+    {
+      "object_number": "SK-A-5092",
+      "title": "The Standard Bearer",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rijn, Rembrandt van",
+        "Rembrandt van Rijn (signed by artist)",
+        "Rembrandt van Rijn (eigenhandig gesigneerd)"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-A-5092.jpg",
+      "iiif_id": "wceCO"
+    },
+    {
+      "object_number": "SK-C-1768",
+      "title": "Portret van Oopjen Coppit",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-C-1768.jpg",
+      "iiif_id": "WjxgV"
+    },
+    {
+      "object_number": "SK-C-216",
+      "title": "Portret van een paar als Isaak en Rebekka, bekend als 'De Joodse bruid'",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-C-216.jpg",
+      "iiif_id": "uRWXq"
+    },
+    {
+      "object_number": "SK-C-5",
+      "title": "Officieren en andere schutters van wijk II in Amsterdam, onder leiding van kapitein Frans Banninck Cocq en luitenant Willem van Ruytenburch, bekend als ‘De Nachtwacht’",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-C-5.jpg",
+      "iiif_id": "PJEZO"
+    },
+    {
+      "object_number": "SK-C-597",
+      "title": "Portrait of a woman, possibly Maria Trip",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-C-597.jpg",
+      "iiif_id": "FeurF"
+    },
+    {
+      "object_number": "SK-C-6",
+      "title": "De waardijns van het Amsterdamse lakenbereidersgilde, bekend als ‘De Staalmeesters’",
+      "split": "cohort",
+      "split_reason": "firm_main_search",
+      "creator_label_family": "firm",
+      "creators": [
+        "Rembrandt van Rijn"
+      ],
+      "source_query_type": "creator",
+      "source_query": "Rembrandt van Rijn",
+      "image_path": "data/images/SK-C-6.jpg",
+      "iiif_id": "cWWQE"
+    },
+    {
+      "object_number": "SK-A-1627",
+      "title": "Simson en Delila",
+      "split": "excluded",
+      "split_reason": "other_artist",
+      "creator_label_family": "other",
+      "creators": [
+        "Jan Lievens"
+      ],
+      "source_query_type": "description",
+      "source_query": "workshop of Rembrandt",
+      "image_path": "data/images/SK-A-1627.jpg",
+      "iiif_id": "EOMZe"
+    },
+    {
+      "object_number": "SK-A-3014",
+      "title": "Madonna and Child with the Infant John the Baptist and Saints Peter and Anthony",
+      "split": "excluded",
+      "split_reason": "anonymous",
+      "creator_label_family": "other",
+      "creators": [
+        "anonymous",
+        "anoniem"
+      ],
+      "source_query_type": "description",
+      "source_query": "school of Rembrandt",
+      "image_path": "data/images/SK-A-3014.jpg",
+      "iiif_id": "VkQpd"
+    },
+    {
+      "object_number": "SK-A-3035",
+      "title": "Portret van een edelman in harnas",
+      "split": "excluded",
+      "split_reason": "anonymous",
+      "creator_label_family": "other",
+      "creators": [
+        "anonymous",
+        "anoniem"
+      ],
+      "source_query_type": "description",
+      "source_query": "school of Rembrandt",
+      "image_path": "data/images/SK-A-3035.jpg",
+      "iiif_id": "bpdjX"
+    },
+    {
+      "object_number": "SK-C-1598",
+      "title": "Portret van Rembrandt",
+      "split": "excluded",
+      "split_reason": "other_artist",
+      "creator_label_family": "other",
+      "creators": [
+        "Jan Lievens"
+      ],
+      "source_query_type": "description",
+      "source_query": "workshop of Rembrandt",
+      "image_path": "data/images/SK-C-1598.jpg",
+      "iiif_id": "xXtHY"
+    },
+    {
+      "object_number": "SK-C-371",
+      "title": "Officieren en andere schutters van wijk XVIII in Amsterdam onder leiding van kapitein Albert Dircksz Bas en luitenant Lucas Pietersz Conijn",
+      "split": "excluded",
+      "split_reason": "other_artist",
+      "creator_label_family": "other",
+      "creators": [
+        "Govert Flinck",
+        "Govert Flinck (signed by artist)",
+        "Govert Flinck (eigenhandig gesigneerd)"
+      ],
+      "source_query_type": "description",
+      "source_query": "circle of Rembrandt",
+      "image_path": "data/images/SK-C-371.jpg",
+      "iiif_id": "URZpJ"
+    },
+    {
+      "object_number": "SK-A-3934",
+      "title": "Borstbeeld van een lachende jonge man",
+      "split": "validation",
+      "split_reason": "circle_keep",
+      "creator_label_family": "circle_workshop",
+      "creators": [
+        "omgeving van Rembrandt van Rijn",
+        "circle of Rembrandt van Rijn"
+      ],
+      "source_query_type": "description",
+      "source_query": "workshop of Rembrandt",
+      "image_path": "data/images/SK-A-3934.jpg",
+      "iiif_id": "wRxpz"
+    }
+  ]
+}

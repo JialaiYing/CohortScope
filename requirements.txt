@@ -1,0 +1,13 @@
+# Install PyTorch with CUDA separately (Windows):
+#   python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+#
+# Then:
+#   python -m pip install -r requirements.txt
+
+requests>=2.32.0
+Pillow>=10.0.0
+numpy>=2.0.0
+tqdm>=4.66.0
+pandas>=2.2.0
+scikit-learn>=1.5.0
+matplotlib>=3.9.0

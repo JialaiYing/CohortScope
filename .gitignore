@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+.cursor/
+.DS_Store
+Thumbs.db
+
+# Keep dataset in repo for datathon reproducibility (~11 MB)
+# (previously ignored; unlocked for initial GitHub publish)
