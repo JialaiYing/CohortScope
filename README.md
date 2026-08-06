@@ -27,8 +27,9 @@ python -m pip install -r requirements.txt
 
 ## Status
 
-- **Phase 0–1 complete:** acquisition, splits (`cohort` / `validation` / `ambiguous` / `excluded`), inventory.  
-- **Phases 2+** (preprocess, features, scoring): not started.  
+- **Phase 0–2 complete:** acquisition, splits, preprocess (`preprocess_v1`), inventory, QC.  
+- **Phase 3+** (embeddings, handcrafted features, scoring): design / not started.  
+- After each finished phase: cleanup + push to GitHub (D28).  
 - Project docs: `docs/` (decisions, tasks, roadmap, agent prompts).
 
 ## License / attribution

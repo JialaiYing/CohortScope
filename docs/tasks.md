@@ -3,7 +3,7 @@
 Shared board. **Update status here when you finish or unblock work.**  
 Statuses: `todo` | `in_progress` | `blocked` | `done` | `cancelled`
 
-Last updated: 2026-08-05 (T019 cleanup done; Phase 2 design gate may open)
+Last updated: 2026-08-06 (Phase 2 DONE + GitHub push; Phase 3 design gate OPEN)
 
 ---
 
@@ -19,9 +19,9 @@ Last updated: 2026-08-05 (T019 cleanup done; Phase 2 design gate may open)
 
 ## Current phase
 
-**Phase 0 — DONE**  
-**Phase 1 — DONE** (T018 PASS + T019 cleanup) → **Phase 2 ON HOLD** (human hold after GitHub publish)  
-**Datathon (D25):** https://github.com/JialaiYing/CohortScope.git — README dataset link stubbed; report/video later
+**Phase 0–2 — DONE** (on GitHub; D28 push-after-phase)  
+**Phase 3 — Feature extraction: ACTIVE — Wave A design gate** (no extract code until human lock)  
+**Datathon (D25):** https://github.com/JialaiYing/CohortScope.git
 
 ---
 
@@ -63,20 +63,28 @@ Last updated: 2026-08-05 (T019 cleanup done; Phase 2 design gate may open)
 
 | ID | Task | Role | Status | Notes |
 |---|---|---|---|---|
-| T020 | Design normalize pipeline (scale, color) | cv | todo | Confirm before code |
-| T021 | Implement preprocess → cached tensors/images | cv | todo | |
-| T022 | QC: before/after samples + failure log | cv | todo | |
-| T023 | Confirm preprocess does not erase brushstroke signal | features | todo | Review CV design |
+| T020 | Design normalize pipeline (scale, color) | cv | done | `results/phase2_preprocess_design.md` — **human locked (D26)** |
+| T024 | Preprocess leakage / allowed stats memo (L6) | stats | done | `results/phase2_preprocess_stats_memo.md` — per-image only; published ImageNet constants |
+| T023 | Confirm preprocess does not erase brushstroke signal | features | done | `results/phase2_features_signoff.md` — **Approve**; Branch H @1500 only |
+| T021 | Implement preprocess → cached tensors/images | cv | done | `preprocess.py`; `data/preprocessed/preprocess_v1/` N=25 |
+| T022 | QC: before/after samples + failure log | cv | done | `results/qc_preprocess_v1/` — 0 failures |
+| T025 | Review Phase 2 artifacts | review | done | `results/phase2_review.md` — **PASS with patches**; no must-fix |
+| T026 | Phase 2 cleanup (D24) + should-fix docs | cv | done | `results/phase2_cleanup_log.md`; geometry note + docstring |
+| T027 | Phase 2 git push (D28) | any | done | This commit |
 
 ### Phase 3 — Feature extraction (Days 5–7)
 
 | ID | Task | Role | Status | Notes |
 |---|---|---|---|---|
-| T030 | ResNet50 embedding extractor (no finetune) | cv | todo | D13 |
-| T031 | Shortlist interpretable features (confirm) | features | todo | O03 — design notes OK in parallel; **no code until Phase 3 gate** |
-| T032 | Implement texture / brushstroke / palette stats | features | todo | Hand-built only |
-| T033 | Feature matrix export + schema doc | features | todo | Align IDs with data layer |
-| T034 | Literature notes on wavelet/brushstroke auth | literature | todo | Honest prior art |
+| T030 | Design ResNet50 embedding extract I/O | cv | todo | **Wave A** — Branch C inputs; no forward until lock |
+| T031 | Shortlist interpretable features (O03 confirm) | features | todo | **Wave A** — Branch H only |
+| T034 | Literature notes on wavelet/brushstroke auth | literature | todo | **Wave A parallel** |
+| T035 | Stats note: embedding/feature matrix contract for Phase 4 | stats | todo | **Wave A parallel** — join keys, no premature scoring |
+| T032 | Implement texture / brushstroke / palette stats | features | todo | **Wave B** after human lock |
+| T033 | Feature matrix export + schema doc | features | todo | Wave B |
+| T036 | Implement ResNet50 embedding extractor | cv | todo | Wave B; was T030 implement |
+| T037 | Review Phase 3 artifacts | review | todo | Wave C |
+| T038 | Phase 3 cleanup + git push (D24/D28) | any | todo | After T037 |
 
 ### Phase 4 — Scoring + validation (Days 8–9)
 
@@ -111,15 +119,13 @@ Last updated: 2026-08-05 (T019 cleanup done; Phase 2 design gate may open)
 
 | Blocker | Blocks | Owner |
 |---|---|---|
-| Human Phase 2 design confirm (T020) | T021+ implement | cv + human |
+| Phase 3 Wave A incomplete (T030/T031/T034/T035 + human lock) | T032/T036 implement | cv + features + literature + stats + human |
 
 ## Parallel work allowed now
 
-- **CV:** Phase 2 preprocess design (T020) — confirm with human before code  
-- Feature Engineering may review preprocess design (T023) once drafted  
-- Data Engineer idle on Phase 1; no Phase 2 acquisition work unless CV asks  
-- Do **not** implement Phase 2 until human opens that gate  
-- Do **not** start Phase 2 code until T019 complete  
+- **CV T030**, **Features T031**, **Literature T034**, **Stats T035** — design only, in parallel  
+- No embedding/feature extraction code until human locks O03 + embed I/O  
+
 
 ---
 

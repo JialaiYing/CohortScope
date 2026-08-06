@@ -3,7 +3,7 @@
 Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
 To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
 
-Last updated: 2026-08-05 (T018 PASS; datathon deliverables locked D25; T019 cleanup next)
+Last updated: 2026-08-05 (D26 Phase 2 preprocess locked; Wave B unlocked)
 
 ---
 
@@ -34,8 +34,10 @@ Last updated: 2026-08-05 (T018 PASS; datathon deliverables locked D25; T019 clea
 | D21 | O05: *attributed to / toegeschreven aan Rembrandt* (incl. SK-A-4096) → `ambiguous` | Never fit normals; never count in T043; score exploratorily | 2026-08-05 |
 | D22 | Phase 1 storage = SQLite `data/cohortscope.sqlite`, table `works` per T010 §1 | Human approved schema | 2026-08-05 |
 | D23 | Phase 1 modules = `rijks_api.py` + `acquire.py`; `smoke_api.py` **removed** in T019 | Duplicate HTTP stack deleted | 2026-08-05 |
-| D24 | After each successful phase: **cleanup pass** before starting the next | Delete obsolete scripts, smoke leftovers, superseded drafts; keep canonical docs + final artifacts | 2026-08-05 |
+| D24 | After each successful phase: **cleanup pass** then **git push (D28)** before the next phase | Delete obsolete files; keep canonical artifacts; publish to GitHub | 2026-08-05; push added 2026-08-06 |
 | D25 | Datathon submission pack (in-repo, excluding demo video) | See § Datathon below | 2026-08-05 |
+| D27 | IIIF geometry honesty: Phase 1 URLs use **width=1500** (`full/1500,`), not always long-edge 1500 | Tall works can have long edge &gt;1500; Branch H is identity on those JPEGs; document, do not val-retune | 2026-08-06 (T025) |
+| D28 | After each phase succeeds (review + cleanup): **git commit + push to `origin/main`** | Datathon continuous publish; human approved 2026-08-06 | 2026-08-06 |
 
 ## Datathon submission mapping (D25)
 

@@ -1,0 +1,90 @@
+{
+  "recipe_id": "preprocess_v1",
+  "created_at": "2026-08-06T05:53:33.497206+00:00",
+  "source_edge": 1500,
+  "backbone": "resnet50",
+  "backbone_weights": "IMAGENET1K_V2",
+  "cnn": {
+    "resize_short": 256,
+    "crop": 224,
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "weights": "IMAGENET1K_V2"
+  },
+  "splits_included": [
+    "cohort",
+    "validation",
+    "ambiguous"
+  ],
+  "object_numbers": [
+    "SK-A-1935",
+    "SK-A-3066",
+    "SK-A-3137",
+    "SK-A-3138",
+    "SK-A-3276",
+    "SK-A-3340",
+    "SK-A-3477",
+    "SK-A-3934",
+    "SK-A-3981",
+    "SK-A-3982",
+    "SK-A-4050",
+    "SK-A-4057",
+    "SK-A-4096",
+    "SK-A-4674",
+    "SK-A-4691",
+    "SK-A-4717",
+    "SK-A-4833",
+    "SK-A-4885",
+    "SK-A-5033",
+    "SK-A-5092",
+    "SK-C-1768",
+    "SK-C-216",
+    "SK-C-5",
+    "SK-C-597",
+    "SK-C-6"
+  ],
+  "splits_by_id": {
+    "SK-A-1935": "cohort",
+    "SK-A-3066": "cohort",
+    "SK-A-3137": "cohort",
+    "SK-A-3138": "cohort",
+    "SK-A-3276": "cohort",
+    "SK-A-3340": "cohort",
+    "SK-A-3477": "cohort",
+    "SK-A-3934": "validation",
+    "SK-A-3981": "cohort",
+    "SK-A-3982": "cohort",
+    "SK-A-4050": "cohort",
+    "SK-A-4057": "cohort",
+    "SK-A-4096": "ambiguous",
+    "SK-A-4674": "cohort",
+    "SK-A-4691": "cohort",
+    "SK-A-4717": "cohort",
+    "SK-A-4833": "cohort",
+    "SK-A-4885": "cohort",
+    "SK-A-5033": "cohort",
+    "SK-A-5092": "cohort",
+    "SK-C-1768": "cohort",
+    "SK-C-216": "cohort",
+    "SK-C-5": "cohort",
+    "SK-C-597": "cohort",
+    "SK-C-6": "cohort"
+  },
+  "n": 25,
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "torchvision": "0.21.0+cu124",
+    "pillow": "12.2.0"
+  },
+  "design": "results/phase2_preprocess_design.md",
+  "decision": "D26",
+  "geometry_note": "results/qc_preprocess_v1/geometry_note.md"
+}

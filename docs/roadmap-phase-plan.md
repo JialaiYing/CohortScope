@@ -221,7 +221,8 @@ Code Reviewer owns calling these out; any agent may raise them.
 | Phase | Status |
 |---|---|
 | 0 Prerequisites | **done** |
-| 1 Data acquisition | **PASS with patches** — T019 cleanup next, then Phase 2 |
-| 2–4 | not started |
+| 2 Preprocessing | **DONE** (pushed; D28) |
+| 3 Feature extraction | **ACTIVE** — design gate (Wave A) |
+| 4 | not started |
 | 5 Write-up / datathon pack (D25) | planned (README + report; video = human) |
 | 6 Buffer | reserved |
