@@ -3,7 +3,7 @@
 Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
 To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
 
-Last updated: 2026-08-05 (D26 Phase 2 preprocess locked; Wave B unlocked)
+Last updated: 2026-08-06 (Phase 3 Wave B unlocked — D29)
 
 ---
 
@@ -36,8 +36,10 @@ Last updated: 2026-08-05 (D26 Phase 2 preprocess locked; Wave B unlocked)
 | D23 | Phase 1 modules = `rijks_api.py` + `acquire.py`; `smoke_api.py` **removed** in T019 | Duplicate HTTP stack deleted | 2026-08-05 |
 | D24 | After each successful phase: **cleanup pass** then **git push (D28)** before the next phase | Delete obsolete files; keep canonical artifacts; publish to GitHub | 2026-08-05; push added 2026-08-06 |
 | D25 | Datathon submission pack (in-repo, excluding demo video) | See § Datathon below | 2026-08-05 |
+| D26 | Phase 2 preprocess = `preprocess_v1` (Branch H RGB identity + Branch C 224 CNN) | Two-branch; scored splits only; no corpus pixel fit | 2026-08-05 human |
 | D27 | IIIF geometry honesty: Phase 1 URLs use **width=1500** (`full/1500,`), not always long-edge 1500 | Tall works can have long edge &gt;1500; Branch H is identity on those JPEGs; document, do not val-retune | 2026-08-06 (T025) |
 | D28 | After each phase succeeds (review + cleanup): **git commit + push to `origin/main`** | Datathon continuous publish; human approved 2026-08-06 | 2026-08-06 |
+| D29 | Phase 3 extract = ResNet50 `embed_v1` (Branch C) + O03 **8** hand-built features (Branch H) | Human locked 2026-08-06; matrices per `results/phase3_matrix_contract.md`; no scoring in Phase 3 | 2026-08-06 |
 
 ## Datathon submission mapping (D25)
 
@@ -69,9 +71,9 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 |---|---|---|---|
 | O01 | Final project display name | Human | write-up |
 | O02 | Exact outlier combination rule (z-score sum vs max vs rank fusion) | Statistics agent | Days 8–9 |
-| O03 | Which hand-built features ship in v1 (shortlist) | Feature Engineering | Days 5–7 |
 | O04 | Success bar for validation (count/tail language, not AUC) | Human + Stats | Days 8–9 |
 
+**O03 resolved (D29):** 8 columns in `results/phase3_feature_shortlist.md` §1.
 ## Explicitly deferred
 
 - Gradio / any UI beyond CSV/ranked tables — revisit after Days 8–9 validation passes

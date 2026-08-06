@@ -27,10 +27,10 @@ python -m pip install -r requirements.txt
 
 ## Status
 
-- **Phase 0–2 complete:** acquisition, splits, preprocess (`preprocess_v1`), inventory, QC.  
-- **Phase 3+** (embeddings, handcrafted features, scoring): design / not started.  
+- **Phase 0–3 complete:** data, preprocess, ResNet50 embeddings, 8 hand-built features.  
+- **Phase 4+** (scoring / validation / write-up): not started.  
 - After each finished phase: cleanup + push to GitHub (D28).  
-- Project docs: `docs/` (decisions, tasks, roadmap, agent prompts).
+- Project docs: `docs/`.
 
 ## License / attribution
 

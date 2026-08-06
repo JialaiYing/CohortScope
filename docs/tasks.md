@@ -3,7 +3,7 @@
 Shared board. **Update status here when you finish or unblock work.**  
 Statuses: `todo` | `in_progress` | `blocked` | `done` | `cancelled`
 
-Last updated: 2026-08-06 (Phase 2 DONE + GitHub push; Phase 3 design gate OPEN)
+Last updated: 2026-08-06 (Phase 3 DONE + GitHub push; Phase 4 next)
 
 ---
 
@@ -19,9 +19,11 @@ Last updated: 2026-08-06 (Phase 2 DONE + GitHub push; Phase 3 design gate OPEN)
 
 ## Current phase
 
-**Phase 0–2 — DONE** (on GitHub; D28 push-after-phase)  
-**Phase 3 — Feature extraction: ACTIVE — Wave A design gate** (no extract code until human lock)  
-**Datathon (D25):** https://github.com/JialaiYing/CohortScope.git
+**Phase 0–2 — DONE**  
+**Phase 0–3 — DONE** (on GitHub)  
+**Phase 4 — Scoring: not started** (design gate next when you say go)  
+**Datathon:** https://github.com/JialaiYing/CohortScope.git
+**Datathon:** https://github.com/JialaiYing/CohortScope.git
 
 ---
 
@@ -76,15 +78,15 @@ Last updated: 2026-08-06 (Phase 2 DONE + GitHub push; Phase 3 design gate OPEN)
 
 | ID | Task | Role | Status | Notes |
 |---|---|---|---|---|
-| T030 | Design ResNet50 embedding extract I/O | cv | todo | **Wave A** — Branch C inputs; no forward until lock |
-| T031 | Shortlist interpretable features (O03 confirm) | features | todo | **Wave A** — Branch H only |
-| T034 | Literature notes on wavelet/brushstroke auth | literature | todo | **Wave A parallel** |
-| T035 | Stats note: embedding/feature matrix contract for Phase 4 | stats | todo | **Wave A parallel** — join keys, no premature scoring |
-| T032 | Implement texture / brushstroke / palette stats | features | todo | **Wave B** after human lock |
-| T033 | Feature matrix export + schema doc | features | todo | Wave B |
-| T036 | Implement ResNet50 embedding extractor | cv | todo | Wave B; was T030 implement |
-| T037 | Review Phase 3 artifacts | review | todo | Wave C |
-| T038 | Phase 3 cleanup + git push (D24/D28) | any | todo | After T037 |
+| T030 | Design ResNet50 embedding extract I/O | cv | done | locked D29 |
+| T031 | Shortlist interpretable features (O03 confirm) | features | done | locked D29 — 8 cols |
+| T034 | Literature notes on wavelet/brushstroke auth | literature | done | `results/prior_art_brushstroke_auth.md` |
+| T035 | Stats note: embedding/feature matrix contract | stats | done | `results/phase3_matrix_contract.md` |
+| T032 | Implement texture / brushstroke / palette stats | features | done | `features.py`; Branch H only; 8 O03 cols |
+| T033 | Feature matrix export + schema doc | features | done | `data/features/features_v1.csv` + dictionary; QC 0 failures |
+| T036 | Implement ResNet50 embedding extractor | cv | done | `embed.py`; `data/embeddings/embed_v1/` N=25; QC 0 fails |
+| T037 | Review Phase 3 artifacts | review | done | `results/phase3_review.md` — **PASS**; no must-fix |
+| T038 | Phase 3 cleanup + git push (D24/D28) | any | done | cleanup log + this push |
 
 ### Phase 4 — Scoring + validation (Days 8–9)
 
@@ -119,13 +121,13 @@ Last updated: 2026-08-06 (Phase 2 DONE + GitHub push; Phase 3 design gate OPEN)
 
 | Blocker | Blocks | Owner |
 |---|---|---|
-| Phase 3 Wave A incomplete (T030/T031/T034/T035 + human lock) | T032/T036 implement | cv + features + literature + stats + human |
+| Phase 4 not opened yet | T040+ | human |
 
 ## Parallel work allowed now
 
-- **CV T030**, **Features T031**, **Literature T034**, **Stats T035** — design only, in parallel  
-- No embedding/feature extraction code until human locks O03 + embed I/O  
-
+- Wait for human to start Phase 4  
+- No scoring code until Phase 4 design is locked  
+- Do **not** retune features/embeddings from validation
 
 ---
 
