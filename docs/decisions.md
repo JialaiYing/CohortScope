@@ -77,10 +77,11 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 **O04 resolved (D30):** SK-A-3934 pass ≥ cohort p95; weak median–p95; fail &lt; median; no AUC; ambiguous excluded.
 ## Explicitly deferred
 
-- Gradio / any UI beyond CSV/ranked tables — revisit after Days 8–9 validation passes
-- FastAPI / service layer — same gate as Gradio
-- DINOv2 / alternate backbones — only if ResNet50 validation is weak
+- Gradio / any UI beyond CSV/ranked tables — **locked tables-only for this cycle (T054)**; O04≠pass
+- FastAPI / service layer — same as Gradio
+- DINOv2 / alternate backbones — not opened (weak N=1 documented; no T050)
 - Multi-artist / multi-museum — sustainability claim in write-up only this cycle
+- T050 method rewrites — cancelled for Phase 5; document limitations instead
 
 ## Rejected / do not reopen without strong reason
 

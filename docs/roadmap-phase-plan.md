@@ -224,5 +224,5 @@ Code Reviewer owns calling these out; any agent may raise them.
 | 2 Preprocessing | **DONE** (pushed; D28) |
 | 3 Feature extraction | **ACTIVE** — design gate (Wave A) |
 | 4 | not started |
-| 5 Write-up / datathon pack (D25) | planned (README + report; video = human) |
+| 5 Write-up / datathon pack (D25) | **DONE** (pushed; O04=weak; video = human T072) |
 | 6 Buffer | reserved |

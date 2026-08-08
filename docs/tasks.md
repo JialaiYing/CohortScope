@@ -3,7 +3,7 @@
 Shared board. **Update status here when you finish or unblock work.**  
 Statuses: `todo` | `in_progress` | `blocked` | `done` | `cancelled`
 
-Last updated: 2026-08-08 (Phase 4 DONE + GitHub push; O04=weak)
+Last updated: 2026-08-08 (Phase 5 DONE + GitHub push; O04=weak; T072 video = human)
 
 ---
 
@@ -19,9 +19,10 @@ Last updated: 2026-08-08 (Phase 4 DONE + GitHub push; O04=weak)
 
 ## Current phase
 
-**Phase 0–4 — DONE** (on GitHub; O04=`weak`)  
-**Phase 5 — Write-up / datathon pack: next when you say go**  
-**Datathon:** https://github.com/JialaiYing/CohortScope.git
+**Phase 0–5 — DONE** (on GitHub; O04=`weak`; tables-only)  
+**T072** demo video remains human.  
+**Datathon:** https://github.com/JialaiYing/CohortScope.git  
+**Pack:** `README.md` + `results/datathon_report.md` + `results/phase5_review.md`
 
 ---
 
@@ -55,9 +56,9 @@ Last updated: 2026-08-08 (Phase 4 DONE + GitHub push; O04=weak)
 
 | ID | Task | Role | Status | Notes |
 |---|---|---|---|---|
-| T070 | Root README: run instructions + dataset link (Rijksmuseum / acquire reproduce) | data + literature | todo | Datathon required |
-| T071 | Datathon report (method, decisions, results, evaluation) | literature | todo | Feed from Stats T045 |
-| T072 | Human: publish GitHub + record demo video | human | todo | Agents do not produce the video |
+| T070 | Root README: run instructions + dataset link (Rijksmuseum / acquire reproduce) | data + literature | done | Root `README.md` — acquire→score runbook; dataset + GitHub link |
+| T071 | Datathon report (method, decisions, results, evaluation) | literature | done | `results/datathon_report.md` (folds T051+T052); O04=weak |
+| T072 | Human: publish GitHub + record demo video | human | todo | Repo already public; video still human |
 
 ### Phase 2 — Preprocessing (Days 3–4)
 
@@ -103,11 +104,12 @@ Last updated: 2026-08-08 (Phase 4 DONE + GitHub push; O04=weak)
 
 | ID | Task | Role | Status | Notes |
 |---|---|---|---|---|
-| T050 | Fix failures from validation | stats+cv+features | todo | Scope-tight fixes only |
-| T051 | Methodology + limits write-up | literature | todo | |
-| T052 | Sustainability claim (second artist without code change) | literature | todo | Design-level, may not execute |
-| T053 | Final code review + scope check | review | todo | |
-| T054 | Decide Gradio/API or stay tables-only | any | todo | Only if method validated |
+| T050 | Fix failures from validation | stats+cv+features | cancelled | Human/orchestrator: closed — document weak; no retune |
+| T051 | Methodology + limits write-up | literature | done | Folded into `results/datathon_report.md` |
+| T052 | Sustainability claim (second artist without code change) | literature | done | Design-level §8 in `results/datathon_report.md` |
+| T053 | Final code review + scope check | review | done | `results/phase5_review.md` — **PASS**; no must-fix |
+| T054 | Decide Gradio/API or stay tables-only | any | done | **tables-only** (O04≠pass; D gate) |
+| T055 | Phase 5 cleanup + git push (D24/D28) | any | done | cleanup log + this push |
 
 ### Phase 6 — Buffer (Days 12–13)
 
@@ -121,12 +123,12 @@ Last updated: 2026-08-08 (Phase 4 DONE + GitHub push; O04=weak)
 
 | Blocker | Blocks | Owner |
 |---|---|---|
-| Phase 5 not opened yet | T050–T054 / T070–T071 | human |
+| T072 demo video | Submission complete | human |
 
 ## Parallel work allowed now
 
-- Wait for human to start Phase 5 write-up  
-- **T050** only if human explicitly opens — do **not** retune O02/O04 or fold ambiguous into T043  
+- Human: record demo video (T072)  
+- Do **not** open T050 / Gradio unless human reopens  
 
 
 ---
