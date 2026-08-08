@@ -4,7 +4,7 @@ Decomposable anomaly ranking for Rijksmuseum Rembrandt oils: pretrained ResNet50
 
 **Repo:** https://github.com/JialaiYing/CohortScope.git
 
-**Status:** Phases 0–4 done. Validation **O04 = `weak`** (N=1; see [`results/validation_report.md`](results/validation_report.md)). Output is **tables-only** (no Gradio/UI this cycle).
+**Status:** Phases 0–5 done. Validation **O04 = `weak`** (N=1; see [`results/validation_report.md`](results/validation_report.md)). Science deliverable is **tables/CSV**; an optional read-only Gradio **demo viewer** exists for the human demo video (D31) — not a product claim.
 
 ---
 
@@ -82,6 +82,22 @@ Optional flags: `--dry-run` / `--inventory` on `acquire.py`; `--force` on prepro
 | [`results/phase4_review.md`](results/phase4_review.md) | Phase 4 leakage / scope gate (**PASS**) |
 | [`results/phase4_results_narrative.md`](results/phase4_results_narrative.md) | Short Phase 4 honesty note |
 | [`docs/`](docs/) | Decisions, tasks, agent briefs |
+
+---
+
+## Demo viewer (optional)
+
+Read-only Gradio UI over `results/scores/scores_v1.csv` + `data/images/`. Does **not** recompute scores or claim the method works (O04 = `weak`).
+
+_Purpose: presentation aid for the human demo video (T072). The science deliverable remains `results/scores/scores_v1.csv` and `results/validation_report.md` (tables/CSV)._
+
+```bash
+mamba activate CohortScope
+python -m pip install -r requirements.txt   # includes gradio
+python demo_app.py                          # local; share=False
+```
+
+Opens a local Gradio page: rank table, work detail (image + z_A/z_B + drivers), and a Validation spotlight for SK-A-3934.
 
 ---
 

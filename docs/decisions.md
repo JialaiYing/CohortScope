@@ -3,7 +3,7 @@
 Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
 To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
 
-Last updated: 2026-08-07 (D30 Phase 4 scoring locked; Wave B unlocked)
+Last updated: 2026-08-08 (D31 demo viewer opened for T072 video; science still tables-only)
 
 ---
 
@@ -41,6 +41,7 @@ Last updated: 2026-08-07 (D30 Phase 4 scoring locked; Wave B unlocked)
 | D28 | After each phase succeeds (review + cleanup): **git commit + push to `origin/main`** | Datathon continuous publish; human approved 2026-08-06 | 2026-08-06 |
 | D29 | Phase 3 extract = ResNet50 `embed_v1` (Branch C) + O03 **8** hand-built features (Branch H) | Human locked 2026-08-06; matrices per `results/phase3_matrix_contract.md`; no scoring in Phase 3 | 2026-08-06 |
 | D30 | Phase 4 scoring = `results/phase4_scoring_design.md` (`scores_v1`) | A: cosine-to-centroid + z; B: RMS of 8 cohort z; O02: `combined=z_A+z_B`; O04: val p95/median tiers; cohort-only fit + LOO | 2026-08-07 human |
+| D31 | Optional **read-only Gradio demo viewer** for T072 (`demo_app.py`) | Presentation aid only — not a product claim; does not reopen T050 or change O04; science deliverable remains CSV/tables (T054) | 2026-08-08 |
 
 ## Datathon submission mapping (D25)
 
@@ -51,7 +52,7 @@ Track expects: repo + dataset link in README + report + demo video. We control t
 | Code repository | Public GitHub (or similar) with clear run instructions | Phase 5 + human publish |
 | Dataset link in README | Document Rijksmuseum open collection + how to reproduce via `acquire.py`; optional zenodo/release of `data/` snapshot if GitHub LFS awkward | Phase 1 inventory already; README in Phase 5 (stub earlier OK) |
 | Report | Methodology, decisions, results, evaluation honesty (tiny-N) | Literature Phase 5; Stats results feed |
-| Demo video | **Out of agent control** — human records; suggest screen-capture of ranked results + inventory | Human; after Phase 4 |
+| Demo video | Human records screen-capture of **Gradio demo viewer** (D31/T080) + validation `weak` | Human; after T080 |
 
 **Method framing (do not warp the science to match “train a Kaggle model” wording):**  
 This project uses a **pretrained** ResNet50 (no finetune by default) + handcrafted features + cohort anomaly scoring. Report language: “model/pipeline evaluation,” not “we trained a classifier from scratch on Kaggle.” Dataset remains Rijksmuseum (D01), not a forced Kaggle swap.
@@ -77,11 +78,12 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 **O04 resolved (D30):** SK-A-3934 pass ≥ cohort p95; weak median–p95; fail &lt; median; no AUC; ambiguous excluded.
 ## Explicitly deferred
 
-- Gradio / any UI beyond CSV/ranked tables — **locked tables-only for this cycle (T054)**; O04≠pass
-- FastAPI / service layer — same as Gradio
+- FastAPI / service layer — still deferred (D31 is Gradio viewer only)
 - DINOv2 / alternate backbones — not opened (weak N=1 documented; no T050)
 - Multi-artist / multi-museum — sustainability claim in write-up only this cycle
 - T050 method rewrites — cancelled for Phase 5; document limitations instead
+
+**T054 clarified by D31:** Core submission stays tables/CSV. A thin Gradio **viewer** over existing artifacts is allowed for the human demo video; it must not claim the method works or retune scores.
 
 ## Rejected / do not reopen without strong reason
 

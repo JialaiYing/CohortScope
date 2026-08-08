@@ -3,7 +3,7 @@
 Shared board. **Update status here when you finish or unblock work.**  
 Statuses: `todo` | `in_progress` | `blocked` | `done` | `cancelled`
 
-Last updated: 2026-08-08 (Phase 5 DONE + GitHub push; O04=weak; T072 video = human)
+Last updated: 2026-08-08 (Phase 6 demo DONE + push; T072 video = human)
 
 ---
 
@@ -19,10 +19,11 @@ Last updated: 2026-08-08 (Phase 5 DONE + GitHub push; O04=weak; T072 video = hum
 
 ## Current phase
 
-**Phase 0–5 — DONE** (on GitHub; O04=`weak`; tables-only)  
-**T072** demo video remains human.  
+**Phase 0–5 — DONE** (on GitHub; O04=`weak`)  
+**Phase 6 demo viewer — DONE** (D31; pushed)  
+**T072** demo video remains human — launch `python demo_app.py`  
 **Datathon:** https://github.com/JialaiYing/CohortScope.git  
-**Pack:** `README.md` + `results/datathon_report.md` + `results/phase5_review.md`
+
 
 ---
 
@@ -108,14 +109,18 @@ Last updated: 2026-08-08 (Phase 5 DONE + GitHub push; O04=weak; T072 video = hum
 | T051 | Methodology + limits write-up | literature | done | Folded into `results/datathon_report.md` |
 | T052 | Sustainability claim (second artist without code change) | literature | done | Design-level §8 in `results/datathon_report.md` |
 | T053 | Final code review + scope check | review | done | `results/phase5_review.md` — **PASS**; no must-fix |
-| T054 | Decide Gradio/API or stay tables-only | any | done | **tables-only** (O04≠pass; D gate) |
+| T054 | Decide Gradio/API or stay tables-only | any | done | Science = tables-only; **D31** allows read-only Gradio **viewer** for video |
 | T055 | Phase 5 cleanup + git push (D24/D28) | any | done | cleanup log + this push |
 
-### Phase 6 — Buffer (Days 12–13)
+### Phase 6 — Buffer / demo aid (Days 12–13)
 
 | ID | Task | Role | Status | Notes |
 |---|---|---|---|---|
-| T060 | Buffer — do not schedule new features here | any | cancelled | D17 |
+| T060 | Buffer — do not schedule new features here | any | cancelled | D17 — science features still cancelled |
+| T080 | Gradio read-only demo viewer for T072 | any | done | D31 — `demo_app.py`; scores+images only; default=SK-A-3934; O04 weak copy; no score import |
+| T081 | README + requirements: how to launch demo | any | done | `## Demo viewer (optional)` + `gradio>=4.0.0` in requirements |
+| T082 | Quick demo review (honesty + scope) | review | done | `results/phase6_demo_review.md` — **PASS**; no must-fix |
+| T083 | Demo cleanup + git push | any | done | cleanup log + this push |
 
 ---
 
@@ -127,8 +132,8 @@ Last updated: 2026-08-08 (Phase 5 DONE + GitHub push; O04=weak; T072 video = hum
 
 ## Parallel work allowed now
 
-- Human: record demo video (T072)  
-- Do **not** open T050 / Gradio unless human reopens  
+- Human: record T072 with `python demo_app.py`  
+- Do **not** open T050 / retune O04  
 
 
 ---

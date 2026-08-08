@@ -156,9 +156,9 @@ Orchestrator issues an explicit cleanup checklist per phase; Data/CV/etc. execut
 - [ ] Cleanup pass (D24)
 - [ ] Human checklist: publish repo + record demo video (agents do not own video)
 
-### Phase 6 — Buffer (Days 12–13)
+### Phase 6 — Buffer / demo aid (Days 12–13)
 
-Slip only. No new features planned.
+Slip for science. **Exception (D31):** optional read-only Gradio viewer for human demo video (T080) — no method changes.
 
 ---
 
@@ -225,4 +225,4 @@ Code Reviewer owns calling these out; any agent may raise them.
 | 3 Feature extraction | **ACTIVE** — design gate (Wave A) |
 | 4 | not started |
 | 5 Write-up / datathon pack (D25) | **DONE** (pushed; O04=weak; video = human T072) |
-| 6 Buffer | reserved |
+| 6 Buffer / demo aid | **DONE** — Gradio viewer pushed (D31); T072 video = human |
