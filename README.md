@@ -27,8 +27,9 @@ python -m pip install -r requirements.txt
 
 ## Status
 
-- **Phase 0–3 complete:** data, preprocess, ResNet50 embeddings, 8 hand-built features.  
-- **Phase 4+** (scoring / validation / write-up): not started.  
+- **Phase 0–4 complete:** data → preprocess → embeddings + hand features → scoring.  
+- **Validation (O04):** `weak` on SK-A-3934 (not a pass).  
+- **Phase 5:** datathon report / README polish — not started.  
 - After each finished phase: cleanup + push to GitHub (D28).  
 - Project docs: `docs/`.
 

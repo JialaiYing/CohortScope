@@ -3,7 +3,7 @@
 Shared board. **Update status here when you finish or unblock work.**  
 Statuses: `todo` | `in_progress` | `blocked` | `done` | `cancelled`
 
-Last updated: 2026-08-06 (Phase 3 DONE + GitHub push; Phase 4 next)
+Last updated: 2026-08-08 (Phase 4 DONE + GitHub push; O04=weak)
 
 ---
 
@@ -19,10 +19,8 @@ Last updated: 2026-08-06 (Phase 3 DONE + GitHub push; Phase 4 next)
 
 ## Current phase
 
-**Phase 0–2 — DONE**  
-**Phase 0–3 — DONE** (on GitHub)  
-**Phase 4 — Scoring: not started** (design gate next when you say go)  
-**Datathon:** https://github.com/JialaiYing/CohortScope.git
+**Phase 0–4 — DONE** (on GitHub; O04=`weak`)  
+**Phase 5 — Write-up / datathon pack: next when you say go**  
 **Datathon:** https://github.com/JialaiYing/CohortScope.git
 
 ---
@@ -92,12 +90,14 @@ Last updated: 2026-08-06 (Phase 3 DONE + GitHub push; Phase 4 next)
 
 | ID | Task | Role | Status | Notes |
 |---|---|---|---|---|
-| T040 | Design decomposable outlier score (confirm) | stats | todo | Resolve O02, O04 |
-| T041 | Fit cohort normals on **main cohort only** | stats | todo | Never fit on validation |
-| T042 | Score all works; emit ranked table + per-signal drivers | stats | todo | |
-| T043 | Validate vs held-out circle/workshop set | stats | todo | Provisional until this passes |
-| T044 | Critique stats method + leakage risks | review | todo | |
-| T045 | Draft results narrative (pass/fail honesty) | literature | todo | |
+| T040 | Design decomposable outlier score (confirm) | stats | done | locked D30 |
+| T041 | Fit cohort normals on **main cohort only** | stats | done | `score.py` — cohort LOO fits; `results/scores/fit_manifest.json` |
+| T042 | Score all works; emit ranked table + per-signal drivers | stats | done | `results/scores/scores_v1.csv` (N=25) |
+| T043 | Validate vs held-out circle/workshop set | stats | done | `results/validation_report.md` — **O04=`weak`** (SK-A-3934); rules not retuned |
+| T044 | Critique stats method + leakage risks | review | done | `results/phase4_review.md` — **PASS**; O04=weak confirmed; no must-fix |
+| T045 | Draft results narrative (pass/fail honesty) | literature | done | `results/phase4_results_narrative.md` — O04=`weak`; do not claim works |
+| T046 | Phase 4 cleanup + git push (D24/D28) | any | done | cleanup log + this push |
+
 
 ### Phase 5 — Iterate + write-up (Days 10–11)
 
@@ -121,13 +121,13 @@ Last updated: 2026-08-06 (Phase 3 DONE + GitHub push; Phase 4 next)
 
 | Blocker | Blocks | Owner |
 |---|---|---|
-| Phase 4 not opened yet | T040+ | human |
+| Phase 5 not opened yet | T050–T054 / T070–T071 | human |
 
 ## Parallel work allowed now
 
-- Wait for human to start Phase 4  
-- No scoring code until Phase 4 design is locked  
-- Do **not** retune features/embeddings from validation
+- Wait for human to start Phase 5 write-up  
+- **T050** only if human explicitly opens — do **not** retune O02/O04 or fold ambiguous into T043  
+
 
 ---
 

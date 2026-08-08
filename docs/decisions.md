@@ -3,7 +3,7 @@
 Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
 To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
 
-Last updated: 2026-08-06 (Phase 3 Wave B unlocked — D29)
+Last updated: 2026-08-07 (D30 Phase 4 scoring locked; Wave B unlocked)
 
 ---
 
@@ -40,6 +40,7 @@ Last updated: 2026-08-06 (Phase 3 Wave B unlocked — D29)
 | D27 | IIIF geometry honesty: Phase 1 URLs use **width=1500** (`full/1500,`), not always long-edge 1500 | Tall works can have long edge &gt;1500; Branch H is identity on those JPEGs; document, do not val-retune | 2026-08-06 (T025) |
 | D28 | After each phase succeeds (review + cleanup): **git commit + push to `origin/main`** | Datathon continuous publish; human approved 2026-08-06 | 2026-08-06 |
 | D29 | Phase 3 extract = ResNet50 `embed_v1` (Branch C) + O03 **8** hand-built features (Branch H) | Human locked 2026-08-06; matrices per `results/phase3_matrix_contract.md`; no scoring in Phase 3 | 2026-08-06 |
+| D30 | Phase 4 scoring = `results/phase4_scoring_design.md` (`scores_v1`) | A: cosine-to-centroid + z; B: RMS of 8 cohort z; O02: `combined=z_A+z_B`; O04: val p95/median tiers; cohort-only fit + LOO | 2026-08-07 human |
 
 ## Datathon submission mapping (D25)
 
@@ -70,10 +71,10 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 | ID | Question | Owner | Needed by |
 |---|---|---|---|
 | O01 | Final project display name | Human | write-up |
-| O02 | Exact outlier combination rule (z-score sum vs max vs rank fusion) | Statistics agent | Days 8–9 |
-| O04 | Success bar for validation (count/tail language, not AUC) | Human + Stats | Days 8–9 |
 
-**O03 resolved (D29):** 8 columns in `results/phase3_feature_shortlist.md` §1.
+**O02 resolved (D30):** `combined = z_A + z_B`; keep per-signal drivers.  
+**O03 resolved (D29):** 8 columns in `results/phase3_feature_shortlist.md` §1.  
+**O04 resolved (D30):** SK-A-3934 pass ≥ cohort p95; weak median–p95; fail &lt; median; no AUC; ambiguous excluded.
 ## Explicitly deferred
 
 - Gradio / any UI beyond CSV/ranked tables — revisit after Days 8–9 validation passes
