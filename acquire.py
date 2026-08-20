@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Any
 
 import requests
+from PIL import Image
 
 import config
 import rijks_api
@@ -68,6 +69,18 @@ CREATE TABLE IF NOT EXISTS works (
   iiif_max_edge INTEGER NOT NULL,
   image_path TEXT,
   image_bytes INTEGER,
+  -- Physical + native geometry (Fix 1). Nullable: the museum does not catalogue
+  -- a size for every object, and unknown must stay distinguishable from zero.
+  cm_width REAL,
+  cm_height REAL,
+  native_px_width INTEGER,
+  native_px_height INTEGER,
+  analyzed_px_width INTEGER,
+  analyzed_px_height INTEGER,
+  -- Millimetres of canvas per pixel. `analyzed` is what features_v1 actually
+  -- measured; `native` is the ceiling the museum publishes over IIIF.
+  mm_per_px_analyzed REAL,
+  mm_per_px_native REAL,
   filters_json TEXT NOT NULL,
   acquired_at TEXT NOT NULL
 );
@@ -91,6 +104,14 @@ class WorkRow:
     iiif_max_edge: int = config.IIIF_MAX_EDGE
     image_path: str | None = None
     image_bytes: int | None = None
+    cm_width: float | None = None
+    cm_height: float | None = None
+    native_px_width: int | None = None
+    native_px_height: int | None = None
+    analyzed_px_width: int | None = None
+    analyzed_px_height: int | None = None
+    mm_per_px_analyzed: float | None = None
+    mm_per_px_native: float | None = None
     filters: dict[str, str] = field(default_factory=dict)
     acquired_at: str = ""
     has_image: bool = False
@@ -213,6 +234,54 @@ def assign_split(
     return "excluded", "fail_closed", family
 
 
+def compute_geometry(
+    record: dict[str, Any],
+    iiif_id: str | None,
+    image_path: Path | None,
+) -> dict[str, float | int | None]:
+    """Catalogued cm size, native IIIF pixel size, and derived mm-per-pixel.
+
+    Every field is independently optional. A work with no catalogued width yields
+    `mm_per_px_* = None`, which downstream code must read as "unknown", never as
+    "fine" — that distinction is the whole point of storing it (Fix 1).
+    """
+    geo: dict[str, float | int | None] = {
+        "cm_width": None,
+        "cm_height": None,
+        "native_px_width": None,
+        "native_px_height": None,
+        "analyzed_px_width": None,
+        "analyzed_px_height": None,
+        "mm_per_px_analyzed": None,
+        "mm_per_px_native": None,
+    }
+
+    cm = rijks_api.extract_physical_cm(record)
+    geo["cm_width"] = cm.get("width")
+    geo["cm_height"] = cm.get("height")
+
+    if iiif_id:
+        try:
+            nw, nh = rijks_api.native_pixels(iiif_id)
+            geo["native_px_width"], geo["native_px_height"] = nw, nh
+        except (requests.RequestException, KeyError, ValueError, TypeError) as exc:
+            print(f"  WARN native size unavailable ({iiif_id}): {exc}")
+
+    if image_path is not None and image_path.is_file():
+        try:
+            with Image.open(image_path) as im:
+                geo["analyzed_px_width"], geo["analyzed_px_height"] = im.size
+        except OSError as exc:
+            print(f"  WARN could not read analyzed size {image_path.name}: {exc}")
+
+    width_mm = geo["cm_width"] * 10.0 if geo["cm_width"] else None
+    if width_mm and geo["analyzed_px_width"]:
+        geo["mm_per_px_analyzed"] = width_mm / geo["analyzed_px_width"]
+    if width_mm and geo["native_px_width"]:
+        geo["mm_per_px_native"] = width_mm / geo["native_px_width"]
+    return geo
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
@@ -230,8 +299,12 @@ def upsert_work(conn: sqlite3.Connection, row: WorkRow) -> None:
         INSERT INTO works (
           object_uri, object_number, title, creators_json, creator_label_family,
           split, split_reason, source_query_type, source_query, pupil_tier,
-          iiif_id, iiif_max_edge, image_path, image_bytes, filters_json, acquired_at
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+          iiif_id, iiif_max_edge, image_path, image_bytes,
+          cm_width, cm_height, native_px_width, native_px_height,
+          analyzed_px_width, analyzed_px_height,
+          mm_per_px_analyzed, mm_per_px_native,
+          filters_json, acquired_at
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ON CONFLICT(object_uri) DO UPDATE SET
           object_number=excluded.object_number,
           title=excluded.title,
@@ -246,6 +319,14 @@ def upsert_work(conn: sqlite3.Connection, row: WorkRow) -> None:
           iiif_max_edge=excluded.iiif_max_edge,
           image_path=excluded.image_path,
           image_bytes=excluded.image_bytes,
+          cm_width=excluded.cm_width,
+          cm_height=excluded.cm_height,
+          native_px_width=excluded.native_px_width,
+          native_px_height=excluded.native_px_height,
+          analyzed_px_width=excluded.analyzed_px_width,
+          analyzed_px_height=excluded.analyzed_px_height,
+          mm_per_px_analyzed=excluded.mm_per_px_analyzed,
+          mm_per_px_native=excluded.mm_per_px_native,
           filters_json=excluded.filters_json,
           acquired_at=excluded.acquired_at
         """,
@@ -264,6 +345,14 @@ def upsert_work(conn: sqlite3.Connection, row: WorkRow) -> None:
             row.iiif_max_edge,
             row.image_path,
             row.image_bytes,
+            row.cm_width,
+            row.cm_height,
+            row.native_px_width,
+            row.native_px_height,
+            row.analyzed_px_width,
+            row.analyzed_px_height,
+            row.mm_per_px_analyzed,
+            row.mm_per_px_native,
             json.dumps(row.filters, ensure_ascii=False),
             row.acquired_at,
         ),
@@ -330,6 +419,12 @@ def process_uri(
     else:
         has_image = False
 
+    geo = compute_geometry(
+        record,
+        iiif_id,
+        config.IMAGES_DIR / f"{obj_no}.jpg" if has_image and not dry_run else None,
+    )
+
     split, reason, family = assign_split(
         creators=creators,
         source_query_type=source_query_type,
@@ -360,6 +455,7 @@ def process_uri(
         image_path=image_path if has_image else None,
         image_bytes=image_bytes,
         filters=dict(filters),
+        **geo,
         acquired_at=utc_now(),
         has_image=has_image,
     )
@@ -473,39 +569,69 @@ def harvest_pupils(
     return rows
 
 
-def migrate_schema(conn: sqlite3.Connection) -> bool:
-    """Rebuild `works` under the D32 DDL if it predates the pupil split.
+# Plain nullable columns added after the original D22 schema. SQLite can ALTER
+# these in place; only a CHECK-constraint change needs a table rebuild.
+ADDED_COLUMNS = (
+    ("pupil_tier", "TEXT"),
+    ("cm_width", "REAL"),
+    ("cm_height", "REAL"),
+    ("native_px_width", "INTEGER"),
+    ("native_px_height", "INTEGER"),
+    ("analyzed_px_width", "INTEGER"),
+    ("analyzed_px_height", "INTEGER"),
+    ("mm_per_px_analyzed", "REAL"),
+    ("mm_per_px_native", "REAL"),
+)
 
-    SQLite cannot ALTER a CHECK constraint, so widening the split enum requires a
-    table rebuild. Existing rows are copied verbatim; no split is reassigned.
+
+def _split_check_is_current(conn: sqlite3.Connection) -> bool:
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type='table' AND name='works'"
+    ).fetchone()
+    return bool(row) and "'pupil'" in (row[0] or "")
+
+
+def migrate_schema(conn: sqlite3.Connection) -> list[str]:
+    """Bring an existing `works` table up to the current DDL. Returns what changed.
+
+    Two kinds of drift are handled. Widening the split enum (D32) needs a table
+    rebuild because SQLite cannot ALTER a CHECK constraint; adding plain nullable
+    columns (Fix 1 geometry) does not. Existing rows are copied verbatim and no
+    split is ever reassigned.
     """
     cols = {r[1] for r in conn.execute("PRAGMA table_info(works)")}
-    if not cols or "pupil_tier" in cols:
-        return False
-    conn.executescript(
-        """
-        ALTER TABLE works RENAME TO works_legacy;
-        DROP INDEX IF EXISTS idx_works_split;
-        """
-    )
-    conn.executescript(DDL)
-    conn.execute(
-        """
-        INSERT INTO works (
-          object_uri, object_number, title, creators_json, creator_label_family,
-          split, split_reason, source_query_type, source_query, pupil_tier,
-          iiif_id, iiif_max_edge, image_path, image_bytes, filters_json, acquired_at
+    if not cols:
+        return []
+    changes: list[str] = []
+
+    if not _split_check_is_current(conn):
+        keep = [
+            "object_uri", "object_number", "title", "creators_json",
+            "creator_label_family", "split", "split_reason", "source_query_type",
+            "source_query", "iiif_id", "iiif_max_edge", "image_path",
+            "image_bytes", "filters_json", "acquired_at",
+        ]
+        conn.executescript(
+            "ALTER TABLE works RENAME TO works_legacy; "
+            "DROP INDEX IF EXISTS idx_works_split;"
         )
-        SELECT
-          object_uri, object_number, title, creators_json, creator_label_family,
-          split, split_reason, source_query_type, source_query, NULL,
-          iiif_id, iiif_max_edge, image_path, image_bytes, filters_json, acquired_at
-        FROM works_legacy
-        """
-    )
-    conn.execute("DROP TABLE works_legacy")
-    conn.commit()
-    return True
+        conn.executescript(DDL)
+        conn.execute(
+            f"INSERT INTO works ({', '.join(keep)}) "
+            f"SELECT {', '.join(keep)} FROM works_legacy"
+        )
+        conn.execute("DROP TABLE works_legacy")
+        changes.append("rebuilt works table (split enum widened to include 'pupil')")
+        cols = {r[1] for r in conn.execute("PRAGMA table_info(works)")}
+
+    for name, sql_type in ADDED_COLUMNS:
+        if name not in cols:
+            conn.execute(f"ALTER TABLE works ADD COLUMN {name} {sql_type}")
+            changes.append(f"added column {name} {sql_type}")
+
+    if changes:
+        conn.commit()
+    return changes
 
 
 def persist_pupils(rows: list[WorkRow]) -> None:
@@ -516,8 +642,8 @@ def persist_pupils(rows: list[WorkRow]) -> None:
         )
     conn = sqlite3.connect(config.DB_PATH)
     try:
-        if migrate_schema(conn):
-            print("migrated works table to D32 schema (pupil split + pupil_tier)")
+        for change in migrate_schema(conn):
+            print(f"  migration: {change}")
         before = conn.execute("SELECT COUNT(*) FROM works").fetchone()[0]
         for row in rows:
             upsert_work(conn, row)

@@ -26,12 +26,13 @@ python preprocess.py   # → data/preprocessed/preprocess_v1/{rgb,cnn}/
 python embed.py        # → data/embeddings/embed_v1/ (vectors/ + matrix.pt)
 python features.py     # → data/features/features_v1.csv
 python score.py        # → results/scores/ + results/validation_report.md
-python dimensions.py       # → data/meta/dimensions.json (catalogued cm + native IIIF px)
+python dimensions.py       # backfill geometry onto pre-D33 rows (no-op after a fresh harvest)
 python evaluate_pupils.py  # → results/pupil_validation_report.md (O06)
+python resolution_audit.py # → results/resolution_audit.{md,csv}
 python demo_app.py     # optional read-only Gradio viewer over existing scores
 ```
 
-All shipped artifacts are committed except `data/preprocessed/` (see below). `preprocess/embed/features/score/dimensions/evaluate_pupils` **refuse to overwrite** existing outputs unless given `--force`; `acquire.py` takes `--dry-run` (no image download / no DB write), `--inventory` (regenerate `results/inventory.*` from the existing DB), and `--pupils-only`. `acquire.py` and `dimensions.py` are the only stages that need network.
+All shipped artifacts are committed except `data/preprocessed/` (see below). `preprocess`, `embed`, `features`, `score`, `evaluate_pupils`, and `resolution_audit` **refuse to overwrite** existing outputs unless given `--force`; `dimensions.py` is incremental instead (it only fills gaps). `acquire.py` takes `--dry-run` (no image download / no DB write), `--inventory` (regenerate `results/inventory.*` from the existing DB), and `--pupils-only`. `acquire.py` and `dimensions.py` are the only stages that need network.
 
 `acquire.py --pupils-only` adds the D32 pupil cohort **additively** against an existing DB, migrating the `works` table to the wider split enum and leaving every pre-existing row and image byte-identical. Prefer it over a full re-harvest, which deletes and rebuilds the DB and re-downloads every image.
 
@@ -57,13 +58,19 @@ Never cross the branches: hand-built features must not read CNN tensors, and the
 
 **`data/preprocessed/` is gitignored.** It is ~340 MB of PNG/tensor cache that `preprocess.py` regenerates byte-identically from the tracked `data/images/`. A fresh clone must run `python preprocess.py` before `embed.py` or `features.py`. Everything else in `data/` is tracked.
 
+**Physical geometry (D33).** `works` stores `cm_width`/`cm_height` (catalogued), `native_px_*` (IIIF `info.json`), `analyzed_px_*`, and derived `mm_per_px_analyzed` / `mm_per_px_native`. `acquire.compute_geometry()` is the single producer, called both during harvest and by `dimensions.py` (which backfills by default, takes `--force` to re-resolve everything and `--check` to report coverage without network); the DB is authoritative and there is no side-cache. All columns are **nullable on purpose** — the museum does not catalogue a size for every object, and "unknown" must stay distinguishable from "fine". Never coerce a missing mm/px to 0 or to a default.
+
+`acquire.migrate_schema()` brings an older DB forward: a CHECK-constraint change (widening the split enum) forces a table rebuild, plain nullable columns do not. It is idempotent and returns a list of what it changed. Add new plain columns to `ADDED_COLUMNS` and to `DDL`.
+
+**Geometry changes no score.** D33 is data capture only. `features.py`, `embed.py`, and `score.py` do not read the geometry columns — resampling to a fixed physical resolution is a separate, still-unmade decision (**O07**), and `results/resolution_audit.md` deliberately declines to pick a floor for that reason.
+
 **QC side-channel.** Each stage writes `results/qc_<recipe_id>/` (failures CSV, summary JSON) alongside its data output; failures are logged rather than silently dropped.
 
 `rijks_api.py` is the only HTTP layer (search / resolve / IIIF); `acquire.py` owns SQLite, splits, and inventory. `config.py` holds locked constants (API filters, IIIF template, backbone) — treat its values as decisions, not tunables.
 
 ## Working conventions
 
-- `docs/decisions.md` is the source of truth for locked decisions (D01–D32). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
+- `docs/decisions.md` is the source of truth for locked decisions (D01–D33). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
 - Code and design docs cite decision/task IDs (`D30`, `T043`, `O04`) in docstrings and reports. Keep doing this — the write-up traces back through them.
 - After a phase succeeds: cleanup pass (D24) → git commit + push to `origin/main` (D28). Cleanup logs live at `results/phase*_cleanup_log.md`.
 - Deferred and not to be reopened without strong reason: FastAPI/service layer, DINOv2 or alternate backbones, finetuning, multi-museum cohorts, folding attributed-to works into primary validation.

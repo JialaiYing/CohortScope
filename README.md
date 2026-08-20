@@ -13,6 +13,18 @@ Decomposable anomaly ranking for Rijksmuseum Rembrandt oils: pretrained ResNet50
 
 O06 raised held-out N from 1 to 67 and the method did not separate: per-signal AUC is 0.427 (`z_A`) and 0.522 (`z_B`), both at chance, and precision@k sits **below** the base rate — the ranking is worse than a random shortlist for triage. The pre-registered confound check found that **mm/px of the source image alone separates the classes better (AUC 0.590) than the whole two-signal pipeline**, which locates the failure in image acquisition rather than in the scoring design. See [`results/pupil_validation_report.md`](results/pupil_validation_report.md).
 
+### Why it fails: the images never carried the detail
+
+Physical geometry is now recorded for every work (D33), which turns the failure into arithmetic rather than speculation — see [`results/resolution_audit.md`](results/resolution_audit.md):
+
+| Stage | mm of canvas per pixel | works finer than 0.30 mm/px |
+|---|---|---:|
+| native IIIF (published by the museum) | 0.015 – 0.812 | 85 / 108 |
+| analyzed derivative (`features_v1`) | 0.100 – 3.467 | 19 / 108 |
+| CNN input (`embed_v1`) | 0.586 – 16.058 | **0 / 108** |
+
+A 17th-century brushstroke is ~0.3–3 mm wide. After `preprocess.py` resizes and centre-crops, **not one work in the corpus reaches 0.3 mm/px** — the ResNet50 never saw a brushstroke on any painting, which is why Signal A scores at chance. Across the corpus only **6.3%** of the resolution the museum already publishes was ever downloaded.
+
 Science deliverable is **tables/CSV**; an optional read-only Gradio **demo viewer** exists for the human demo video (D31) — not a product claim.
 
 ---
@@ -62,8 +74,9 @@ python preprocess.py       # → data/preprocessed/preprocess_v1/
 python embed.py            # → data/embeddings/embed_v1/
 python features.py         # → data/features/features_v1.csv
 python score.py            # → results/scores/, results/validation_report.md
-python dimensions.py       # → data/meta/dimensions.json (physical + native geometry)
+python dimensions.py       # backfill geometry onto pre-D33 rows (no-op on fresh harvests)
 python evaluate_pupils.py  # → results/pupil_validation_report.md (O06)
+python resolution_audit.py # → results/resolution_audit.{md,csv}
 ```
 
 Optional flags: `--dry-run` / `--inventory` / `--pupils-only` on `acquire.py`; `--force` on preprocess / embed / features / score / dimensions / evaluate_pupils.
@@ -83,7 +96,8 @@ Optional flags: `--dry-run` / `--inventory` / `--pupils-only` on `acquire.py`; `
 | Ranked scores + fit manifest | `results/scores/scores_v1.csv`, `results/scores/fit_manifest.json` |
 | Validation outcome (O04) | [`results/validation_report.md`](results/validation_report.md) |
 | Pupil-cohort outcome (O06) | [`results/pupil_validation_report.md`](results/pupil_validation_report.md) |
-| Physical + native geometry | `data/meta/dimensions.json` |
+| Physical + native geometry | `data/cohortscope.sqlite` (`works.mm_per_px_*`) |
+| Resolution audit | [`results/resolution_audit.md`](results/resolution_audit.md), `results/resolution_audit.csv` |
 | QC logs | `results/qc_preprocess_v1/`, `results/qc_embed_v1/`, `results/qc_features_v1/` |
 
 ---
@@ -96,6 +110,7 @@ Optional flags: `--dry-run` / `--inventory` / `--pupils-only` on `acquire.py`; `
 | [`results/validation_report.md`](results/validation_report.md) | O04 / T043 outcome (`weak`) |
 | [`results/phase7_pupil_validation_design.md`](results/phase7_pupil_validation_design.md) | O06 **pre-registration** (committed before acquisition) |
 | [`results/pupil_validation_report.md`](results/pupil_validation_report.md) | O06 outcome (`fail`) + confound analysis |
+| [`results/resolution_audit.md`](results/resolution_audit.md) | What physical detail the images actually carry (D33) |
 | [`results/phase4_review.md`](results/phase4_review.md) | Phase 4 leakage / scope gate (**PASS**) |
 | [`results/phase4_results_narrative.md`](results/phase4_results_narrative.md) | Short Phase 4 honesty note |
 | [`docs/`](docs/) | Decisions, tasks, agent briefs |

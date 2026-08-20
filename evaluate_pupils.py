@@ -7,7 +7,7 @@ before any pupil work was acquired or scored. Nothing here is tunable: the AUC
 thresholds, bootstrap count, seed, and k values are transcribed from that
 document and must not be edited to change an outcome.
 
-Reads : results/scores/scores_v1.csv, data/cohortscope.sqlite, data/meta/dimensions.json
+Reads : results/scores/scores_v1.csv, data/cohortscope.sqlite
 Writes: results/pupil_validation_report.md
 
 This module does not fit anything and does not touch O04.
@@ -38,7 +38,6 @@ PRECISION_AT_K = (5, 10, 20)
 PASS_AUC = 0.70
 
 SCORES_CSV = config.RESULTS_DIR / "scores" / "scores_v1.csv"
-DIMENSIONS_JSON = config.DATA_DIR / "meta" / "dimensions.json"
 REPORT_PATH = config.RESULTS_DIR / "pupil_validation_report.md"
 DESIGN_DOC = "results/phase7_pupil_validation_design.md"
 
@@ -118,36 +117,36 @@ def load_rows() -> list[dict]:
     with SCORES_CSV.open(encoding="utf-8", newline="") as f:
         rows = list(csv.DictReader(f))
 
+    # Geometry lives on `works` (Fix 1); there is no side-cache to fall out of sync.
     conn = sqlite3.connect(config.DB_PATH)
+    conn.row_factory = sqlite3.Row
     try:
-        tiers = dict(
-            conn.execute("SELECT object_number, pupil_tier FROM works").fetchall()
-        )
-        creators = dict(
-            conn.execute("SELECT object_number, source_query FROM works").fetchall()
-        )
+        meta = {
+            r["object_number"]: dict(r)
+            for r in conn.execute(
+                "SELECT object_number, pupil_tier, source_query, "
+                "mm_per_px_analyzed, native_px_width FROM works"
+            )
+        }
     finally:
         conn.close()
-
-    with DIMENSIONS_JSON.open(encoding="utf-8") as f:
-        dims = json.load(f)["works"]
 
     out = []
     for r in rows:
         oid = r["object_number"]
-        d = dims.get(oid)
+        d = meta.get(oid, {})
         out.append(
             {
                 "object_number": oid,
                 "split": r["split"],
                 "title": r["title"],
-                "tier": tiers.get(oid),
-                "creator": creators.get(oid) if r["split"] == "pupil" else None,
+                "tier": d.get("pupil_tier"),
+                "creator": d.get("source_query") if r["split"] == "pupil" else None,
                 "combined": float(r["combined"]),
                 "z_A": float(r["z_A"]),
                 "z_B": float(r["z_B"]),
-                "mm_per_px": d["mm_per_px_analyzed"] if d else None,
-                "native_px_width": d["native_px_width"] if d else None,
+                "mm_per_px": d.get("mm_per_px_analyzed"),
+                "native_px_width": d.get("native_px_width"),
             }
         )
     return out
@@ -337,7 +336,7 @@ def build_report(rows: list[dict]) -> tuple[str, dict]:
         "|---|---|",
         "| Pre-registration | `results/phase7_pupil_validation_design.md` |",
         "| Scores | `results/scores/scores_v1.csv` |",
-        "| Geometry cache | `data/meta/dimensions.json` |",
+        "| Geometry | `data/cohortscope.sqlite` (`works.mm_per_px_analyzed`) |",
         "| D04 outcome (untouched) | `results/validation_report.md` |",
         "",
     ]

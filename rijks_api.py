@@ -198,6 +198,48 @@ def iiif_url(identifier: str, edge: int = config.IIIF_MAX_EDGE) -> str:
     return config.IIIF_IMAGE_TMPL.format(identifier=identifier, edge=edge)
 
 
+# --- Physical + native geometry (Fix 1). --------------------------------------
+# Texture features are implicitly measured in millimetres of canvas per pixel, so
+# that quantity has to be recoverable for every work. The catalogued size is
+# already present in the la-framed record we resolve anyway; only the native
+# pixel size costs an extra request.
+
+# Getty AAT / Rijksmuseum `notation` labels for the two dimensions we want.
+_DIMENSION_LABELS = ("height", "width")
+
+
+def extract_physical_cm(record: dict[str, Any]) -> dict[str, float]:
+    """Catalogued height/width in centimetres from a resolved la-framed record.
+
+    Returns {} when the museum publishes no usable dimension for the object;
+    callers must treat a missing value as unknown, never as zero.
+    """
+    out: dict[str, float] = {}
+    for dim in record.get("dimension") or []:
+        value = dim.get("value")
+        if value is None:
+            continue
+        for classified in dim.get("classified_as") or []:
+            for note in classified.get("notation") or []:
+                label = note.get("@value")
+                if note.get("@language") == "en" and label in _DIMENSION_LABELS:
+                    try:
+                        out.setdefault(label, float(value))
+                    except (TypeError, ValueError):
+                        pass
+    return out
+
+
+def iiif_info(identifier: str) -> dict[str, Any]:
+    """IIIF info.json — the full-resolution size the museum actually publishes."""
+    return get_json(config.IIIF_INFO_TMPL.format(identifier=identifier))
+
+
+def native_pixels(identifier: str) -> tuple[int, int]:
+    info = iiif_info(identifier)
+    return int(info["width"]), int(info["height"])
+
+
 def paginate_ids(params: dict[str, str], max_pages: int = 20) -> list[str]:
     """Paginate search until exhausted or max_pages."""
     url: str | None = config.SEARCH_URL

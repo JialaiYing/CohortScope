@@ -3,7 +3,7 @@
 Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
 To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
 
-Last updated: 2026-08-19 (D32 pupil-cohort validation; O06 = `fail`)
+Last updated: 2026-08-19 (D32 pupil cohort, O06 = `fail`; D33 physical geometry first-class)
 
 ---
 
@@ -42,6 +42,7 @@ Last updated: 2026-08-19 (D32 pupil-cohort validation; O06 = `fail`)
 | D29 | Phase 3 extract = ResNet50 `embed_v1` (Branch C) + O03 **8** hand-built features (Branch H) | Human locked 2026-08-06; matrices per `results/phase3_matrix_contract.md`; no scoring in Phase 3 | 2026-08-06 |
 | D30 | Phase 4 scoring = `results/phase4_scoring_design.md` (`scores_v1`) | A: cosine-to-centroid + z; B: RMS of 8 cohort z; O02: `combined=z_A+z_B`; O04: val p95/median tiers; cohort-only fit + LOO | 2026-08-07 human |
 | D31 | Optional **read-only Gradio demo viewer** for T072 (`demo_app.py`) | Presentation aid only — not a product claim; does not reopen T050 or change O04; science deliverable remains CSV/tables (T054) | 2026-08-08 |
+| D33 | **Physical geometry is first-class**: `works` stores catalogued cm size, native IIIF pixel size, analyzed pixel size, and derived `mm_per_px_analyzed` / `mm_per_px_native` | Texture features are implicitly measured in mm of canvas per pixel, and the fixed `width=1500` request made that quantity vary 35× across the corpus (D27). It cannot be reasoned about while it is unrecorded. Captured during acquisition; `dimensions.py` backfills existing snapshots. Changes **no** score | 2026-08-19 |
 | D32 | **Pupil split** added to the split enum: documented Rembrandt pupils, catalogued under their own names, as a surrogate held-out negative class (O06) | D04's population cannot be grown inside D01 (N=1); pupils are the closest available stylistic neighbours and `creator=` search works for them. Pre-registered in `results/phase7_pupil_validation_design.md` **before** acquisition or scoring. Never fitted into cohort normals; never enters O04 | 2026-08-19 |
 
 ## Datathon submission mapping (D25)
@@ -73,6 +74,9 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 | ID | Question | Owner | Needed by |
 |---|---|---|---|
 | O01 | Final project display name | Human | write-up |
+| O07 | Target physical resolution floor (mm/px) for texture analysis, and what happens to works below it | Human + Stats | before any re-acquisition at native resolution |
+
+**O07 is deliberately open.** `results/resolution_audit.md` reports the eligibility census across candidate floors (0.05–0.50 mm/px) but selects none: choosing a floor decides which works get scored and which are declared out of scope, so it must be pre-registered before the resulting numbers are seen — the rule that governed O04 and O06.
 
 **O02 resolved (D30):** `combined = z_A + z_B`; keep per-signal drivers.  
 **O03 resolved (D29):** 8 columns in `results/phase3_feature_shortlist.md` §1.  

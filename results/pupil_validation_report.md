@@ -1,6 +1,6 @@
 # Pupil-cohort validation report (O06 / D32)
 
-**Design:** [`results/phase7_pupil_validation_design.md`](phase7_pupil_validation_design.md) · **Scores:** `scores_v1` · **Generated:** `2026-08-20T00:43:45.144445+00:00`
+**Design:** [`results/phase7_pupil_validation_design.md`](phase7_pupil_validation_design.md) · **Scores:** `scores_v1` · **Generated:** `2026-08-20T00:53:45.486187+00:00`
 
 Every threshold, seed, and k below is transcribed from the pre-registration, which was committed before any pupil work was acquired or scored.
 
@@ -105,5 +105,5 @@ Cohort median `combined` = -0.1168. A pupil group above it scores as more anomal
 |---|---|
 | Pre-registration | `results/phase7_pupil_validation_design.md` |
 | Scores | `results/scores/scores_v1.csv` |
-| Geometry cache | `data/meta/dimensions.json` |
+| Geometry | `data/cohortscope.sqlite` (`works.mm_per_px_analyzed`) |
 | D04 outcome (untouched) | `results/validation_report.md` |

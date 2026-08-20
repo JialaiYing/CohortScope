@@ -74,6 +74,7 @@ PUPIL_TIER2_CREATORS = (
 # IIIF: long-edge 1500px — Phase 0 sample was ~237 KB/image; ~30 images << 5 GB.
 IIIF_MAX_EDGE = 1500
 IIIF_IMAGE_TMPL = "https://iiif.micr.io/{identifier}/full/{edge},/0/default.jpg"
+IIIF_INFO_TMPL = "https://iiif.micr.io/{identifier}/info.json"
 
 # Visual embedding backbone (Days 5–7). ResNet50 fits 4 GB VRAM; swap later only if weak.
 BACKBONE = "resnet50"
