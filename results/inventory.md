@@ -1,6 +1,6 @@
 # Cohortscope Phase 1 inventory
 
-Generated: `2026-08-05T07:23:03+00:00`
+Generated: `2026-08-20T00:31:46+00:00`
 
 ## Counts by split
 
@@ -9,10 +9,10 @@ Generated: `2026-08-05T07:23:03+00:00`
 | cohort | 23 | yes | yes | no |
 | validation | 1 | no | yes | **yes** |
 | ambiguous | 1 | no | exploratory | no |
-| excluded | 5 | no | no | no |
-| **total** | **30** | | | |
+| excluded | 6 | no | no | no |
+| **total** | **114** | | | |
 
-Images on disk (excl. `smoke_*`): **11,304,527 bytes** (30 rows with image_path; 0 missing).
+Images on disk (excl. `smoke_*`): **43,129,619 bytes** (113 rows with image_path; 1 missing).
 
 ## Tiny validation N (read this)
 
@@ -135,15 +135,17 @@ Split rules: `results/phase1_experimental_design.md` §1.2; schema: `results/pha
 |---|---:|
 | `other_artist` | 3 |
 | `anonymous` | 2 |
+| `missing_image` | 1 |
 
 ### Excluded rows
 
 - **SK-A-1627** — Simson en Delila · `other_artist` · Jan Lievens
 - **SK-A-3014** — Madonna and Child with the Infant John the Baptist and Saints Peter and Anthony · `anonymous` · anonymous, anoniem
 - **SK-A-3035** — Portret van een edelman in harnas · `anonymous` · anonymous, anoniem
+- **SK-A-4034** — Hermanus Boerhaave (1668-1738), Professor of Medicine at the University of Leiden, with his Wife Maria Drolenvaux (1686-1746) and their Daughter Johanna Maria (1712-91) · `missing_image` · Aert de Gelder
 - **SK-C-1598** — Portret van Rembrandt · `other_artist` · Jan Lievens
 - **SK-C-371** — Officieren en andere schutters van wijk XVIII in Amsterdam onder leiding van kapitein Albert Dircksz Bas en luitenant Lucas Pietersz Conijn · `other_artist` · Govert Flinck, Govert Flinck (signed by artist), Govert Flinck (eigenhandig gesigneerd)
 
 ## Missing images
 
-None.
+- SK-A-4034 (excluded)

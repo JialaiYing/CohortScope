@@ -5,6 +5,7 @@ Usage (from repo root, mamba env CohortScope):
   python acquire.py              # full harvest
   python acquire.py --dry-run    # resolve + assign splits; no image download / no DB write
   python acquire.py --inventory  # regenerate results/inventory.* from existing DB
+  python acquire.py --pupils-only  # D32: add pupil cohort only; existing rows untouched
 """
 
 from __future__ import annotations
@@ -24,7 +25,7 @@ import requests
 import config
 import rijks_api
 
-SPLITS = ("cohort", "validation", "ambiguous", "excluded")
+SPLITS = ("cohort", "validation", "ambiguous", "pupil", "excluded")
 
 # Circle / workshop / school hedge (D20 / T017 §1.1) — Rembrandt context required.
 CIRCLE_WORKSHOP_PHRASES = (
@@ -58,10 +59,11 @@ CREATE TABLE IF NOT EXISTS works (
   title TEXT,
   creators_json TEXT NOT NULL,
   creator_label_family TEXT NOT NULL,
-  split TEXT NOT NULL CHECK (split IN ('cohort','validation','ambiguous','excluded')),
+  split TEXT NOT NULL CHECK (split IN ('cohort','validation','ambiguous','pupil','excluded')),
   split_reason TEXT NOT NULL,
   source_query_type TEXT NOT NULL,
   source_query TEXT NOT NULL,
+  pupil_tier TEXT,
   iiif_id TEXT,
   iiif_max_edge INTEGER NOT NULL,
   image_path TEXT,
@@ -84,6 +86,7 @@ class WorkRow:
     split_reason: str
     source_query_type: str
     source_query: str
+    pupil_tier: str | None = None
     iiif_id: str | None = None
     iiif_max_edge: int = config.IIIF_MAX_EDGE
     image_path: str | None = None
@@ -176,6 +179,18 @@ def assign_split(
     if not has_image:
         return "excluded", "missing_image", family
 
+    # --- Pupil cohort (D32 / O06). Leakage guard: any Rembrandt token in the
+    # creator labels disqualifies the work from the negative class outright; it
+    # falls through to the standing D20 rules instead. ---
+    if source_query_type == "pupil_creator":
+        if not creators:
+            return "excluded", "pupil_no_creator", family
+        if _has_rembrandt(_joined_creators(creators)):
+            return "excluded", "pupil_rembrandt_label", family
+        if _is_anonymous_only(creators):
+            return "excluded", "anonymous", family
+        return "pupil", "pupil_creator_search", family
+
     # Description-probe false positives
     if source_query_type == "description":
         if _is_anonymous_only(creators):
@@ -214,9 +229,9 @@ def upsert_work(conn: sqlite3.Connection, row: WorkRow) -> None:
         """
         INSERT INTO works (
           object_uri, object_number, title, creators_json, creator_label_family,
-          split, split_reason, source_query_type, source_query,
+          split, split_reason, source_query_type, source_query, pupil_tier,
           iiif_id, iiif_max_edge, image_path, image_bytes, filters_json, acquired_at
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ON CONFLICT(object_uri) DO UPDATE SET
           object_number=excluded.object_number,
           title=excluded.title,
@@ -226,6 +241,7 @@ def upsert_work(conn: sqlite3.Connection, row: WorkRow) -> None:
           split_reason=excluded.split_reason,
           source_query_type=excluded.source_query_type,
           source_query=excluded.source_query,
+          pupil_tier=excluded.pupil_tier,
           iiif_id=excluded.iiif_id,
           iiif_max_edge=excluded.iiif_max_edge,
           image_path=excluded.image_path,
@@ -243,6 +259,7 @@ def upsert_work(conn: sqlite3.Connection, row: WorkRow) -> None:
             row.split_reason,
             row.source_query_type,
             row.source_query,
+            row.pupil_tier,
             row.iiif_id,
             row.iiif_max_edge,
             row.image_path,
@@ -262,8 +279,12 @@ def process_uri(
     seen_uris: set[str],
     seen_object_numbers: set[str],
     dry_run: bool,
+    pupil_tier: str | None = None,
 ) -> WorkRow | None:
     if uri in seen_uris:
+        # Already claimed by an earlier pass. Logged, not silent: a dropped
+        # candidate must be visible in the acquisition audit trail (D32 3.1).
+        print(f"  SKIP already claimed {uri.rsplit('/', 1)[-1]} (source={source_query_type}:{source_query})")
         return None
 
     try:
@@ -333,6 +354,7 @@ def process_uri(
         split_reason=reason,
         source_query_type=source_query_type,
         source_query=source_query,
+        pupil_tier=pupil_tier if split == "pupil" else None,
         iiif_id=iiif_id,
         iiif_max_edge=config.IIIF_MAX_EDGE,
         image_path=image_path if has_image else None,
@@ -397,7 +419,113 @@ def harvest(dry_run: bool = False) -> list[WorkRow]:
             if row:
                 rows.append(row)
 
+    # --- Pupil cohort (D32 / O06) ---
+    rows.extend(
+        harvest_pupils(
+            seen_uris=seen_uris,
+            seen_object_numbers=seen_object_numbers,
+            dry_run=dry_run,
+        )
+    )
+
     return rows
+
+
+def harvest_pupils(
+    *,
+    seen_uris: set[str],
+    seen_object_numbers: set[str],
+    dry_run: bool,
+) -> list[WorkRow]:
+    """Acquire the documented-pupil surrogate negative class (D32 / O06).
+
+    `seen_object_numbers` must already contain every object_number claimed by an
+    earlier pass, so a work that is both a Rembrandt search hit and a pupil search
+    hit keeps its D20 split and never enters the pupil class.
+    """
+    config.IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    rows: list[WorkRow] = []
+    roster = [(c, "tier1") for c in config.PUPIL_TIER1_CREATORS]
+    roster += [(c, "tier2") for c in config.PUPIL_TIER2_CREATORS]
+
+    for creator, tier in roster:
+        filters = {**config.FILTERS, "creator": creator}
+        print(f"=== Pupil search [{tier}]: {creator} ===")
+        try:
+            ids = rijks_api.paginate_ids(filters)
+        except requests.RequestException as exc:
+            print(f"  SKIP search failed for {creator}: {exc}")
+            continue
+        print(f"  found {len(ids)} uris")
+        for uri in ids:
+            row = process_uri(
+                uri,
+                source_query_type="pupil_creator",
+                source_query=creator,
+                filters=filters,
+                seen_uris=seen_uris,
+                seen_object_numbers=seen_object_numbers,
+                dry_run=dry_run,
+                pupil_tier=tier,
+            )
+            if row:
+                rows.append(row)
+    return rows
+
+
+def migrate_schema(conn: sqlite3.Connection) -> bool:
+    """Rebuild `works` under the D32 DDL if it predates the pupil split.
+
+    SQLite cannot ALTER a CHECK constraint, so widening the split enum requires a
+    table rebuild. Existing rows are copied verbatim; no split is reassigned.
+    """
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(works)")}
+    if not cols or "pupil_tier" in cols:
+        return False
+    conn.executescript(
+        """
+        ALTER TABLE works RENAME TO works_legacy;
+        DROP INDEX IF EXISTS idx_works_split;
+        """
+    )
+    conn.executescript(DDL)
+    conn.execute(
+        """
+        INSERT INTO works (
+          object_uri, object_number, title, creators_json, creator_label_family,
+          split, split_reason, source_query_type, source_query, pupil_tier,
+          iiif_id, iiif_max_edge, image_path, image_bytes, filters_json, acquired_at
+        )
+        SELECT
+          object_uri, object_number, title, creators_json, creator_label_family,
+          split, split_reason, source_query_type, source_query, NULL,
+          iiif_id, iiif_max_edge, image_path, image_bytes, filters_json, acquired_at
+        FROM works_legacy
+        """
+    )
+    conn.execute("DROP TABLE works_legacy")
+    conn.commit()
+    return True
+
+
+def persist_pupils(rows: list[WorkRow]) -> None:
+    """Additive write for --pupils-only: keep every existing row and image."""
+    if not config.DB_PATH.exists():
+        raise FileNotFoundError(
+            f"{config.DB_PATH} missing; run a full `python acquire.py` first"
+        )
+    conn = sqlite3.connect(config.DB_PATH)
+    try:
+        if migrate_schema(conn):
+            print("migrated works table to D32 schema (pupil split + pupil_tier)")
+        before = conn.execute("SELECT COUNT(*) FROM works").fetchone()[0]
+        for row in rows:
+            upsert_work(conn, row)
+        conn.commit()
+        after = conn.execute("SELECT COUNT(*) FROM works").fetchone()[0]
+    finally:
+        conn.close()
+    print(f"Wrote {config.DB_PATH}: {before} -> {after} rows (+{after - before})")
 
 
 def persist(rows: list[WorkRow]) -> None:
@@ -600,12 +728,46 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Regenerate results/inventory.* from existing SQLite only",
     )
+    parser.add_argument(
+        "--pupils-only",
+        action="store_true",
+        help="D32: additively acquire the pupil cohort; leave existing rows/images untouched",
+    )
     args = parser.parse_args(argv)
 
     if args.inventory:
         if not config.DB_PATH.exists():
             print(f"ERROR: no database at {config.DB_PATH}", file=sys.stderr)
             return 1
+        write_inventory()
+        return 0
+
+    if args.pupils_only:
+        if not config.DB_PATH.exists():
+            print(f"ERROR: no database at {config.DB_PATH}", file=sys.stderr)
+            return 1
+        conn = sqlite3.connect(config.DB_PATH)
+        try:
+            claimed = {r[0] for r in conn.execute("SELECT object_number FROM works")}
+            claimed_uris = {r[0] for r in conn.execute("SELECT object_uri FROM works")}
+        finally:
+            conn.close()
+        print(f"existing DB claims {len(claimed)} object_numbers; pupil pass will skip those")
+        rows = harvest_pupils(
+            seen_uris=set(claimed_uris),
+            seen_object_numbers=set(claimed),
+            dry_run=args.dry_run,
+        )
+        counts = Counter(r.split for r in rows)
+        print("")
+        print("pupil pass results:")
+        for sp in SPLITS:
+            if counts.get(sp):
+                print(f"  {sp:12} {counts[sp]}")
+        if args.dry_run:
+            print("(dry-run) skipping DB write")
+            return 0
+        persist_pupils(rows)
         write_inventory()
         return 0
 

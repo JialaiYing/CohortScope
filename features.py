@@ -31,7 +31,7 @@ import config
 
 RECIPE_ID = "features_v1"
 PREPROCESS_RECIPE = "preprocess_v1"
-SCORED_SPLITS = ("cohort", "validation", "ambiguous")
+SCORED_SPLITS = ("cohort", "validation", "ambiguous", "pupil")  # D32 adds pupil
 
 FEATURE_COLUMNS = (
     "grad_mag_mean",
@@ -88,7 +88,7 @@ def load_scored_works(db_path: Path) -> list[dict]:
             """
             SELECT object_number, split
             FROM works
-            WHERE split IN ('cohort', 'validation', 'ambiguous')
+            WHERE split IN ('cohort', 'validation', 'ambiguous', 'pupil')
             ORDER BY object_number
             """
         ).fetchall()

@@ -3,7 +3,7 @@
 Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
 To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
 
-Last updated: 2026-08-08 (D31 demo viewer opened for T072 video; science still tables-only)
+Last updated: 2026-08-19 (D32 pupil-cohort validation; O06 = `fail`)
 
 ---
 
@@ -42,6 +42,7 @@ Last updated: 2026-08-08 (D31 demo viewer opened for T072 video; science still t
 | D29 | Phase 3 extract = ResNet50 `embed_v1` (Branch C) + O03 **8** hand-built features (Branch H) | Human locked 2026-08-06; matrices per `results/phase3_matrix_contract.md`; no scoring in Phase 3 | 2026-08-06 |
 | D30 | Phase 4 scoring = `results/phase4_scoring_design.md` (`scores_v1`) | A: cosine-to-centroid + z; B: RMS of 8 cohort z; O02: `combined=z_A+z_B`; O04: val p95/median tiers; cohort-only fit + LOO | 2026-08-07 human |
 | D31 | Optional **read-only Gradio demo viewer** for T072 (`demo_app.py`) | Presentation aid only — not a product claim; does not reopen T050 or change O04; science deliverable remains CSV/tables (T054) | 2026-08-08 |
+| D32 | **Pupil split** added to the split enum: documented Rembrandt pupils, catalogued under their own names, as a surrogate held-out negative class (O06) | D04's population cannot be grown inside D01 (N=1); pupils are the closest available stylistic neighbours and `creator=` search works for them. Pre-registered in `results/phase7_pupil_validation_design.md` **before** acquisition or scoring. Never fitted into cohort normals; never enters O04 | 2026-08-19 |
 
 ## Datathon submission mapping (D25)
 
@@ -75,7 +76,8 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 
 **O02 resolved (D30):** `combined = z_A + z_B`; keep per-signal drivers.  
 **O03 resolved (D29):** 8 columns in `results/phase3_feature_shortlist.md` §1.  
-**O04 resolved (D30):** SK-A-3934 pass ≥ cohort p95; weak median–p95; fail &lt; median; no AUC; ambiguous excluded.
+**O04 resolved (D30):** SK-A-3934 pass ≥ cohort p95; weak median–p95; fail &lt; median; no AUC; ambiguous excluded.  
+**O06 resolved (D32) — outcome `fail`:** cohort vs 67 Tier-1 pupils, AUC = **0.419**, bootstrap 95% CI [0.269, 0.578]. Per-signal AUC: `z_A` 0.427, `z_B` 0.522 — both at chance. precision@k is **below** the 0.744 base rate at k=5/10/20, so the ranking is worse than a random shortlist for triage. Confound check: **mm/px alone separates the two classes better (AUC 0.590) than the entire two-signal pipeline (0.419)**. See `results/pupil_validation_report.md`. O04 is unchanged.
 ## Explicitly deferred
 
 - FastAPI / service layer — still deferred (D31 is Gradio viewer only)

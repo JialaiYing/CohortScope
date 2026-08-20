@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T07:23:03+00:00",
+  "generated_at": "2026-08-20T00:31:46+00:00",
   "filters": {
     "imageAvailable": "true",
     "type": "painting",
@@ -11,13 +11,14 @@
     "cohort": 23,
     "validation": 1,
     "ambiguous": 1,
-    "excluded": 5,
-    "total": 30,
-    "with_image": 30,
-    "missing_image": 0
+    "pupil": 83,
+    "excluded": 6,
+    "total": 114,
+    "with_image": 113,
+    "missing_image": 1
   },
-  "disk_bytes_images": 11304527,
-  "disk_budget_note": "11,304,527 bytes of production images; budget < 5 GB",
+  "disk_bytes_images": 43129619,
+  "disk_budget_note": "43,129,619 bytes of production images; budget < 5 GB",
   "expected_validation_n_note": "Primary validation N is expected to be tiny (1–3). Do not claim AUC or large-sample rates (T017 §3). T043 success counts only split=validation; ambiguous is exploratory only (D21).",
   "works": [
     {
@@ -415,6 +416,20 @@
       "iiif_id": "bpdjX"
     },
     {
+      "object_number": "SK-A-4034",
+      "title": "Hermanus Boerhaave (1668-1738), Professor of Medicine at the University of Leiden, with his Wife Maria Drolenvaux (1686-1746) and their Daughter Johanna Maria (1712-91)",
+      "split": "excluded",
+      "split_reason": "missing_image",
+      "creator_label_family": "other",
+      "creators": [
+        "Aert de Gelder"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Aert de Gelder",
+      "image_path": null,
+      "iiif_id": "eudFF"
+    },
+    {
       "object_number": "SK-C-1598",
       "title": "Portret van Rembrandt",
       "split": "excluded",
@@ -443,6 +458,1205 @@
       "source_query": "circle of Rembrandt",
       "image_path": "data/images/SK-C-371.jpg",
       "iiif_id": "URZpJ"
+    },
+    {
+      "object_number": "SK-A-106",
+      "title": "Christ and the Woman in Adultery",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerbrand van den Eeckhout"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerbrand van den Eeckhout",
+      "image_path": "data/images/SK-A-106.jpg",
+      "iiif_id": "sAbhD"
+    },
+    {
+      "object_number": "SK-A-110",
+      "title": "Isaac Blessing Jacob",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Govert Flinck"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Govert Flinck",
+      "image_path": "data/images/SK-A-110.jpg",
+      "iiif_id": "LkKRz"
+    },
+    {
+      "object_number": "SK-A-1259",
+      "title": "Gerard Röver, Merchant and Shipowner in Amsterdam",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-1259.jpg",
+      "iiif_id": "RtNES"
+    },
+    {
+      "object_number": "SK-A-1304",
+      "title": "Willem van der Helm (c 1625-75), Municipal Architect of Leiden, with his Wife Belytgen Cornelisdr van der Schelt (d 1661) and their Son Leendert (1622-64)",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Barent Fabritius"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Barent Fabritius",
+      "image_path": "data/images/SK-A-1304.jpg",
+      "iiif_id": "cBOKT"
+    },
+    {
+      "object_number": "SK-A-1575",
+      "title": "Farao's dochter vindt Mozes in het biezen mandje",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-1575.jpg",
+      "iiif_id": "heOvK"
+    },
+    {
+      "object_number": "SK-A-1576",
+      "title": "Aeneas ontvangt door voorspraak van Venus een nieuwe wapenrusting in de smidse van Vulcanus",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-1576.jpg",
+      "iiif_id": "uajBk"
+    },
+    {
+      "object_number": "SK-A-1577",
+      "title": "Abraham Entertaining the Three Angels",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-1577.jpg",
+      "iiif_id": "HrTCC"
+    },
+    {
+      "object_number": "SK-A-1578",
+      "title": "The Captain of God's Army Appearing to Joshua",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-1578.jpg",
+      "iiif_id": "cFyRX"
+    },
+    {
+      "object_number": "SK-A-1579",
+      "title": "Salomon Receives Gifts",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-1579.jpg",
+      "iiif_id": "BzuXh"
+    },
+    {
+      "object_number": "SK-A-158",
+      "title": "Portrait of Mattheus van den Broucke (1620-1685). Councillor of the Indies",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Samuel van Hoogstraten"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Samuel van Hoogstraten",
+      "image_path": "data/images/SK-A-158.jpg",
+      "iiif_id": "sHNFH"
+    },
+    {
+      "object_number": "SK-A-1591",
+      "title": "Abraham de Potter (1592-1650). Zijdelakenkoopman te Amsterdam",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Carel Fabritius"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Carel Fabritius",
+      "image_path": "data/images/SK-A-1591.jpg",
+      "iiif_id": "NmWqZ"
+    },
+    {
+      "object_number": "SK-A-1612",
+      "title": "Badende mannen",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerbrand van den Eeckhout"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerbrand van den Eeckhout",
+      "image_path": "data/images/SK-A-1612.jpg",
+      "iiif_id": "FzFDb"
+    },
+    {
+      "object_number": "SK-A-1645",
+      "title": "Portrait of Willem Pottey, Lawyer and Accountant-General of Flushing",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-1645.jpg",
+      "iiif_id": "qRUAw"
+    },
+    {
+      "object_number": "SK-A-1646",
+      "title": "Portrait of Catharina Pottey, Sister of Willem and Sara Pottey",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-1646.jpg",
+      "iiif_id": "aWhqJ"
+    },
+    {
+      "object_number": "SK-A-1660",
+      "title": "Engel de Ruyter (1649-83), Vice Admiral, Son of Michiel Adriaensz de Ruyter",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jan Andrea Lievens"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jan Lievens",
+      "image_path": "data/images/SK-A-1660.jpg",
+      "iiif_id": "XWdaS"
+    },
+    {
+      "object_number": "SK-A-1661",
+      "title": "Jan van Gelder (1647-73), Naval Captain, Stepson of Michiel Adriaensz de Ruyter",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jan Andrea Lievens"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jan Lievens",
+      "image_path": "data/images/SK-A-1661.jpg",
+      "iiif_id": "VAgzp"
+    },
+    {
+      "object_number": "SK-A-1662",
+      "title": "Cornelis Evertsen (1642-1706). Luitenant-admiraal van Zeeland",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-1662.jpg",
+      "iiif_id": "moChn"
+    },
+    {
+      "object_number": "SK-A-218",
+      "title": "Joost van den Vondel (1587-1679). Dichter",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Lievens, Jan",
+        "attributed to Jan Lievens",
+        "toegeschreven aan Jan Lievens"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jan Lievens",
+      "image_path": "data/images/SK-A-218.jpg",
+      "iiif_id": "XhpYS"
+    },
+    {
+      "object_number": "SK-A-2359",
+      "title": "De gevangenneming van Christus",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Aert de Gelder"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Aert de Gelder",
+      "image_path": "data/images/SK-A-2359.jpg",
+      "iiif_id": "xqkxN"
+    },
+    {
+      "object_number": "SK-A-2360",
+      "title": "Christus voor Kajafas",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Aert de Gelder"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Aert de Gelder",
+      "image_path": "data/images/SK-A-2360.jpg",
+      "iiif_id": "RTuBp"
+    },
+    {
+      "object_number": "SK-A-245",
+      "title": "Meisje aan het venster, bekend als 'De peinzende'",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-245.jpg",
+      "iiif_id": "YPwTs"
+    },
+    {
+      "object_number": "SK-A-246",
+      "title": "De spinster",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-246.jpg",
+      "iiif_id": "Mhtpz"
+    },
+    {
+      "object_number": "SK-A-2507",
+      "title": "The Last Supper",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerbrand van den Eeckhout"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerbrand van den Eeckhout",
+      "image_path": "data/images/SK-A-2507.jpg",
+      "iiif_id": "QEzJL"
+    },
+    {
+      "object_number": "SK-A-2627",
+      "title": "Oude vrouw lezend in een lectionarium; zogenaamd portret van Rembrandts moeder, Neeltgen Willemsdr van Zuijdtbroeck (gest 1640)",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerrit Dou"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerrit Dou",
+      "image_path": "data/images/SK-A-2627.jpg",
+      "iiif_id": "KzwJs"
+    },
+    {
+      "object_number": "SK-A-2695",
+      "title": "Koning David",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Aert de Gelder"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Aert de Gelder",
+      "image_path": "data/images/SK-A-2695.jpg",
+      "iiif_id": "aprYJ"
+    },
+    {
+      "object_number": "SK-A-2958",
+      "title": "De verloren zoon",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Barent Fabritius"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Barent Fabritius",
+      "image_path": "data/images/SK-A-2958.jpg",
+      "iiif_id": "BvpYo"
+    },
+    {
+      "object_number": "SK-A-2959",
+      "title": "The Pharisee and the Publican",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Barent Fabritius"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Barent Fabritius",
+      "image_path": "data/images/SK-A-2959.jpg",
+      "iiif_id": "KVpSf"
+    },
+    {
+      "object_number": "SK-A-2960",
+      "title": "De rijke man en de arme Lazarus",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Barent Fabritius"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Barent Fabritius",
+      "image_path": "data/images/SK-A-2960.jpg",
+      "iiif_id": "GmbSM"
+    },
+    {
+      "object_number": "SK-A-3103",
+      "title": "Gerard Pietersz Hulft (1621-56). Eerste raad en directeur-generaal van de VOC",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Govert Flinck",
+        "Govert Flinck (eigenhandig gesigneerd)",
+        "Govert Flinck (signed by artist)"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Govert Flinck",
+      "image_path": "data/images/SK-A-3103.jpg",
+      "iiif_id": "LwVCJ"
+    },
+    {
+      "object_number": "SK-A-3106",
+      "title": "Portrait of a young Woman",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Gerritsz. Maes",
+        "Nicolaes Maes (vermeld op object)",
+        "Nicolaes Maes (mentioned on object)"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-3106.jpg",
+      "iiif_id": "NSAyN"
+    },
+    {
+      "object_number": "SK-A-3254",
+      "title": "Groentemarkt",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-3254.jpg",
+      "iiif_id": "nGnYh"
+    },
+    {
+      "object_number": "SK-A-3451",
+      "title": "Shepherd",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Govert Flinck",
+        "Govert Flinck (vermeld op object)",
+        "Govert Flinck (mentioned on object)"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Govert Flinck",
+      "image_path": "data/images/SK-A-3451.jpg",
+      "iiif_id": "HkQGP"
+    },
+    {
+      "object_number": "SK-A-3508",
+      "title": "Portret van een jonge man",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Gerritsz. Maes",
+        "toegeschreven aan Nicolaes Maes",
+        "attributed to Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-3508.jpg",
+      "iiif_id": "YcLRS"
+    },
+    {
+      "object_number": "SK-A-3516",
+      "title": "Portrait of Jan Lutma (1584/85-1669), Amsterdam Silversmith",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jacob Adriaensz Backer",
+        "Jacob Adriaensz Backer (signed by artist)",
+        "Jacob Adriaensz. Backer (eigenhandig gesigneerd)"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jacob Backer",
+      "image_path": "data/images/SK-A-3516.jpg",
+      "iiif_id": "vCbVA"
+    },
+    {
+      "object_number": "SK-A-3517",
+      "title": "Portrait of Sara de Bie, Jan Lutma's second Wife",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jacob Adriaensz Backer",
+        "Jacob Adriaensz Backer (signed by artist)",
+        "Jacob Adriaensz. Backer (eigenhandig gesigneerd)"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jacob Backer",
+      "image_path": "data/images/SK-A-3517.jpg",
+      "iiif_id": "JRkrk"
+    },
+    {
+      "object_number": "SK-A-3969",
+      "title": "Ernestus van Beveren (1660-1722), Lord of West-Ysselmonde and de Lindt, Alderman, Burgomaster and from 1704 on Postmaster of Dordrecht",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Arent de Gelder",
+        "Aert de Gelder (signed by artist)",
+        "Aert de Gelder (eigenhandig gesigneerd)"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Aert de Gelder",
+      "image_path": "data/images/SK-A-3969.jpg",
+      "iiif_id": "eGXzA"
+    },
+    {
+      "object_number": "SK-A-397",
+      "title": "Portrait of Machtelt Bas (?-1681)",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jacob Adriaensz Backer",
+        "attributed to Jacob Adriaensz Backer",
+        "toegeschreven aan Jacob Adriaensz. Backer"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jacob Backer",
+      "image_path": "data/images/SK-A-397.jpg",
+      "iiif_id": "gaEam"
+    },
+    {
+      "object_number": "SK-A-4047",
+      "title": "Woman at a Cradle",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-4047.jpg",
+      "iiif_id": "UjhHA"
+    },
+    {
+      "object_number": "SK-A-4090",
+      "title": "Vanitas Still Life",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jan Lievens"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jan Lievens",
+      "image_path": "data/images/SK-A-4090.jpg",
+      "iiif_id": "jjmVB"
+    },
+    {
+      "object_number": "SK-A-4166",
+      "title": "Portret van een man, mogelijk Gozen Centen (1611/12-1677)",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Govert Flinck"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Govert Flinck",
+      "image_path": "data/images/SK-A-4166.jpg",
+      "iiif_id": "owUrv"
+    },
+    {
+      "object_number": "SK-A-4192",
+      "title": "Galerij met uitzicht op een park",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Barend Fabritius",
+        "toegeschreven aan Barent Fabritius",
+        "attributed to Barent Fabritius"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Barent Fabritius",
+      "image_path": "data/images/SK-A-4192.jpg",
+      "iiif_id": "WgVWX"
+    },
+    {
+      "object_number": "SK-A-42",
+      "title": "Zelfportret",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-42.jpg",
+      "iiif_id": "DUvOY"
+    },
+    {
+      "object_number": "SK-A-43",
+      "title": "Portrait of a Man",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-43.jpg",
+      "iiif_id": "qrGoC"
+    },
+    {
+      "object_number": "SK-A-44",
+      "title": "Portrait of Michiel Adriaenszoon de Ruyter (1607-1676), Vice Admiral",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-44.jpg",
+      "iiif_id": "PSUKG"
+    },
+    {
+      "object_number": "SK-A-45",
+      "title": "Caritas: Joanna de Geer (1629-1691) met haar kinderen Cecilia Trip (1660-1728) en Laurens Trip (geb. 1662)",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-45.jpg",
+      "iiif_id": "qxANh"
+    },
+    {
+      "object_number": "SK-A-46",
+      "title": "Allegorie op het onderwijs: Margarita Trip (1640-1714) haar zuster Anna Maria Trip (1652- 1681) onderwijzend",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-46.jpg",
+      "iiif_id": "qXjWA"
+    },
+    {
+      "object_number": "SK-A-4702",
+      "title": "Old Woman Reading",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jan Lievens"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jan Lievens",
+      "image_path": "data/images/SK-A-4702.jpg",
+      "iiif_id": "pkaDj"
+    },
+    {
+      "object_number": "SK-A-4823",
+      "title": "Venus and Adonis",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-4823.jpg",
+      "iiif_id": "pyxro"
+    },
+    {
+      "object_number": "SK-A-4853",
+      "title": "De vredesonderhandelingen tussen Claudius Civilis en Quintus Petillius Cerealis op de afgebroken brug",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-4853.jpg",
+      "iiif_id": "cZygr"
+    },
+    {
+      "object_number": "SK-A-4881",
+      "title": "Portrait of a young man, possibly Simon van Alphen (1650-1730)",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-4881.jpg",
+      "iiif_id": "MvumA"
+    },
+    {
+      "object_number": "SK-A-4888",
+      "title": "Portret van Pieter Groenendijk",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-4888.jpg",
+      "iiif_id": "gnqAd"
+    },
+    {
+      "object_number": "SK-A-4889",
+      "title": "Portret van Petronella Dunois",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-A-4889.jpg",
+      "iiif_id": "cBFUO"
+    },
+    {
+      "object_number": "SK-A-582",
+      "title": "Portret van een man, vermoedelijk Augustijn Wtenbogaert (1577-1655)",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Govert Flinck"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Govert Flinck",
+      "image_path": "data/images/SK-A-582.jpg",
+      "iiif_id": "gYTCv"
+    },
+    {
+      "object_number": "SK-A-589",
+      "title": "Portrait of Abraham de Visscher (1605-67). Amsterdam merchant and director of the Dutch West India Company",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jacob Adriaensz Backer",
+        "attributed to Jacob Adriaensz Backer",
+        "toegeschreven aan Jacob Adriaensz. Backer"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jacob Backer",
+      "image_path": "data/images/SK-A-589.jpg",
+      "iiif_id": "tVMkm"
+    },
+    {
+      "object_number": "SK-A-612",
+      "title": "Allegorie op de vrede",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jan Lievens"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jan Lievens",
+      "image_path": "data/images/SK-A-612.jpg",
+      "iiif_id": "OHdsv"
+    },
+    {
+      "object_number": "SK-A-613",
+      "title": "Consul Titus Manlius Torquatus laat zijn zoon onthoofden",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-613.jpg",
+      "iiif_id": "urKzm"
+    },
+    {
+      "object_number": "SK-A-614",
+      "title": "Aeneas Crowning Cloanthus",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-614.jpg",
+      "iiif_id": "TQEUH"
+    },
+    {
+      "object_number": "SK-A-683",
+      "title": "Roelof Meulenaer (1618/19-1691). Amsterdam Mercantile Courier or Postmaster on the Antwerp Route",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-683.jpg",
+      "iiif_id": "Ovyaj"
+    },
+    {
+      "object_number": "SK-A-684",
+      "title": "Maria Rey (1630/31-1703). Echtgenote van Roelof Meulenaer",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-684.jpg",
+      "iiif_id": "KSuFh"
+    },
+    {
+      "object_number": "SK-A-686",
+      "title": "Johan Wittert van der Aa (1604-1670)",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerrit Dou"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerrit Dou",
+      "image_path": "data/images/SK-A-686.jpg",
+      "iiif_id": "FeJnU"
+    },
+    {
+      "object_number": "SK-A-714",
+      "title": "Portret van een vrouw, mogelijk Elisabeth Bas",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol",
+        "toegeschreven aan Ferdinand Bol",
+        "attributed to Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-A-714.jpg",
+      "iiif_id": "otwWP"
+    },
+    {
+      "object_number": "SK-A-838",
+      "title": "Maerten Harpertsz Tromp (1598-1653). Luitenant-admiraal",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jan Lievens"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jan Lievens",
+      "image_path": "data/images/SK-A-838.jpg",
+      "iiif_id": "QNYZZ"
+    },
+    {
+      "object_number": "SK-A-839",
+      "title": "Cornelia Teding van Berkhout (1614-80). Echtgenote van Maerten Harpertsz Tromp",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jan Lievens"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jan Lievens",
+      "image_path": "data/images/SK-A-839.jpg",
+      "iiif_id": "ZjbvU"
+    },
+    {
+      "object_number": "SK-A-86",
+      "title": "Man Smoking a Pipe",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerrit Dou"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerrit Dou",
+      "image_path": "data/images/SK-A-86.jpg",
+      "iiif_id": "FhWMP"
+    },
+    {
+      "object_number": "SK-A-869",
+      "title": "Allegory on the Memory of Frederik Hendrik (1584-1647), Prince of Orange, with the Portrait of his Widow Amalia van Solms",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Govert Flinck",
+        "Govert Flinck (signed by artist)",
+        "Govert Flinck (eigenhandig gesigneerd)"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Govert Flinck",
+      "image_path": "data/images/SK-A-869.jpg",
+      "iiif_id": "TULXC"
+    },
+    {
+      "object_number": "SK-A-87",
+      "title": "The Night School",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerrit Dou"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerrit Dou",
+      "image_path": "data/images/SK-A-87.jpg",
+      "iiif_id": "CNRSy"
+    },
+    {
+      "object_number": "SK-A-88",
+      "title": "Een kluizenaar in gebed",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerrit Dou"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerrit Dou",
+      "image_path": "data/images/SK-A-88.jpg",
+      "iiif_id": "KfgBh"
+    },
+    {
+      "object_number": "SK-A-89",
+      "title": "Meisje met olielamp voor een venster",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerrit Dou"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerrit Dou",
+      "image_path": "data/images/SK-A-89.jpg",
+      "iiif_id": "NMDAG"
+    },
+    {
+      "object_number": "SK-A-90",
+      "title": "Portrait of a Couple in a Landscape",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Pietersz Berchem",
+        "Gerrit Dou, Nicolaes Pietersz. Berchem",
+        "Gerrit Dou, Nicolaes Pietersz Berchem"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerrit Dou",
+      "image_path": "data/images/SK-A-90.jpg",
+      "iiif_id": "tmbrh"
+    },
+    {
+      "object_number": "SK-C-107",
+      "title": "Portret van een zee-overste, waarschijnlijk vice-admiraal Aert van Nes (1626-1693)",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-C-107.jpg",
+      "iiif_id": "PrpcV"
+    },
+    {
+      "object_number": "SK-C-1174",
+      "title": "Officers and other Civic Guardsmen of the V District in Amsterdam under the command of Captain Cornelis de Graeff and Lieutenant Hendrick Lauwrensz",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jacob Adriaensz Backer",
+        "Jacob Adriaensz. Backer"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jacob Backer",
+      "image_path": "data/images/SK-C-1174.jpg",
+      "iiif_id": "AttQn"
+    },
+    {
+      "object_number": "SK-C-127",
+      "title": "A Fisherman's Wife",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerrit Dou"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerrit Dou",
+      "image_path": "data/images/SK-C-127.jpg",
+      "iiif_id": "yUUNA"
+    },
+    {
+      "object_number": "SK-C-128",
+      "title": "A Hermit",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Gerrit Dou"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Gerrit Dou",
+      "image_path": "data/images/SK-C-128.jpg",
+      "iiif_id": "VyeUF"
+    },
+    {
+      "object_number": "SK-C-1467",
+      "title": "Constantijn Huygens (1596-1687), Lord of Zuylichem. Secretary of the Stadtholder, Prince Frederik Hendrik, and Poet",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jan Lievens"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jan Lievens",
+      "image_path": "data/images/SK-C-1467.jpg",
+      "iiif_id": "kOMLD"
+    },
+    {
+      "object_number": "SK-C-1474",
+      "title": "Johannes Wttenbogaert (1557-1644). Remonstrant Minister in The Hague",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jacob Adriaensz Backer",
+        "Jacob Adriaensz. Backer"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jacob Backer",
+      "image_path": "data/images/SK-C-1474.jpg",
+      "iiif_id": "OxCtg"
+    },
+    {
+      "object_number": "SK-C-152",
+      "title": "'The Anemic Lady'",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Samuel van Hoogstraten"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Samuel van Hoogstraten",
+      "image_path": "data/images/SK-C-152.jpg",
+      "iiif_id": "Tabto"
+    },
+    {
+      "object_number": "SK-C-176",
+      "title": "De spinster",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-C-176.jpg",
+      "iiif_id": "msBPv"
+    },
+    {
+      "object_number": "SK-C-1802",
+      "title": "Cimon and Pero (Roman Charity)",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Willem Drost"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Willem Drost",
+      "image_path": "data/images/SK-C-1802.jpg",
+      "iiif_id": "ZwKyW"
+    },
+    {
+      "object_number": "SK-C-367",
+      "title": "Three Regentesses of the Lepers' Asylum in Amsterdam, 1668",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol",
+        "anonymous",
+        "Ferdinand Bol, anoniem",
+        "Ferdinand Bol, anonymous"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-C-367.jpg",
+      "iiif_id": "vNmhc"
+    },
+    {
+      "object_number": "SK-C-370",
+      "title": "Portrait of the Governors of the Kloveniersdoelen",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Govert Flinck",
+        "Govert Flinck (signed by artist)",
+        "Govert Flinck (eigenhandig gesigneerd)"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Govert Flinck",
+      "image_path": "data/images/SK-C-370.jpg",
+      "iiif_id": "BFpSE"
+    },
+    {
+      "object_number": "SK-C-436",
+      "title": "Six Regents and the Beadle of the Nieuwezijds Institute for the Outdoor Relief of the Poor, Amsterdam, 1657",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Ferdinand Bol"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Ferdinand Bol",
+      "image_path": "data/images/SK-C-436.jpg",
+      "iiif_id": "cpkQp"
+    },
+    {
+      "object_number": "SK-C-442",
+      "title": "Portrait of the Regents of the Nieuwezijds Institute for the Outdoor Relief of the Poor, Amsterdam, c. 1650",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Jacob Adriaensz Backer",
+        "Jacob Adriaensz. Backer (eigenhandig gesigneerd)",
+        "Jacob Adriaensz Backer (signed by artist)"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Jacob Backer",
+      "image_path": "data/images/SK-C-442.jpg",
+      "iiif_id": "NysOn"
+    },
+    {
+      "object_number": "SK-C-535",
+      "title": "Oude vrouw in gebed, bekend als 'Het gebed zonder end'",
+      "split": "pupil",
+      "split_reason": "pupil_creator_search",
+      "creator_label_family": "other",
+      "creators": [
+        "Nicolaes Maes"
+      ],
+      "source_query_type": "pupil_creator",
+      "source_query": "Nicolaes Maes",
+      "image_path": "data/images/SK-C-535.jpg",
+      "iiif_id": "yorZz"
     },
     {
       "object_number": "SK-A-3934",

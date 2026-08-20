@@ -29,7 +29,7 @@ from torchvision import transforms
 import config
 
 RECIPE_ID = "preprocess_v1"
-SCORED_SPLITS = ("cohort", "validation", "ambiguous")
+SCORED_SPLITS = ("cohort", "validation", "ambiguous", "pupil")  # D32 adds pupil
 
 IMAGENET_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_STD = (0.229, 0.224, 0.225)
@@ -65,7 +65,7 @@ def load_scored_works(db_path: Path) -> list[dict]:
             """
             SELECT object_number, split, image_path
             FROM works
-            WHERE split IN ('cohort', 'validation', 'ambiguous')
+            WHERE split IN ('cohort', 'validation', 'ambiguous', 'pupil')
             ORDER BY object_number
             """
         ).fetchall()

@@ -2,7 +2,7 @@
 CohortScope demo viewer (D31 / T080) — read-only Gradio UI for the human demo video (T072).
 
 Loads precomputed scores + local JPEGs only. Does not import score/embed/acquire
-or recompute anything. Not a product claim: O04 = weak on SK-A-3934.
+or recompute anything. Not a product claim: O04 = weak (N=1); O06 = fail (N=67).
 Created solely as a presentation aid for the datathon video submission.
 """
 
@@ -25,9 +25,11 @@ VALIDATION_ID = "SK-A-3934"
 AMBIGUOUS_ID = "SK-A-4096"
 
 BANNER_DEFAULT = (
-    "**Demo viewer — O04 = weak on SK-A-3934. Not a validated product.**\n\n"
+    "**Demo viewer — O04 = weak (N=1), O06 = fail (N=67). Not a validated product.**\n\n"
     "Read-only view of `scores_v1.csv` + `data/images/`. "
-    "Scores are not recomputed; science deliverable remains tables/CSV."
+    "Scores are not recomputed; science deliverable remains tables/CSV. "
+    "Against 67 documented Rembrandt pupils this ranking scores AUC 0.419 — below "
+    "chance; see `results/pupil_validation_report.md`."
 )
 BANNER_AMBIGUOUS = (
     "**ambiguous — excluded from O04 (D21)**\n\n"
@@ -151,7 +153,7 @@ def build_app() -> gr.Blocks:
     with gr.Blocks(title="CohortScope demo viewer") as demo:
         banner = gr.Markdown(BANNER_DEFAULT)
 
-        gr.Markdown("### Rank explorer (all 25 scored works)")
+        gr.Markdown(f"### Rank explorer (all {len(DF)} scored works)")
         gr.Dataframe(value=table_df, interactive=False, wrap=True)
 
         with gr.Row():

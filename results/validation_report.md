@@ -1,6 +1,6 @@
 # Validation report (T043 / scores_v1)
 
-**Recipe:** `scores_v1` · **Decision:** D30 · **Generated:** `2026-08-08T06:08:53.326305+00:00`
+**Recipe:** `scores_v1` · **Decision:** D30 · **Generated:** `2026-08-20T00:38:53.647585+00:00`
 
 ## Counts
 
@@ -9,6 +9,7 @@
 | cohort | 23 | fit normals (LOO self-scores) |
 | validation | 1 | O04 / T043 only |
 | ambiguous | 1 | exploratory; not counted |
+| pupil | 83 | D32 surrogate negative class; **not** part of O04 (see `results/pupil_validation_report.md`) |
 
 ## O04 outcome (SK-A-3934)
 
@@ -25,7 +26,7 @@
 | driver_A | embed_cosine_to_centroid |
 | driver_B_1 | hue_circ_std |
 | driver_B_2 | grad_mag_std |
-| rank_combined (of 25) | 10 |
+| rank_combined (of 108) | 26 |
 | cohort median combined | -0.116810 |
 | cohort p90 | 1.886465 |
 | cohort p95 (O04 bar) | 2.106898 |
@@ -53,7 +54,7 @@
 | driver_A | embed_cosine_to_centroid |
 | driver_B_1 | grad_mag_mean |
 | driver_B_2 | glcm_contrast |
-| rank_combined (of 25) | 2 |
+| rank_combined (of 108) | 4 |
 
 Per D21 / O04: ambiguous outcomes do **not** confirm or refute the method.
 

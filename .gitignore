@@ -9,3 +9,9 @@ Thumbs.db
 
 # Keep dataset in repo for datathon reproducibility (~11 MB)
 # (previously ignored; unlocked for initial GitHub publish)
+
+# Derived, byte-identically regenerable from data/images/ via `python preprocess.py`.
+# Tracking it would add ~340 MB for 108 works; the acquired inputs (data/images/,
+# data/cohortscope.sqlite) and the cheap derived artifacts (embeddings, features,
+# scores) stay in the repo, so reproduction is still one command.
+data/preprocessed/

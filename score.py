@@ -30,7 +30,7 @@ import config
 RECIPE_ID = "scores_v1"
 EMBED_RECIPE = "embed_v1"
 FEATURES_RECIPE = "features_v1"
-SCORED_SPLITS = ("cohort", "validation", "ambiguous")
+SCORED_SPLITS = ("cohort", "validation", "ambiguous", "pupil")  # D32 adds pupil
 FEATURE_COLS = (
     "grad_mag_mean",
     "grad_mag_std",
@@ -105,7 +105,7 @@ def load_works_meta() -> dict[str, dict[str, str]]:
     conn = sqlite3.connect(config.DB_PATH)
     try:
         rows = conn.execute(
-            "SELECT object_number, split, title FROM works WHERE split IN (?,?,?)",
+            "SELECT object_number, split, title FROM works WHERE split IN (?,?,?,?)",
             SCORED_SPLITS,
         ).fetchall()
     finally:
@@ -133,8 +133,8 @@ def align_inputs() -> tuple[list[str], np.ndarray, np.ndarray, dict[str, dict[st
             f"only_feat={sorted(feat_set - embed_set)[:5]} "
             f"only_meta={sorted(meta_set - embed_set)[:5]}"
         )
-    if len(embed_ids) != 25:
-        raise ValueError(f"expected N=25 scored works, got {len(embed_ids)}")
+    if len(embed_ids) < 25:
+        raise ValueError(f"expected at least the original N=25 scored works, got {len(embed_ids)}")
 
     # Stable order: sorted object_number
     ids = sorted(embed_ids)
@@ -146,8 +146,12 @@ def align_inputs() -> tuple[list[str], np.ndarray, np.ndarray, dict[str, dict[st
     n_cohort = sum(s == "cohort" for s in splits)
     n_val = sum(s == "validation" for s in splits)
     n_amb = sum(s == "ambiguous" for s in splits)
+    n_pupil = sum(s == "pupil" for s in splits)
+    # D30 splits are frozen; D32 only adds `pupil`, which never enters a fit.
     if (n_cohort, n_val, n_amb) != (23, 1, 1):
         raise ValueError(f"expected split counts 23/1/1, got {n_cohort}/{n_val}/{n_amb}")
+    if n_cohort + n_val + n_amb + n_pupil != len(ids):
+        raise ValueError("unexpected split value among scored rows")
     if VALIDATION_ID not in meta or meta[VALIDATION_ID]["split"] != "validation":
         raise ValueError(f"{VALIDATION_ID} must be split=validation")
     if AMBIGUOUS_ID not in meta or meta[AMBIGUOUS_ID]["split"] != "ambiguous":
@@ -338,6 +342,8 @@ def write_validation_report(
     cohort_combined: np.ndarray,
     outcome: str,
 ) -> None:
+    n_scored = len(rows_by_id)
+    n_pupil = sum(1 for r in rows_by_id.values() if r["split"] == "pupil")
     val = rows_by_id[VALIDATION_ID]
     amb = rows_by_id[AMBIGUOUS_ID]
     med = float(np.median(cohort_combined))
@@ -365,6 +371,8 @@ def write_validation_report(
         "| cohort | 23 | fit normals (LOO self-scores) |",
         "| validation | 1 | O04 / T043 only |",
         "| ambiguous | 1 | exploratory; not counted |",
+        f"| pupil | {n_pupil} | D32 surrogate negative class; **not** part of O04 "
+        "(see `results/pupil_validation_report.md`) |",
         "",
         "## O04 outcome (SK-A-3934)",
         "",
@@ -381,7 +389,7 @@ def write_validation_report(
         f"| driver_A | {val['driver_A']} |",
         f"| driver_B_1 | {val['driver_B_1']} |",
         f"| driver_B_2 | {val['driver_B_2']} |",
-        f"| rank_combined (of 25) | {val['rank_combined']} |",
+        f"| rank_combined (of {n_scored}) | {val['rank_combined']} |",
         f"| cohort median combined | {med:.6f} |",
         f"| cohort p90 | {p90:.6f} |",
         f"| cohort p95 (O04 bar) | {p95:.6f} |",
@@ -409,7 +417,7 @@ def write_validation_report(
         f"| driver_A | {amb['driver_A']} |",
         f"| driver_B_1 | {amb['driver_B_1']} |",
         f"| driver_B_2 | {amb['driver_B_2']} |",
-        f"| rank_combined (of 25) | {amb['rank_combined']} |",
+        f"| rank_combined (of {n_scored}) | {amb['rank_combined']} |",
         "",
         "Per D21 / O04: ambiguous outcomes do **not** confirm or refute the method.",
         "",

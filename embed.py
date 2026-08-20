@@ -29,7 +29,7 @@ RECIPE_ID = "embed_v1"
 PREPROCESS_RECIPE = "preprocess_v1"
 EMBED_DIM = 2048
 BATCH_SIZE = 1
-SCORED_SPLITS = ("cohort", "validation", "ambiguous")
+SCORED_SPLITS = ("cohort", "validation", "ambiguous", "pupil")  # D32 adds pupil
 
 PREPROCESS_ROOT = config.DATA_DIR / "preprocessed" / PREPROCESS_RECIPE
 CNN_DIR = PREPROCESS_ROOT / "cnn"
@@ -60,8 +60,10 @@ def load_preprocess_worklist() -> tuple[list[str], dict[str, str]]:
     splits_by_id = dict(meta.get("splits_by_id", {}))
     if sorted(object_numbers) != object_numbers:
         object_numbers = sorted(object_numbers)
-    if len(object_numbers) != 25:
-        raise ValueError(f"expected N=25 scored IDs, got {len(object_numbers)}")
+    if len(object_numbers) < 25:
+        raise ValueError(
+            f"expected at least the original N=25 scored IDs, got {len(object_numbers)}"
+        )
     missing_split = [oid for oid in object_numbers if oid not in splits_by_id]
     if missing_split:
         raise ValueError(f"splits_by_id missing IDs: {missing_split[:5]}")
