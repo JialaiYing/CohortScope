@@ -75,6 +75,21 @@ PUPIL_TIER2_CREATORS = (
 IIIF_MAX_EDGE = 1500
 IIIF_IMAGE_TMPL = "https://iiif.micr.io/{identifier}/full/{edge},/0/default.jpg"
 IIIF_INFO_TMPL = "https://iiif.micr.io/{identifier}/info.json"
+# IIIF Image API region request: {x},{y},{w},{h} in native pixels, served at {tw},{th}.
+IIIF_REGION_TMPL = (
+    "https://iiif.micr.io/{identifier}/{x},{y},{w},{h}/{tw},{th}/0/default.jpg"
+)
+
+# Physically-normalized tiling — D34 / O07, locked in
+# results/phase8_tiling_design.md before any tile was fetched. These are
+# pre-registered values, not tunables: changing one changes which works are
+# scored, so it requires a new recipe ID and a new pre-registration.
+TILE_FLOOR_MM_PER_PX = 0.20   # O07, human decision 2026-08-19
+TILE_SIZE_MM = 30.0           # canvas covered by one tile, both axes
+TILE_EDGE_INSET = 0.05        # fraction of each edge dropped (frame / tacking margin)
+TILES_PER_WORK = 20           # equal weight per work; bounded by the smallest work
+# Determined, not chosen: 30.0 / 0.20 = 150 px.
+TILE_SIZE_PX = int(round(TILE_SIZE_MM / TILE_FLOOR_MM_PER_PX))
 
 # Visual embedding backbone (Days 5–7). ResNet50 fits 4 GB VRAM; swap later only if weak.
 BACKBONE = "resnet50"

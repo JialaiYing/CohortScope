@@ -3,7 +3,7 @@
 Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
 To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
 
-Last updated: 2026-08-19 (D32 pupil cohort, O06 = `fail`; D33 physical geometry first-class)
+Last updated: 2026-08-19 (D32 pupil cohort, O06 = `fail`; D33 geometry; D34 tiling, O07 = 0.20 mm/px)
 
 ---
 
@@ -42,6 +42,7 @@ Last updated: 2026-08-19 (D32 pupil cohort, O06 = `fail`; D33 physical geometry 
 | D29 | Phase 3 extract = ResNet50 `embed_v1` (Branch C) + O03 **8** hand-built features (Branch H) | Human locked 2026-08-06; matrices per `results/phase3_matrix_contract.md`; no scoring in Phase 3 | 2026-08-06 |
 | D30 | Phase 4 scoring = `results/phase4_scoring_design.md` (`scores_v1`) | A: cosine-to-centroid + z; B: RMS of 8 cohort z; O02: `combined=z_A+z_B`; O04: val p95/median tiers; cohort-only fit + LOO | 2026-08-07 human |
 | D31 | Optional **read-only Gradio demo viewer** for T072 (`demo_app.py`) | Presentation aid only — not a product claim; does not reopen T050 or change O04; science deliverable remains CSV/tables (T054) | 2026-08-08 |
+| D34 | **Physically-normalized tiling** (`tiles_v1`): IIIF region requests of 30 mm x 30 mm of canvas served at 150 x 150 px, 20 non-overlapping tiles per work, 5% edge inset, deterministic selection. Works whose native resolution is coarser than the floor are **below floor** and are not tiled | Fixed-pixel downloads made mm/px vary 35x, so texture features were not measuring the same physical quantity across works. Fixed-*area* requests make one pixel mean the same distance on every painting. Pre-registered in `results/phase8_tiling_design.md` **before** any tile was fetched. Computes no feature, embedding, or score; `scores_v1` is retained as the baseline | 2026-08-19 |
 | D33 | **Physical geometry is first-class**: `works` stores catalogued cm size, native IIIF pixel size, analyzed pixel size, and derived `mm_per_px_analyzed` / `mm_per_px_native` | Texture features are implicitly measured in mm of canvas per pixel, and the fixed `width=1500` request made that quantity vary 35× across the corpus (D27). It cannot be reasoned about while it is unrecorded. Captured during acquisition; `dimensions.py` backfills existing snapshots. Changes **no** score | 2026-08-19 |
 | D32 | **Pupil split** added to the split enum: documented Rembrandt pupils, catalogued under their own names, as a surrogate held-out negative class (O06) | D04's population cannot be grown inside D01 (N=1); pupils are the closest available stylistic neighbours and `creator=` search works for them. Pre-registered in `results/phase7_pupil_validation_design.md` **before** acquisition or scoring. Never fitted into cohort normals; never enters O04 | 2026-08-19 |
 
@@ -74,9 +75,11 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 | ID | Question | Owner | Needed by |
 |---|---|---|---|
 | O01 | Final project display name | Human | write-up |
-| O07 | Target physical resolution floor (mm/px) for texture analysis, and what happens to works below it | Human + Stats | before any re-acquisition at native resolution |
+| O08 | Statistics over the tile population (what is computed per tile, and how tiles aggregate to a work-level verdict) | Stats | before any tile-based score |
 
-**O07 is deliberately open.** `results/resolution_audit.md` reports the eligibility census across candidate floors (0.05–0.50 mm/px) but selects none: choosing a floor decides which works get scored and which are declared out of scope, so it must be pre-registered before the resulting numbers are seen — the rule that governed O04 and O06.
+**O07 resolved (D34) — floor = `0.20 mm/px`:** chosen by the human on 2026-08-19 from the eligibility census in `results/resolution_audit.md` §4, before any tile was fetched. A 1 mm stroke spans 5 px at this floor. The 0.15 floor admits the *same* 17 cohort works while costing 12 Tier-1 pupils, so it is dominated. Accepted consequences, recorded in advance: the cohort shrinks **23 → 17** (the six physically largest firm Rembrandts, including the Night Watch at 0.310 mm/px native, are below floor) and Tier-2 pupils fall to 7. Eligible population **64 / 108**. See `results/phase8_tiling_design.md` §4 and `results/tiling_report.md`.
+
+**O08 is deliberately open.** `tiles_v1` deliberately stops at acquisition. What gets measured on a tile, and how tile-level values aggregate into a work-level number, changes what the method claims — so it is pre-registered separately before anything is computed.
 
 **O02 resolved (D30):** `combined = z_A + z_B`; keep per-signal drivers.  
 **O03 resolved (D29):** 8 columns in `results/phase3_feature_shortlist.md` §1.  

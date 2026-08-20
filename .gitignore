@@ -15,3 +15,6 @@ Thumbs.db
 # data/cohortscope.sqlite) and the cheap derived artifacts (embeddings, features,
 # scores) stay in the repo, so reproduction is still one command.
 data/preprocessed/
+
+# Physically-normalized tile cache: regenerable from IIIF via `python tiles.py`.
+data/tiles/

@@ -29,6 +29,7 @@ python score.py        # → results/scores/ + results/validation_report.md
 python dimensions.py       # backfill geometry onto pre-D33 rows (no-op after a fresh harvest)
 python evaluate_pupils.py  # → results/pupil_validation_report.md (O06)
 python resolution_audit.py # → results/resolution_audit.{md,csv}
+python tiles.py            # → data/tiles/tiles_v1/ + results/tiling_report.md (D34)
 python demo_app.py     # optional read-only Gradio viewer over existing scores
 ```
 
@@ -42,7 +43,7 @@ There is no test suite, linter config, or CI. Verification is by re-running a st
 
 Flat modules at repo root (D15); docs in `docs/`, artifacts in `data/` and `results/`.
 
-**Recipe-ID contract.** Every stage has a frozen `RECIPE_ID` (`preprocess_v1`, `embed_v1`, `features_v1`, `scores_v1`) that names its output directory and is written into a `manifest.json`. Downstream stages read the upstream manifest, assert `recipe_id`, and use its `object_numbers` / `splits_by_id` as the worklist — they do **not** re-glob the filesystem or re-query SQLite for the worklist. Changing a recipe means bumping the ID and rerunning everything downstream, not editing outputs in place.
+**Recipe-ID contract.** Every stage has a frozen `RECIPE_ID` (`preprocess_v1`, `embed_v1`, `features_v1`, `scores_v1`, `tiles_v1`) that names its output directory and is written into a `manifest.json`. Downstream stages read the upstream manifest, assert `recipe_id`, and use its `object_numbers` / `splits_by_id` as the worklist — they do **not** re-glob the filesystem or re-query SQLite for the worklist. Changing a recipe means bumping the ID and rerunning everything downstream, not editing outputs in place.
 
 **Two-branch preprocess (D26/D29).** `preprocess.py` writes two disjoint caches from the same JPEG:
 - Branch H `rgb/*.png` — identity/EXIF-corrected RGB, **only** consumer is `features.py` (interpretable features).
@@ -62,6 +63,12 @@ Never cross the branches: hand-built features must not read CNN tensors, and the
 
 `acquire.migrate_schema()` brings an older DB forward: a CHECK-constraint change (widening the split enum) forces a table rebuild, plain nullable columns do not. It is idempotent and returns a list of what it changed. Add new plain columns to `ADDED_COLUMNS` and to `DDL`.
 
+**Physically-normalized tiling (D34, `tiles.py`).** The second acquisition path, parallel to `preprocess_v1` rather than replacing it. Instead of one fixed-1500px image per work it fetches 20 IIIF **region** tiles, each covering 30 mm × 30 mm of canvas served at 150 × 150 px — so every tile is 0.20 mm/px on a 15 cm panel and on a 4 m canvas alike. Tile selection is deterministic (evenly spaced indices over the row-major grid, no RNG), so the same DB yields the same tiles every run.
+
+Works whose `mm_per_px_native` exceeds the 0.20 floor are **below floor**: not tiled, and not to be scored on this recipe. Six firm Rembrandts including the Night Watch fall out, taking the cohort from 23 to 17. That exclusion is the point — reporting a work as unanswerable beats scoring it on inadequate pixels. Eligibility is **derived, never stored on `works`**: the table holds measured facts, the floor is policy, and cached policy goes stale silently.
+
+`data/tiles/` is gitignored (regenerable via `python tiles.py`). `scores_v1` and the whole fixed-1500 chain stay published as the baseline the normalized pipeline gets compared against — deleting them would destroy that comparison.
+
 **Geometry changes no score.** D33 is data capture only. `features.py`, `embed.py`, and `score.py` do not read the geometry columns — resampling to a fixed physical resolution is a separate, still-unmade decision (**O07**), and `results/resolution_audit.md` deliberately declines to pick a floor for that reason.
 
 **QC side-channel.** Each stage writes `results/qc_<recipe_id>/` (failures CSV, summary JSON) alongside its data output; failures are logged rather than silently dropped.
@@ -70,7 +77,7 @@ Never cross the branches: hand-built features must not read CNN tensors, and the
 
 ## Working conventions
 
-- `docs/decisions.md` is the source of truth for locked decisions (D01–D33). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
+- `docs/decisions.md` is the source of truth for locked decisions (D01–D34). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
 - Code and design docs cite decision/task IDs (`D30`, `T043`, `O04`) in docstrings and reports. Keep doing this — the write-up traces back through them.
 - After a phase succeeds: cleanup pass (D24) → git commit + push to `origin/main` (D28). Cleanup logs live at `results/phase*_cleanup_log.md`.
 - Deferred and not to be reopened without strong reason: FastAPI/service layer, DINOv2 or alternate backbones, finetuning, multi-museum cohorts, folding attributed-to works into primary validation.
