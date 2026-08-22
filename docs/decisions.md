@@ -3,7 +3,7 @@
 Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
 To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
 
-Last updated: 2026-08-19 (D32 pupil cohort, O06 = `fail`; D33 geometry; D34 tiling, O07 = 0.20 mm/px)
+Last updated: 2026-08-22 (D35 tile statistics, O08 resolved, O09 opened)
 
 ---
 
@@ -45,6 +45,7 @@ Last updated: 2026-08-19 (D32 pupil cohort, O06 = `fail`; D33 geometry; D34 tili
 | D34 | **Physically-normalized tiling** (`tiles_v1`): IIIF region requests of 30 mm x 30 mm of canvas served at 150 x 150 px, 20 non-overlapping tiles per work, 5% edge inset, deterministic selection. Works whose native resolution is coarser than the floor are **below floor** and are not tiled | Fixed-pixel downloads made mm/px vary 35x, so texture features were not measuring the same physical quantity across works. Fixed-*area* requests make one pixel mean the same distance on every painting. Pre-registered in `results/phase8_tiling_design.md` **before** any tile was fetched. Computes no feature, embedding, or score; `scores_v1` is retained as the baseline | 2026-08-19 |
 | D33 | **Physical geometry is first-class**: `works` stores catalogued cm size, native IIIF pixel size, analyzed pixel size, and derived `mm_per_px_analyzed` / `mm_per_px_native` | Texture features are implicitly measured in mm of canvas per pixel, and the fixed `width=1500` request made that quantity vary 35× across the corpus (D27). It cannot be reasoned about while it is unrecorded. Captured during acquisition; `dimensions.py` backfills existing snapshots. Changes **no** score | 2026-08-19 |
 | D32 | **Pupil split** added to the split enum: documented Rembrandt pupils, catalogued under their own names, as a surrogate held-out negative class (O06) | D04's population cannot be grown inside D01 (N=1); pupils are the closest available stylistic neighbours and `creator=` search works for them. Pre-registered in `results/phase7_pupil_validation_design.md` **before** acquisition or scoring. Never fitted into cohort normals; never enters O04 | 2026-08-19 |
+| D35 | **Tile statistics = Signal B only** (`tile_features_v1` / `tile_scores_v1`): the eight `features_v1` columns recomputed per 150x150 tile, aggregated to a work by the **median** over that work's 20 tiles, z-scored against a **cohort-only, leave-one-out** fit on the 17 eligible firm Rembrandts; `z_B_tile` = RMS of the 8 z-scores | Resolves O08. Signal A is excluded on purpose: tiles are 150 px and `embed_v1` wants 224, so embedding a tile means choosing a resample factor — the exact arbitrariness D34 exists to remove. Feature definitions are deliberately **unchanged** so the only difference from `features_v1` is what a pixel means. Pre-registered in `results/phase9_tile_statistics_design.md` before any feature value was computed from any tile. Does not amend O04 or O06; `scores_v1` stays published as the baseline | 2026-08-22 |
 
 ## Datathon submission mapping (D25)
 
@@ -75,11 +76,13 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 | ID | Question | Owner | Needed by |
 |---|---|---|---|
 | O01 | Final project display name | Human | write-up |
-| O08 | Statistics over the tile population (what is computed per tile, and how tiles aggregate to a work-level verdict) | Stats | before any tile-based score |
+| O09 | Does Signal B separate cohort from Tier-1 pupils at a constant 0.20 mm/px? (outcome of `tile_scores_v1`) | Stats | after `tile_features_v1` runs |
 
 **O07 resolved (D34) — floor = `0.20 mm/px`:** chosen by the human on 2026-08-19 from the eligibility census in `results/resolution_audit.md` §4, before any tile was fetched. A 1 mm stroke spans 5 px at this floor. The 0.15 floor admits the *same* 17 cohort works while costing 12 Tier-1 pupils, so it is dominated. Accepted consequences, recorded in advance: the cohort shrinks **23 → 17** (the six physically largest firm Rembrandts, including the Night Watch at 0.310 mm/px native, are below floor) and Tier-2 pupils fall to 7. Eligible population **64 / 108**. See `results/phase8_tiling_design.md` §4 and `results/tiling_report.md`.
 
-**O08 is deliberately open.** `tiles_v1` deliberately stops at acquisition. What gets measured on a tile, and how tile-level values aggregate into a work-level number, changes what the method claims — so it is pre-registered separately before anything is computed.
+**O08 resolved (D35) — Signal B only, median over tiles, cohort-only LOO fit on 17:** pre-registered in `results/phase9_tile_statistics_design.md` on 2026-08-22, before any feature value was computed from any tile. Signal A is out of scope by design (§2 there): a 150 px tile cannot enter a 224 px CNN without a resample factor, which is the arbitrariness D34 removed. Consequences accepted in advance: there is **no `combined`** on this recipe, so the baseline to beat is `z_B` alone (**AUC 0.522**, not the 0.419 headline), and the comparison is a **paired ΔAUC** against `features_v1` re-fit on the same 55 eligible works so the pixels are the only thing that differs.
+
+**O09 is open — the outcome of running D35.** Tiers, seed (20260822), k values, and the fail-closed confound rule are locked in `results/phase9_tile_statistics_design.md` §6–§8. Because analyzed mm/px is now constant by construction, the O06 confound is re-run against its *successors* — `mm_per_px_native`, native pixel width, canvas area, tile count — and if any of them matches or beats `z_B_tile`, the result is reported as confounded whatever the tier.
 
 **O02 resolved (D30):** `combined = z_A + z_B`; keep per-signal drivers.  
 **O03 resolved (D29):** 8 columns in `results/phase3_feature_shortlist.md` §1.  

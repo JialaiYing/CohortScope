@@ -3,7 +3,7 @@
 Shared board. **Update status here when you finish or unblock work.**  
 Statuses: `todo` | `in_progress` | `blocked` | `done` | `cancelled`
 
-Last updated: 2026-08-08 (Phase 6 demo DONE + push; T072 video = human)
+Last updated: 2026-08-22 (Phase 7/8 backfilled; Phase 9 pre-registered — D35 / O08 resolved, O09 open)
 
 ---
 
@@ -19,8 +19,10 @@ Last updated: 2026-08-08 (Phase 6 demo DONE + push; T072 video = human)
 
 ## Current phase
 
-**Phase 0–5 — DONE** (on GitHub; O04=`weak`)  
-**Phase 6 demo viewer — DONE** (D31; pushed)  
+**Phase 0–6 — DONE** (on GitHub; O04=`weak`)  
+**Phase 7 pupil validation — DONE** (D32; **O06 = `fail`**, AUC 0.419; mm/px alone separates better at 0.590)  
+**Phase 8 physically-normalized tiling — DONE** (D33 geometry + D34 `tiles_v1`; O07 = 0.20 mm/px; 1,280 tiles over 64 eligible works)  
+**Phase 9 tile statistics — pre-registered, not yet implemented** (D35; O08 resolved, **O09 open**) → `results/phase9_tile_statistics_design.md`  
 **T072** demo video remains human — launch `python demo_app.py`  
 **Datathon:** https://github.com/JialaiYing/CohortScope.git  
 
@@ -122,6 +124,37 @@ Last updated: 2026-08-08 (Phase 6 demo DONE + push; T072 video = human)
 | T082 | Quick demo review (honesty + scope) | review | done | `results/phase6_demo_review.md` — **PASS**; no must-fix |
 | T083 | Demo cleanup + git push | any | done | cleanup log + this push |
 
+### Phase 7 — Pupil-cohort validation (D32 / O06)
+
+| ID | Task | Role | Status | Notes |
+|---|---|---|---|---|
+| T070 | Pre-register pupil validation **before** acquiring any pupil work | stats | done | `results/phase7_pupil_validation_design.md`; D32; thresholds + seed locked in advance |
+| T071 | Acquire Tier-1/Tier-2 pupils additively (`acquire.py --pupils-only`) | data | done | split enum widened via `migrate_schema()`; pre-existing rows byte-identical |
+| T073 | Score pupils on `scores_v1`; evaluate O06 | stats | done | `evaluate_pupils.py` → `results/pupil_validation_report.md` — **O06 = `fail`**, AUC 0.419, CI [0.269, 0.578] |
+| T074 | Report the confound honestly | stats | done | mm/px alone AUC **0.590** > pipeline 0.419; 3 works lost to §3.1 recorded, rule not amended |
+
+### Phase 8 — Physical geometry + normalized tiling (D33 / D34 / O07)
+
+| ID | Task | Role | Status | Notes |
+|---|---|---|---|---|
+| T090 | Make physical geometry first-class on `works` | data | done | D33; `acquire.compute_geometry()` sole producer; `dimensions.py` backfills; all columns nullable on purpose |
+| T091 | Audit resolution exposure; decline to pick a floor | stats | done | `resolution_audit.py` → `results/resolution_audit.{md,csv}`; 30× mm/px spread; audit deliberately picks no floor |
+| T092 | Human picks the floor (O07) from the eligibility census | human | done | **0.20 mm/px**, chosen 2026-08-19 before any tile fetched; 0.15 dominated |
+| T093 | Pre-register tiling **before** fetching any tile | cv | done | `results/phase8_tiling_design.md`; D34; cohort 23→17 accepted in advance |
+| T094 | Fetch tiles (`tiles.py` / `tiles_v1`) | cv | done | 1,280 tiles, 5.5 MB, 64/108 eligible; `results/tiling_report.md`; **no** feature/score computed |
+| T095 | Phase 7+8 cleanup + git push | any | done | commits `48332fd`…`3f1a95a` |
+
+### Phase 9 — Statistics over the tile population (D35 / O08 → O09)
+
+| ID | Task | Role | Status | Notes |
+|---|---|---|---|---|
+| T100 | Pre-register tile statistics **before** computing any feature value | stats | done | `results/phase9_tile_statistics_design.md`; D35; O08 resolved = Signal B only, median-over-tiles, cohort-only LOO on 17 |
+| T101 | Implement `tile_features.py` (`tile_features_v1`) | features | todo | 8 unchanged `features_v1` columns per tile; reads `tiles_v1` manifest as worklist; `--force` guard + `results/qc_tile_features_v1/` |
+| T102 | Implement `tile_score.py` (`tile_scores_v1`) | stats | todo | median aggregate + IQR; cohort-only LOO fit on N=17; `z_B_tile` = RMS of 8 z; **no `z_A`, no `combined`** |
+| T103 | Evaluate O09 + paired ΔAUC vs `features_v1` re-fit on the same 55 works | stats | todo | seed 20260822; k ∈ {5,10,20}; base rate 0.691 → `results/tile_validation_report.md` |
+| T104 | Run the §7 confound successors fail-closed | stats | todo | `mm_per_px_native`, native px width, canvas cm², tiles written; any AUC ≥ `z_B_tile` ⇒ report **confounded** |
+| T105 | Phase 9 cleanup + git push (D24/D28) | any | todo | — |
+
 ---
 
 ## Active blockers
@@ -129,11 +162,15 @@ Last updated: 2026-08-08 (Phase 6 demo DONE + push; T072 video = human)
 | Blocker | Blocks | Owner |
 |---|---|---|
 | T072 demo video | Submission complete | human |
+| T101 `tile_features.py` | T102–T104, O09 | features |
 
 ## Parallel work allowed now
 
 - Human: record T072 with `python demo_app.py`  
+- T101 may start now — D35 is pre-registered and the tile cache exists  
 - Do **not** open T050 / retune O04  
+- Do **not** edit the D35 thresholds, seed, k values, or the median aggregation rule to move O09  
+- Do **not** re-run at another floor as a substitute for a disappointing 0.20 result (declared sweep only)  
 
 
 ---
