@@ -1,0 +1,374 @@
+{
+  "recipe_id": "sweep_v1",
+  "created_at": "2026-08-23T22:36:50.523443+00:00",
+  "design": "results/phase11_resolution_sweep_design.md",
+  "decision": "D37",
+  "floors": [
+    0.15,
+    0.2,
+    0.25,
+    0.3
+  ],
+  "signal_pixels": {
+    "B": 150,
+    "A": 224
+  },
+  "parameterization": "pixel count fixed per signal; tile canvas = px x floor",
+  "population": "fixed across floors: works eligible at EVERY swept floor",
+  "populations": {
+    "B": [
+      "SK-A-106",
+      "SK-A-1259",
+      "SK-A-1591",
+      "SK-A-1612",
+      "SK-A-1645",
+      "SK-A-1646",
+      "SK-A-1935",
+      "SK-A-218",
+      "SK-A-246",
+      "SK-A-3066",
+      "SK-A-3138",
+      "SK-A-3276",
+      "SK-A-3340",
+      "SK-A-3451",
+      "SK-A-3477",
+      "SK-A-3508",
+      "SK-A-3934",
+      "SK-A-4047",
+      "SK-A-4050",
+      "SK-A-4057",
+      "SK-A-4096",
+      "SK-A-4166",
+      "SK-A-4674",
+      "SK-A-4691",
+      "SK-A-4717",
+      "SK-A-4833",
+      "SK-A-4881",
+      "SK-A-4888",
+      "SK-A-4889",
+      "SK-A-5033",
+      "SK-A-5092",
+      "SK-A-582",
+      "SK-A-686",
+      "SK-A-86",
+      "SK-A-87",
+      "SK-A-90",
+      "SK-C-127",
+      "SK-C-128",
+      "SK-C-152",
+      "SK-C-176",
+      "SK-C-1768",
+      "SK-C-1802",
+      "SK-C-597"
+    ],
+    "A": [
+      "SK-A-106",
+      "SK-A-1259",
+      "SK-A-1591",
+      "SK-A-1612",
+      "SK-A-1645",
+      "SK-A-1646",
+      "SK-A-1935",
+      "SK-A-218",
+      "SK-A-246",
+      "SK-A-3066",
+      "SK-A-3138",
+      "SK-A-3276",
+      "SK-A-3340",
+      "SK-A-3451",
+      "SK-A-3477",
+      "SK-A-3508",
+      "SK-A-3934",
+      "SK-A-4050",
+      "SK-A-4057",
+      "SK-A-4166",
+      "SK-A-4674",
+      "SK-A-4717",
+      "SK-A-4833",
+      "SK-A-4881",
+      "SK-A-4888",
+      "SK-A-4889",
+      "SK-A-5033",
+      "SK-A-5092",
+      "SK-A-582",
+      "SK-A-86",
+      "SK-A-87",
+      "SK-A-90",
+      "SK-C-152",
+      "SK-C-176",
+      "SK-C-1768",
+      "SK-C-1802",
+      "SK-C-597"
+    ]
+  },
+  "population_sizes": {
+    "B": 43,
+    "A": 37
+  },
+  "fit_on": "split == 'cohort' only, leave-one-out for cohort rows",
+  "tier2_sensitivity": "not computed -- one work per sweep (design \u00a73)",
+  "combined": null,
+  "bootstrap": {
+    "n": 10000,
+    "seed": 20260824,
+    "unit": "works"
+  },
+  "multiplicity": {
+    "n_tests": 8,
+    "alpha": 0.05,
+    "corrected_ci_pct": 99.375,
+    "corrected_percentiles": [
+      0.3125,
+      99.6875
+    ],
+    "note": "computed at every point, not only the best"
+  },
+  "reused_020_recipes": [
+    "tiles_v1",
+    "cnn_tiles_v1"
+  ],
+  "confound_mm_per_px_native": {
+    "B": {
+      "auc": 0.5572916666666666,
+      "auc_directionless": 0.5572916666666666,
+      "n_cohort": 16,
+      "n_tier1": 24
+    },
+    "A": {
+      "auc": 0.6166666666666667,
+      "auc_directionless": 0.6166666666666667,
+      "n_cohort": 15,
+      "n_tier1": 20
+    }
+  },
+  "points": [
+    {
+      "signal": "B",
+      "floor": 0.15,
+      "recipe_id": "sweep_b_015",
+      "tile_px": 150,
+      "tile_mm": 22.5,
+      "n_cohort": 16,
+      "n_tier1": 24,
+      "auc": 0.4661458333333333,
+      "ci95": [
+        0.2864583333333333,
+        0.6510416666666666
+      ],
+      "ci_corrected": [
+        0.22395833333333334,
+        0.7161458333333334
+      ],
+      "base_rate": 0.6,
+      "precision_at_k": {
+        "5": 0.6,
+        "10": 0.6
+      },
+      "per_feature_auc": {
+        "grad_mag_mean": 0.5182291666666666,
+        "grad_mag_std": 0.6145833333333334,
+        "grad_orient_entropy": 0.6015625,
+        "laplacian_var": 0.5,
+        "lbp_entropy": 0.5885416666666666,
+        "glcm_contrast": 0.5338541666666666,
+        "lab_chroma_mean": 0.6119791666666666,
+        "hue_circ_std": 0.4765625
+      }
+    },
+    {
+      "signal": "B",
+      "floor": 0.2,
+      "recipe_id": "tiles_v1",
+      "tile_px": 150,
+      "tile_mm": 30.0,
+      "n_cohort": 16,
+      "n_tier1": 24,
+      "auc": 0.4739583333333333,
+      "ci95": [
+        0.2916666666666667,
+        0.65625
+      ],
+      "ci_corrected": [
+        0.22395833333333334,
+        0.7239583333333334
+      ],
+      "base_rate": 0.6,
+      "precision_at_k": {
+        "5": 0.6,
+        "10": 0.7
+      },
+      "per_feature_auc": {
+        "grad_mag_mean": 0.5598958333333334,
+        "grad_mag_std": 0.6067708333333334,
+        "grad_orient_entropy": 0.5807291666666666,
+        "laplacian_var": 0.578125,
+        "lbp_entropy": 0.4557291666666667,
+        "glcm_contrast": 0.5729166666666666,
+        "lab_chroma_mean": 0.4609375,
+        "hue_circ_std": 0.5546875
+      }
+    },
+    {
+      "signal": "B",
+      "floor": 0.25,
+      "recipe_id": "sweep_b_025",
+      "tile_px": 150,
+      "tile_mm": 37.5,
+      "n_cohort": 16,
+      "n_tier1": 24,
+      "auc": 0.484375,
+      "ci95": [
+        0.2864583333333333,
+        0.6770833333333334
+      ],
+      "ci_corrected": [
+        0.22395833333333334,
+        0.75
+      ],
+      "base_rate": 0.6,
+      "precision_at_k": {
+        "5": 0.4,
+        "10": 0.5
+      },
+      "per_feature_auc": {
+        "grad_mag_mean": 0.4661458333333333,
+        "grad_mag_std": 0.5104166666666666,
+        "grad_orient_entropy": 0.5859375,
+        "laplacian_var": 0.4583333333333333,
+        "lbp_entropy": 0.609375,
+        "glcm_contrast": 0.46875,
+        "lab_chroma_mean": 0.5390625,
+        "hue_circ_std": 0.4921875
+      }
+    },
+    {
+      "signal": "B",
+      "floor": 0.3,
+      "recipe_id": "sweep_b_030",
+      "tile_px": 150,
+      "tile_mm": 45.0,
+      "n_cohort": 16,
+      "n_tier1": 24,
+      "auc": 0.4947916666666667,
+      "ci95": [
+        0.3098958333333333,
+        0.6822916666666666
+      ],
+      "ci_corrected": [
+        0.2421875,
+        0.7571695963541648
+      ],
+      "base_rate": 0.6,
+      "precision_at_k": {
+        "5": 0.6,
+        "10": 0.5
+      },
+      "per_feature_auc": {
+        "grad_mag_mean": 0.5598958333333334,
+        "grad_mag_std": 0.5703125,
+        "grad_orient_entropy": 0.6119791666666666,
+        "laplacian_var": 0.5598958333333334,
+        "lbp_entropy": 0.5755208333333334,
+        "glcm_contrast": 0.5598958333333334,
+        "lab_chroma_mean": 0.5416666666666666,
+        "hue_circ_std": 0.5494791666666666
+      }
+    },
+    {
+      "signal": "A",
+      "floor": 0.15,
+      "recipe_id": "sweep_a_015",
+      "tile_px": 224,
+      "tile_mm": 33.6,
+      "n_cohort": 15,
+      "n_tier1": 20,
+      "auc": 0.4533333333333333,
+      "ci95": [
+        0.25,
+        0.6666666666666666
+      ],
+      "ci_corrected": [
+        0.17,
+        0.76
+      ],
+      "base_rate": 0.5714285714285714,
+      "precision_at_k": {
+        "5": 0.2,
+        "10": 0.5
+      },
+      "per_feature_auc": {}
+    },
+    {
+      "signal": "A",
+      "floor": 0.2,
+      "recipe_id": "cnn_tiles_v1",
+      "tile_px": 224,
+      "tile_mm": 44.8,
+      "n_cohort": 15,
+      "n_tier1": 20,
+      "auc": 0.53,
+      "ci95": [
+        0.31,
+        0.7566666666666667
+      ],
+      "ci_corrected": [
+        0.23,
+        0.8383541666666618
+      ],
+      "base_rate": 0.5714285714285714,
+      "precision_at_k": {
+        "5": 0.2,
+        "10": 0.5
+      },
+      "per_feature_auc": {}
+    },
+    {
+      "signal": "A",
+      "floor": 0.25,
+      "recipe_id": "sweep_a_025",
+      "tile_px": 224,
+      "tile_mm": 56.0,
+      "n_cohort": 15,
+      "n_tier1": 20,
+      "auc": 0.5033333333333333,
+      "ci95": [
+        0.2833333333333333,
+        0.72
+      ],
+      "ci_corrected": [
+        0.19748958333333333,
+        0.81
+      ],
+      "base_rate": 0.5714285714285714,
+      "precision_at_k": {
+        "5": 0.4,
+        "10": 0.4
+      },
+      "per_feature_auc": {}
+    },
+    {
+      "signal": "A",
+      "floor": 0.3,
+      "recipe_id": "sweep_a_030",
+      "tile_px": 224,
+      "tile_mm": 67.2,
+      "n_cohort": 15,
+      "n_tier1": 20,
+      "auc": 0.47333333333333333,
+      "ci95": [
+        0.26325000000000004,
+        0.69
+      ],
+      "ci_corrected": [
+        0.18,
+        0.7733333333333333
+      ],
+      "base_rate": 0.5714285714285714,
+      "precision_at_k": {
+        "5": 0.2,
+        "10": 0.5
+      },
+      "per_feature_auc": {}
+    }
+  ]
+}

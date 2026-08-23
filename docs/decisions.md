@@ -3,7 +3,7 @@
 Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
 To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
 
-Last updated: 2026-08-23 (D37 resolution sweep pre-registered, O12 resolved, O13 opened)
+Last updated: 2026-08-23 (D37 resolution sweep run; O13 resolved = `fail`; the method is closed)
 
 ---
 
@@ -105,7 +105,22 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 
 **O12 resolved (D37) — sweep 0.15-0.30 mm/px on a fixed population, pixel count held constant.** The obvious sweep (0.05-0.40, eight floors, all works eligible at each) is not available: eligibility is **not monotonic** in the floor, because a coarser floor admits more works by the mm/px test while excluding more by the 20-tiles-must-fit test. The eligible sets are therefore not nested, and the intersection over 0.05-0.40 is 6 works for Signal B and **0 for Signal A**. Only nine works in the corpus have imagery finer than 0.05 mm/px at all. 0.15-0.30 is the widest contiguous range retaining a usable fixed population (43 / 37 works), and it brackets the locked 0.20 floor on both sides. Each signal holds its **pixel count** fixed rather than its canvas size: the alternative would give Signal B 64x more texture samples at one end of the sweep than the other and would force a per-floor resize on Signal A, reintroducing the arbitrariness D34 and D36 removed. Accepted in advance: N drops to 40 / 35, and Tier-2 falls to one work so its sensitivity analysis is **not computed** in this phase.
 
-**O13 is open — the outcome of running D37.** Is there any resolution this corpus can support at which either signal separates cohort from Tier-1 pupils? The multiplicity correction is locked **before any sweep point exists**: 4 floors x 2 signals = 8 tests, so a floor counts as showing separation only if its **99.375% bootstrap CI** (Bonferroni, 1 - 0.05/8, seed 20260824) excludes 0.50 — the uncorrected 95% curve is descriptive only. Locked in `results/phase11_resolution_sweep_design.md` §5-§7, along with three binding clauses: a good sweep point **does not amend O07, O09, or O11 and does not move the locked floor**; the `mm_per_px_native` confound clause carries over; and a flat curve is the expected, informative result that closes the method rather than a call for more resolution the corpus cannot supply.
+**O13 resolved (D37) — outcome `fail`. The method is closed.** Both signals re-run at 0.15 / 0.20 / 0.25 / 0.30 mm/px on a population held fixed across floors (Signal B 16 vs 24, Signal A 15 vs 20), each signal holding its pixel count fixed so only millimetres-per-pixel varied:
+
+| floor | Signal B AUC | Signal A AUC |
+|---:|---:|---:|
+| 0.15 | 0.466 | 0.453 |
+| 0.20 | 0.474 | 0.530 |
+| 0.25 | 0.484 | 0.503 |
+| 0.30 | 0.495 | 0.473 |
+
+**All eight points are at chance.** Signal B spans 0.466–0.495 across a 2× change in resolution, Signal A 0.453–0.530; every point sits within 0.047 of 0.500. Zero of eight clear the Bonferroni-corrected 99.375% bar — and zero clear even the *uncorrected* 95% bar, so the multiplicity correction never had to do any work. The curves are flat, not noisy-but-trending.
+
+**The confound clause fires again.** `mm_per_px_native` separates the classes at AUC 0.557 (Signal B population) and 0.617 (Signal A population), beating the best swept point in both cases. That is the fourth consecutive test in which a digitization column out-predicts the pipeline: 0.590 in O06, 0.689 in O09, 0.705 in O11, and again here.
+
+**What O13 settles:** the answer to "was 0.20 simply the wrong scale?" is **no**. Over a 2× range bracketing the locked floor, with the population fixed so only resolution varied, neither half of the method separates firm Rembrandts from their pupils at any resolution. Combined with O09 and O11, **the method as specified is closed.** Per design §7 this is not softened into a call for more resolution, and §3 shows it cannot be: nine works in the whole corpus have imagery finer than 0.05 mm/px, and **zero** support a full-range sweep for Signal A. The imagery to test a finer hypothesis does not exist in this collection.
+
+**What O13 does not settle:** N is 40 and 35, so the experiment is well powered for a large resolution effect and poorly powered for a small one — it fails to find one, which is not the same as showing there is none. Tier-2 sensitivity was not computed (one work per sweep). ImageNet features are still not brushwork features, and a flat Signal-A curve is **not** a licence to reopen the deferred DINOv2 / finetuning work. O04, O06, O09, and O11 are unchanged and unamended; the locked 0.20 floor does not move. See `results/resolution_sweep_report.md`.
 
 **O02 resolved (D30):** `combined = z_A + z_B`; keep per-signal drivers.  
 **O03 resolved (D29):** 8 columns in `results/phase3_feature_shortlist.md` §1.  

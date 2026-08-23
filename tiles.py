@@ -61,6 +61,21 @@ class Recipe:
     design: str
     decision: str
     report_name: str
+    # The resolution floor this recipe requests. Carried on the recipe rather than
+    # read from `config`, because a recipe that requests a finer tile than the
+    # source can supply would have the IIIF server UPSAMPLE to fill it -- inventing
+    # resolution, which is the single failure this whole line of work exists to
+    # prevent. A recipe's floor and its tile geometry must agree; see __post_init__.
+    floor_mm_per_px: float = config.TILE_FLOOR_MM_PER_PX
+
+    def __post_init__(self) -> None:
+        derived = self.size_px * self.floor_mm_per_px
+        if abs(derived - self.size_mm) > 1e-6:
+            raise ValueError(
+                f"{self.recipe_id}: size_mm={self.size_mm} but size_px x floor = "
+                f"{derived}. The tile size is derived from the floor, not chosen "
+                "independently of it."
+            )
 
     @property
     def root(self) -> Path:
@@ -189,7 +204,7 @@ def assess(work: dict, rec: Recipe = TILES_V1) -> dict:
     if work["mm_per_px_native"] is None or not work["native_px_width"]:
         out["verdict"], out["reason"] = "below_floor", REASON_NO_GEOMETRY
         return out
-    if work["mm_per_px_native"] > config.TILE_FLOOR_MM_PER_PX:
+    if work["mm_per_px_native"] > rec.floor_mm_per_px:
         out["verdict"], out["reason"] = "below_floor", REASON_COARSER_THAN_FLOOR
         return out
 
@@ -314,7 +329,7 @@ def write_manifest(
         "design": rec.design,
         "decision": rec.decision,
         "parameters": {
-            "floor_mm_per_px": config.TILE_FLOOR_MM_PER_PX,
+            "floor_mm_per_px": rec.floor_mm_per_px,
             "tile_size_mm": rec.size_mm,
             "tile_size_px": rec.size_px,
             "edge_inset": config.TILE_EDGE_INSET,
@@ -416,7 +431,7 @@ def write_report(
         "",
         "| Parameter | Value |",
         "|---|---|",
-        f"| resolution floor | **{config.TILE_FLOOR_MM_PER_PX} mm/px** (O07) |",
+        f"| resolution floor | **{rec.floor_mm_per_px:g} mm/px** |",
         f"| tile size | {rec.size_mm:g} mm × {rec.size_mm:g} mm "
         f"= {rec.size_px} × {rec.size_px} px |",
         f"| edge inset | {config.TILE_EDGE_INSET:.0%} of each edge |",
@@ -447,7 +462,7 @@ def write_report(
         "|---|---:|",
     ]
     labels = {
-        REASON_COARSER_THAN_FLOOR: f"native resolution coarser than {config.TILE_FLOOR_MM_PER_PX} mm/px",
+        REASON_COARSER_THAN_FLOOR: f"native resolution coarser than {rec.floor_mm_per_px:g} mm/px",
         REASON_TOO_FEW_TILES: f"fewer than {config.TILES_PER_WORK} tiles of "
                               f"{rec.size_mm:g} mm fit inside the inset",
         REASON_NO_GEOMETRY: "no catalogued size — run `python dimensions.py`",
@@ -480,7 +495,7 @@ def write_report(
         f"Every tile is requested as an IIIF region of "
         f"`tile_side_native_px` square, served at {rec.size_px} px, so the "
         f"realized resolution is {rec.size_mm:g} mm ÷ {rec.size_px} px "
-        f"= **{config.TILE_FLOOR_MM_PER_PX:.3f} mm/px for every work**, independent of "
+        f"= **{rec.floor_mm_per_px:.3f} mm/px for every work**, independent of "
         "painting size. That is the property the fixed-1500 pipeline lacked.",
         "",
         f"Per-work detail: `results/{rec.qc_dir.name}/coverage.csv`. "
@@ -499,7 +514,7 @@ def run(*, force: bool, plan_only: bool, rec: Recipe = TILES_V1) -> int:
     eligible = [p for p in plans if p["verdict"] == "eligible"]
 
     print(f"{len(works)} scored works; {len(eligible)} eligible at "
-          f"{config.TILE_FLOOR_MM_PER_PX} mm/px; "
+          f"{rec.floor_mm_per_px:g} mm/px; "
           f"{len(works) - len(eligible)} below floor")
     print(f"{rec.recipe_id}: planned tiles {sum(p['tiles_planned'] for p in plans):,} "
           f"({rec.size_px}x{rec.size_px} px, {rec.size_mm:g}mm of canvas each)")

@@ -1,0 +1,321 @@
+signal,floor,recipe_id,tile_px,tile_mm,object_number,split,pupil_tier,creator,title,n_tiles,score,tile_spread
+B,0.15,sweep_b_015,150,22.5,SK-A-106,pupil,tier1,Gerbrand van den Eeckhout,Christ and the Woman in Adultery,20,0.73980628,0.95052152
+B,0.15,sweep_b_015,150,22.5,SK-A-1259,pupil,tier1,Nicolaes Maes,"Gerard Röver, Merchant and Shipowner in Amsterdam",20,1.51836060,1.69099328
+B,0.15,sweep_b_015,150,22.5,SK-A-1591,pupil,tier1,Carel Fabritius,Abraham de Potter (1592-1650). Zijdelakenkoopman te Amsterdam,20,1.06846605,0.66619108
+B,0.15,sweep_b_015,150,22.5,SK-A-1612,pupil,tier1,Gerbrand van den Eeckhout,Badende mannen,20,0.49110757,0.88261008
+B,0.15,sweep_b_015,150,22.5,SK-A-1645,pupil,tier1,Nicolaes Maes,"Portrait of Willem Pottey, Lawyer and Accountant-General of Flushing",20,5.41905407,3.23826412
+B,0.15,sweep_b_015,150,22.5,SK-A-1646,pupil,tier1,Nicolaes Maes,"Portrait of Catharina Pottey, Sister of Willem and Sara Pottey",20,0.95817101,0.57782630
+B,0.15,sweep_b_015,150,22.5,SK-A-1935,cohort,,,Landschap met stenen brug,20,0.61649897,1.09394934
+B,0.15,sweep_b_015,150,22.5,SK-A-218,pupil,tier2,Jan Lievens,Joost van den Vondel (1587-1679). Dichter,20,0.58011058,0.63245744
+B,0.15,sweep_b_015,150,22.5,SK-A-246,pupil,tier1,Nicolaes Maes,De spinster,20,0.74881727,0.49570987
+B,0.15,sweep_b_015,150,22.5,SK-A-3066,cohort,,,"Oude lezende vrouw, waarschijnlijk de profetes Hanna",20,0.42620396,1.21499504
+B,0.15,sweep_b_015,150,22.5,SK-A-3138,cohort,,,Titus in monniksdracht,20,0.59263631,0.58170296
+B,0.15,sweep_b_015,150,22.5,SK-A-3276,cohort,,,Jeremiah Lamenting the Destruction of Jerusalem,20,0.52543621,0.86111426
+B,0.15,sweep_b_015,150,22.5,SK-A-3340,cohort,,,Borstbeeld van een man in oosterse kleding,20,0.65945489,2.04218318
+B,0.15,sweep_b_015,150,22.5,SK-A-3451,pupil,tier1,Govert Flinck,Shepherd,20,0.69206728,1.00215340
+B,0.15,sweep_b_015,150,22.5,SK-A-3477,cohort,,,Joseph telling his dreams,20,0.64315964,1.11116554
+B,0.15,sweep_b_015,150,22.5,SK-A-3508,pupil,tier1,Nicolaes Maes,Portret van een jonge man,20,0.65720063,0.77717145
+B,0.15,sweep_b_015,150,22.5,SK-A-3934,validation,,,Borstbeeld van een lachende jonge man,20,0.64805734,0.45177971
+B,0.15,sweep_b_015,150,22.5,SK-A-4047,pupil,tier1,Nicolaes Maes,Woman at a Cradle,20,0.57774698,0.73400172
+B,0.15,sweep_b_015,150,22.5,SK-A-4050,cohort,,,Self Portrait as the Apostle Paul,20,0.60604471,0.64439234
+B,0.15,sweep_b_015,150,22.5,SK-A-4057,cohort,,,Young Woman in Fantasy Costume,20,2.46656739,1.06374967
+B,0.15,sweep_b_015,150,22.5,SK-A-4096,ambiguous,,,Simson en Delila,20,2.08973630,0.85016208
+B,0.15,sweep_b_015,150,22.5,SK-A-4166,pupil,tier1,Govert Flinck,"Portret van een man, mogelijk Gozen Centen (1611/12-1677)",20,0.50376388,1.23435413
+B,0.15,sweep_b_015,150,22.5,SK-A-4674,cohort,,,Musical Company,20,8.88393576,3.12619881
+B,0.15,sweep_b_015,150,22.5,SK-A-4691,cohort,,,Self Portrait,20,0.41132379,0.87085376
+B,0.15,sweep_b_015,150,22.5,SK-A-4717,cohort,,,Tobit and Anna with the Kid,20,1.06260326,1.76928761
+B,0.15,sweep_b_015,150,22.5,SK-A-4833,cohort,,,Portrait van Haesje Jacobsdr van Cleyburgh,20,0.61887444,0.76598275
+B,0.15,sweep_b_015,150,22.5,SK-A-4881,pupil,tier1,Nicolaes Maes,"Portrait of a young man, possibly Simon van Alphen (1650-1730)",20,0.51479395,1.27993263
+B,0.15,sweep_b_015,150,22.5,SK-A-4888,pupil,tier1,Nicolaes Maes,Portret van Pieter Groenendijk,20,0.51223729,1.45596305
+B,0.15,sweep_b_015,150,22.5,SK-A-4889,pupil,tier1,Nicolaes Maes,Portret van Petronella Dunois,20,0.52060695,1.00239727
+B,0.15,sweep_b_015,150,22.5,SK-A-5033,cohort,,,Portrait of Marten Soolmans,20,0.62836856,0.85615366
+B,0.15,sweep_b_015,150,22.5,SK-A-5092,cohort,,,The Standard Bearer,20,0.56012652,0.68661945
+B,0.15,sweep_b_015,150,22.5,SK-A-582,pupil,tier1,Govert Flinck,"Portret van een man, vermoedelijk Augustijn Wtenbogaert (1577-1655)",20,0.52854074,1.27828010
+B,0.15,sweep_b_015,150,22.5,SK-A-686,pupil,tier1,Gerrit Dou,Johan Wittert van der Aa (1604-1670),20,0.49012060,0.97684603
+B,0.15,sweep_b_015,150,22.5,SK-A-86,pupil,tier1,Gerrit Dou,Man Smoking a Pipe,20,0.35424963,1.18219564
+B,0.15,sweep_b_015,150,22.5,SK-A-87,pupil,tier1,Gerrit Dou,The Night School,20,3.95429558,0.10986424
+B,0.15,sweep_b_015,150,22.5,SK-A-90,pupil,tier1,Gerrit Dou,Portrait of a Couple in a Landscape,20,0.71529789,0.32717355
+B,0.15,sweep_b_015,150,22.5,SK-C-127,pupil,tier1,Gerrit Dou,A Fisherman's Wife,20,0.56011948,0.65139504
+B,0.15,sweep_b_015,150,22.5,SK-C-128,pupil,tier1,Gerrit Dou,A Hermit,20,0.59040636,0.87671825
+B,0.15,sweep_b_015,150,22.5,SK-C-152,pupil,tier1,Samuel van Hoogstraten,'The Anemic Lady',20,0.83345951,0.82711072
+B,0.15,sweep_b_015,150,22.5,SK-C-176,pupil,tier1,Nicolaes Maes,De spinster,20,0.64690626,0.60853987
+B,0.15,sweep_b_015,150,22.5,SK-C-1768,cohort,,,Portret van Oopjen Coppit,20,0.69694098,0.55248450
+B,0.15,sweep_b_015,150,22.5,SK-C-1802,pupil,tier1,Willem Drost,Cimon and Pero (Roman Charity),20,0.55588760,0.79742808
+B,0.15,sweep_b_015,150,22.5,SK-C-597,cohort,,,"Portrait of a woman, possibly Maria Trip",20,0.89793695,1.35017042
+B,0.20,tiles_v1,150,30,SK-A-106,pupil,tier1,Gerbrand van den Eeckhout,Christ and the Woman in Adultery,20,0.37036583,0.73623826
+B,0.20,tiles_v1,150,30,SK-A-1259,pupil,tier1,Nicolaes Maes,"Gerard Röver, Merchant and Shipowner in Amsterdam",20,2.11749774,1.89500190
+B,0.20,tiles_v1,150,30,SK-A-1591,pupil,tier1,Carel Fabritius,Abraham de Potter (1592-1650). Zijdelakenkoopman te Amsterdam,20,1.22798112,0.46317373
+B,0.20,tiles_v1,150,30,SK-A-1612,pupil,tier1,Gerbrand van den Eeckhout,Badende mannen,20,0.58337345,0.71209051
+B,0.20,tiles_v1,150,30,SK-A-1645,pupil,tier1,Nicolaes Maes,"Portrait of Willem Pottey, Lawyer and Accountant-General of Flushing",20,5.87351671,2.40292973
+B,0.20,tiles_v1,150,30,SK-A-1646,pupil,tier1,Nicolaes Maes,"Portrait of Catharina Pottey, Sister of Willem and Sara Pottey",20,0.55948187,0.72751206
+B,0.20,tiles_v1,150,30,SK-A-1935,cohort,,,Landschap met stenen brug,20,0.48847554,1.07766179
+B,0.20,tiles_v1,150,30,SK-A-218,pupil,tier2,Jan Lievens,Joost van den Vondel (1587-1679). Dichter,20,0.63529442,0.56324898
+B,0.20,tiles_v1,150,30,SK-A-246,pupil,tier1,Nicolaes Maes,De spinster,20,1.75314612,0.92303525
+B,0.20,tiles_v1,150,30,SK-A-3066,cohort,,,"Oude lezende vrouw, waarschijnlijk de profetes Hanna",20,1.39779013,2.43087847
+B,0.20,tiles_v1,150,30,SK-A-3138,cohort,,,Titus in monniksdracht,20,0.53610562,0.63139231
+B,0.20,tiles_v1,150,30,SK-A-3276,cohort,,,Jeremiah Lamenting the Destruction of Jerusalem,20,0.57240719,0.98490692
+B,0.20,tiles_v1,150,30,SK-A-3340,cohort,,,Borstbeeld van een man in oosterse kleding,20,0.77459503,2.07019757
+B,0.20,tiles_v1,150,30,SK-A-3451,pupil,tier1,Govert Flinck,Shepherd,20,0.45119581,1.41618324
+B,0.20,tiles_v1,150,30,SK-A-3477,cohort,,,Joseph telling his dreams,20,0.88770051,0.99613635
+B,0.20,tiles_v1,150,30,SK-A-3508,pupil,tier1,Nicolaes Maes,Portret van een jonge man,20,0.73738907,0.68320186
+B,0.20,tiles_v1,150,30,SK-A-3934,validation,,,Borstbeeld van een lachende jonge man,20,0.91160895,0.48644658
+B,0.20,tiles_v1,150,30,SK-A-4047,pupil,tier1,Nicolaes Maes,Woman at a Cradle,20,0.66092067,0.60404491
+B,0.20,tiles_v1,150,30,SK-A-4050,cohort,,,Self Portrait as the Apostle Paul,20,0.70052235,1.00328980
+B,0.20,tiles_v1,150,30,SK-A-4057,cohort,,,Young Woman in Fantasy Costume,20,1.03743759,1.51100781
+B,0.20,tiles_v1,150,30,SK-A-4096,ambiguous,,,Simson en Delila,20,1.60569379,1.71491410
+B,0.20,tiles_v1,150,30,SK-A-4166,pupil,tier1,Govert Flinck,"Portret van een man, mogelijk Gozen Centen (1611/12-1677)",20,0.47508567,0.41334699
+B,0.20,tiles_v1,150,30,SK-A-4674,cohort,,,Musical Company,20,2.82175450,2.88760675
+B,0.20,tiles_v1,150,30,SK-A-4691,cohort,,,Self Portrait,20,0.33833354,0.98908131
+B,0.20,tiles_v1,150,30,SK-A-4717,cohort,,,Tobit and Anna with the Kid,20,0.92268064,1.72047665
+B,0.20,tiles_v1,150,30,SK-A-4833,cohort,,,Portrait van Haesje Jacobsdr van Cleyburgh,20,0.84595119,0.68471286
+B,0.20,tiles_v1,150,30,SK-A-4881,pupil,tier1,Nicolaes Maes,"Portrait of a young man, possibly Simon van Alphen (1650-1730)",20,1.11266814,2.34164610
+B,0.20,tiles_v1,150,30,SK-A-4888,pupil,tier1,Nicolaes Maes,Portret van Pieter Groenendijk,20,0.68131252,1.06465275
+B,0.20,tiles_v1,150,30,SK-A-4889,pupil,tier1,Nicolaes Maes,Portret van Petronella Dunois,20,0.64271125,1.42241452
+B,0.20,tiles_v1,150,30,SK-A-5033,cohort,,,Portrait of Marten Soolmans,20,0.74078839,0.71008342
+B,0.20,tiles_v1,150,30,SK-A-5092,cohort,,,The Standard Bearer,20,0.71998459,0.92076907
+B,0.20,tiles_v1,150,30,SK-A-582,pupil,tier1,Govert Flinck,"Portret van een man, vermoedelijk Augustijn Wtenbogaert (1577-1655)",20,0.78809286,1.61194322
+B,0.20,tiles_v1,150,30,SK-A-686,pupil,tier1,Gerrit Dou,Johan Wittert van der Aa (1604-1670),20,0.52070758,0.62508683
+B,0.20,tiles_v1,150,30,SK-A-86,pupil,tier1,Gerrit Dou,Man Smoking a Pipe,20,1.14958738,0.31377450
+B,0.20,tiles_v1,150,30,SK-A-87,pupil,tier1,Gerrit Dou,The Night School,20,4.34951491,0.31760628
+B,0.20,tiles_v1,150,30,SK-A-90,pupil,tier1,Gerrit Dou,Portrait of a Couple in a Landscape,20,1.45038666,0.50873070
+B,0.20,tiles_v1,150,30,SK-C-127,pupil,tier1,Gerrit Dou,A Fisherman's Wife,20,0.83907476,1.41422500
+B,0.20,tiles_v1,150,30,SK-C-128,pupil,tier1,Gerrit Dou,A Hermit,20,0.55967525,0.83283064
+B,0.20,tiles_v1,150,30,SK-C-152,pupil,tier1,Samuel van Hoogstraten,'The Anemic Lady',20,0.80630389,0.84505959
+B,0.20,tiles_v1,150,30,SK-C-176,pupil,tier1,Nicolaes Maes,De spinster,20,0.48903410,0.97985048
+B,0.20,tiles_v1,150,30,SK-C-1768,cohort,,,Portret van Oopjen Coppit,20,0.64096714,1.23802163
+B,0.20,tiles_v1,150,30,SK-C-1802,pupil,tier1,Willem Drost,Cimon and Pero (Roman Charity),20,0.55787622,0.63570204
+B,0.20,tiles_v1,150,30,SK-C-597,cohort,,,"Portrait of a woman, possibly Maria Trip",20,3.45412285,1.14191635
+B,0.25,sweep_b_025,150,37.5,SK-A-106,pupil,tier1,Gerbrand van den Eeckhout,Christ and the Woman in Adultery,20,0.73388844,0.87458113
+B,0.25,sweep_b_025,150,37.5,SK-A-1259,pupil,tier1,Nicolaes Maes,"Gerard Röver, Merchant and Shipowner in Amsterdam",20,0.99530718,1.00126224
+B,0.25,sweep_b_025,150,37.5,SK-A-1591,pupil,tier1,Carel Fabritius,Abraham de Potter (1592-1650). Zijdelakenkoopman te Amsterdam,20,1.05427216,0.63158137
+B,0.25,sweep_b_025,150,37.5,SK-A-1612,pupil,tier1,Gerbrand van den Eeckhout,Badende mannen,20,0.61177686,0.72903735
+B,0.25,sweep_b_025,150,37.5,SK-A-1645,pupil,tier1,Nicolaes Maes,"Portrait of Willem Pottey, Lawyer and Accountant-General of Flushing",20,5.85830035,2.64055297
+B,0.25,sweep_b_025,150,37.5,SK-A-1646,pupil,tier1,Nicolaes Maes,"Portrait of Catharina Pottey, Sister of Willem and Sara Pottey",20,0.85741714,1.49634062
+B,0.25,sweep_b_025,150,37.5,SK-A-1935,cohort,,,Landschap met stenen brug,20,0.46367199,1.62517167
+B,0.25,sweep_b_025,150,37.5,SK-A-218,pupil,tier2,Jan Lievens,Joost van den Vondel (1587-1679). Dichter,20,0.62084528,1.34356267
+B,0.25,sweep_b_025,150,37.5,SK-A-246,pupil,tier1,Nicolaes Maes,De spinster,20,0.64543996,0.69446800
+B,0.25,sweep_b_025,150,37.5,SK-A-3066,cohort,,,"Oude lezende vrouw, waarschijnlijk de profetes Hanna",20,1.39744083,2.64351608
+B,0.25,sweep_b_025,150,37.5,SK-A-3138,cohort,,,Titus in monniksdracht,20,0.44039706,0.71092849
+B,0.25,sweep_b_025,150,37.5,SK-A-3276,cohort,,,Jeremiah Lamenting the Destruction of Jerusalem,20,0.68447883,0.86037589
+B,0.25,sweep_b_025,150,37.5,SK-A-3340,cohort,,,Borstbeeld van een man in oosterse kleding,20,0.32961520,1.71413970
+B,0.25,sweep_b_025,150,37.5,SK-A-3451,pupil,tier1,Govert Flinck,Shepherd,20,0.92506826,0.59197268
+B,0.25,sweep_b_025,150,37.5,SK-A-3477,cohort,,,Joseph telling his dreams,20,1.27310964,1.16640185
+B,0.25,sweep_b_025,150,37.5,SK-A-3508,pupil,tier1,Nicolaes Maes,Portret van een jonge man,20,0.65872577,1.12435203
+B,0.25,sweep_b_025,150,37.5,SK-A-3934,validation,,,Borstbeeld van een lachende jonge man,20,0.89442788,0.54225234
+B,0.25,sweep_b_025,150,37.5,SK-A-4047,pupil,tier1,Nicolaes Maes,Woman at a Cradle,20,0.68630016,0.78325893
+B,0.25,sweep_b_025,150,37.5,SK-A-4050,cohort,,,Self Portrait as the Apostle Paul,20,0.47247613,0.99339396
+B,0.25,sweep_b_025,150,37.5,SK-A-4057,cohort,,,Young Woman in Fantasy Costume,20,0.71963843,1.18582899
+B,0.25,sweep_b_025,150,37.5,SK-A-4096,ambiguous,,,Simson en Delila,20,1.97242665,1.64268484
+B,0.25,sweep_b_025,150,37.5,SK-A-4166,pupil,tier1,Govert Flinck,"Portret van een man, mogelijk Gozen Centen (1611/12-1677)",20,0.66311705,1.43872490
+B,0.25,sweep_b_025,150,37.5,SK-A-4674,cohort,,,Musical Company,20,3.34972573,3.19892406
+B,0.25,sweep_b_025,150,37.5,SK-A-4691,cohort,,,Self Portrait,20,0.48695397,0.74242773
+B,0.25,sweep_b_025,150,37.5,SK-A-4717,cohort,,,Tobit and Anna with the Kid,20,0.66185645,2.31258832
+B,0.25,sweep_b_025,150,37.5,SK-A-4833,cohort,,,Portrait van Haesje Jacobsdr van Cleyburgh,20,0.86032746,0.75308707
+B,0.25,sweep_b_025,150,37.5,SK-A-4881,pupil,tier1,Nicolaes Maes,"Portrait of a young man, possibly Simon van Alphen (1650-1730)",20,0.70921853,1.13501642
+B,0.25,sweep_b_025,150,37.5,SK-A-4888,pupil,tier1,Nicolaes Maes,Portret van Pieter Groenendijk,20,0.36794968,1.14104792
+B,0.25,sweep_b_025,150,37.5,SK-A-4889,pupil,tier1,Nicolaes Maes,Portret van Petronella Dunois,20,0.49470492,1.49051264
+B,0.25,sweep_b_025,150,37.5,SK-A-5033,cohort,,,Portrait of Marten Soolmans,20,1.10766708,1.63844027
+B,0.25,sweep_b_025,150,37.5,SK-A-5092,cohort,,,The Standard Bearer,20,0.76067936,0.89522483
+B,0.25,sweep_b_025,150,37.5,SK-A-582,pupil,tier1,Govert Flinck,"Portret van een man, vermoedelijk Augustijn Wtenbogaert (1577-1655)",20,1.23702660,1.60614522
+B,0.25,sweep_b_025,150,37.5,SK-A-686,pupil,tier1,Gerrit Dou,Johan Wittert van der Aa (1604-1670),20,0.59857854,1.08477953
+B,0.25,sweep_b_025,150,37.5,SK-A-86,pupil,tier1,Gerrit Dou,Man Smoking a Pipe,20,0.53330278,1.05174769
+B,0.25,sweep_b_025,150,37.5,SK-A-87,pupil,tier1,Gerrit Dou,The Night School,20,5.03463517,0.29138093
+B,0.25,sweep_b_025,150,37.5,SK-A-90,pupil,tier1,Gerrit Dou,Portrait of a Couple in a Landscape,20,0.92156228,0.47432220
+B,0.25,sweep_b_025,150,37.5,SK-C-127,pupil,tier1,Gerrit Dou,A Fisherman's Wife,20,0.60742639,1.01978334
+B,0.25,sweep_b_025,150,37.5,SK-C-128,pupil,tier1,Gerrit Dou,A Hermit,20,0.55494283,0.95250499
+B,0.25,sweep_b_025,150,37.5,SK-C-152,pupil,tier1,Samuel van Hoogstraten,'The Anemic Lady',20,0.60474483,0.99793673
+B,0.25,sweep_b_025,150,37.5,SK-C-176,pupil,tier1,Nicolaes Maes,De spinster,20,0.58359510,0.98974164
+B,0.25,sweep_b_025,150,37.5,SK-C-1768,cohort,,,Portret van Oopjen Coppit,20,0.83558060,0.60128544
+B,0.25,sweep_b_025,150,37.5,SK-C-1802,pupil,tier1,Willem Drost,Cimon and Pero (Roman Charity),20,0.77753897,0.64081951
+B,0.25,sweep_b_025,150,37.5,SK-C-597,cohort,,,"Portrait of a woman, possibly Maria Trip",20,2.33528363,1.91165038
+B,0.30,sweep_b_030,150,45,SK-A-106,pupil,tier1,Gerbrand van den Eeckhout,Christ and the Woman in Adultery,20,0.75018310,1.58039767
+B,0.30,sweep_b_030,150,45,SK-A-1259,pupil,tier1,Nicolaes Maes,"Gerard Röver, Merchant and Shipowner in Amsterdam",20,1.27383272,1.75091724
+B,0.30,sweep_b_030,150,45,SK-A-1591,pupil,tier1,Carel Fabritius,Abraham de Potter (1592-1650). Zijdelakenkoopman te Amsterdam,20,0.78309394,0.67469127
+B,0.30,sweep_b_030,150,45,SK-A-1612,pupil,tier1,Gerbrand van den Eeckhout,Badende mannen,20,0.47558134,0.59581314
+B,0.30,sweep_b_030,150,45,SK-A-1645,pupil,tier1,Nicolaes Maes,"Portrait of Willem Pottey, Lawyer and Accountant-General of Flushing",20,7.09853154,3.82043200
+B,0.30,sweep_b_030,150,45,SK-A-1646,pupil,tier1,Nicolaes Maes,"Portrait of Catharina Pottey, Sister of Willem and Sara Pottey",20,0.68783511,1.25038652
+B,0.30,sweep_b_030,150,45,SK-A-1935,cohort,,,Landschap met stenen brug,20,0.43885847,1.31272057
+B,0.30,sweep_b_030,150,45,SK-A-218,pupil,tier2,Jan Lievens,Joost van den Vondel (1587-1679). Dichter,20,0.69887720,1.10089649
+B,0.30,sweep_b_030,150,45,SK-A-246,pupil,tier1,Nicolaes Maes,De spinster,20,0.73116657,0.71261692
+B,0.30,sweep_b_030,150,45,SK-A-3066,cohort,,,"Oude lezende vrouw, waarschijnlijk de profetes Hanna",20,0.42411050,1.25443011
+B,0.30,sweep_b_030,150,45,SK-A-3138,cohort,,,Titus in monniksdracht,20,0.60148170,0.86813564
+B,0.30,sweep_b_030,150,45,SK-A-3276,cohort,,,Jeremiah Lamenting the Destruction of Jerusalem,20,0.65336076,0.92200141
+B,0.30,sweep_b_030,150,45,SK-A-3340,cohort,,,Borstbeeld van een man in oosterse kleding,20,0.48188370,1.89983394
+B,0.30,sweep_b_030,150,45,SK-A-3451,pupil,tier1,Govert Flinck,Shepherd,20,0.73943750,0.96583063
+B,0.30,sweep_b_030,150,45,SK-A-3477,cohort,,,Joseph telling his dreams,20,1.20845485,1.15164173
+B,0.30,sweep_b_030,150,45,SK-A-3508,pupil,tier1,Nicolaes Maes,Portret van een jonge man,20,1.49641920,1.64206421
+B,0.30,sweep_b_030,150,45,SK-A-3934,validation,,,Borstbeeld van een lachende jonge man,20,0.80772271,0.67485452
+B,0.30,sweep_b_030,150,45,SK-A-4047,pupil,tier1,Nicolaes Maes,Woman at a Cradle,20,0.74454808,1.55879537
+B,0.30,sweep_b_030,150,45,SK-A-4050,cohort,,,Self Portrait as the Apostle Paul,20,0.72985377,0.58117192
+B,0.30,sweep_b_030,150,45,SK-A-4057,cohort,,,Young Woman in Fantasy Costume,20,1.08150632,1.64724316
+B,0.30,sweep_b_030,150,45,SK-A-4096,ambiguous,,,Simson en Delila,20,2.49660966,1.50541304
+B,0.30,sweep_b_030,150,45,SK-A-4166,pupil,tier1,Govert Flinck,"Portret van een man, mogelijk Gozen Centen (1611/12-1677)",20,0.54127884,1.60105017
+B,0.30,sweep_b_030,150,45,SK-A-4674,cohort,,,Musical Company,20,4.21482888,3.14800342
+B,0.30,sweep_b_030,150,45,SK-A-4691,cohort,,,Self Portrait,20,0.49749309,1.13573010
+B,0.30,sweep_b_030,150,45,SK-A-4717,cohort,,,Tobit and Anna with the Kid,20,1.45958156,2.22178201
+B,0.30,sweep_b_030,150,45,SK-A-4833,cohort,,,Portrait van Haesje Jacobsdr van Cleyburgh,20,0.57024879,1.02424556
+B,0.30,sweep_b_030,150,45,SK-A-4881,pupil,tier1,Nicolaes Maes,"Portrait of a young man, possibly Simon van Alphen (1650-1730)",20,0.31742836,1.90126010
+B,0.30,sweep_b_030,150,45,SK-A-4888,pupil,tier1,Nicolaes Maes,Portret van Pieter Groenendijk,20,0.84532043,1.38623414
+B,0.30,sweep_b_030,150,45,SK-A-4889,pupil,tier1,Nicolaes Maes,Portret van Petronella Dunois,20,1.35926382,1.02062814
+B,0.30,sweep_b_030,150,45,SK-A-5033,cohort,,,Portrait of Marten Soolmans,20,0.85178341,0.76526543
+B,0.30,sweep_b_030,150,45,SK-A-5092,cohort,,,The Standard Bearer,20,0.67409321,1.12670672
+B,0.30,sweep_b_030,150,45,SK-A-582,pupil,tier1,Govert Flinck,"Portret van een man, vermoedelijk Augustijn Wtenbogaert (1577-1655)",20,0.96405219,1.23657385
+B,0.30,sweep_b_030,150,45,SK-A-686,pupil,tier1,Gerrit Dou,Johan Wittert van der Aa (1604-1670),20,0.47017422,0.75635904
+B,0.30,sweep_b_030,150,45,SK-A-86,pupil,tier1,Gerrit Dou,Man Smoking a Pipe,20,0.38295506,1.37963896
+B,0.30,sweep_b_030,150,45,SK-A-87,pupil,tier1,Gerrit Dou,The Night School,20,4.63721952,0.68246153
+B,0.30,sweep_b_030,150,45,SK-A-90,pupil,tier1,Gerrit Dou,Portrait of a Couple in a Landscape,20,0.72289036,0.54063232
+B,0.30,sweep_b_030,150,45,SK-C-127,pupil,tier1,Gerrit Dou,A Fisherman's Wife,20,0.51400138,0.93432156
+B,0.30,sweep_b_030,150,45,SK-C-128,pupil,tier1,Gerrit Dou,A Hermit,20,0.50551609,0.91179746
+B,0.30,sweep_b_030,150,45,SK-C-152,pupil,tier1,Samuel van Hoogstraten,'The Anemic Lady',20,0.54856799,1.31554024
+B,0.30,sweep_b_030,150,45,SK-C-176,pupil,tier1,Nicolaes Maes,De spinster,20,0.66755358,0.85833272
+B,0.30,sweep_b_030,150,45,SK-C-1768,cohort,,,Portret van Oopjen Coppit,20,0.77146148,0.26822590
+B,0.30,sweep_b_030,150,45,SK-C-1802,pupil,tier1,Willem Drost,Cimon and Pero (Roman Charity),20,0.72023900,0.60957727
+B,0.30,sweep_b_030,150,45,SK-C-597,cohort,,,"Portrait of a woman, possibly Maria Trip",20,2.93602222,3.18352300
+A,0.15,sweep_a_015,224,33.6,SK-A-106,pupil,tier1,Gerbrand van den Eeckhout,Christ and the Woman in Adultery,20,-1.25055936,0.09113673
+A,0.15,sweep_a_015,224,33.6,SK-A-1259,pupil,tier1,Nicolaes Maes,"Gerard Röver, Merchant and Shipowner in Amsterdam",20,1.05095105,0.12444235
+A,0.15,sweep_a_015,224,33.6,SK-A-1591,pupil,tier1,Carel Fabritius,Abraham de Potter (1592-1650). Zijdelakenkoopman te Amsterdam,20,0.84081315,0.31741221
+A,0.15,sweep_a_015,224,33.6,SK-A-1612,pupil,tier1,Gerbrand van den Eeckhout,Badende mannen,20,-0.16907770,0.21757785
+A,0.15,sweep_a_015,224,33.6,SK-A-1645,pupil,tier1,Nicolaes Maes,"Portrait of Willem Pottey, Lawyer and Accountant-General of Flushing",20,0.59671931,0.14363367
+A,0.15,sweep_a_015,224,33.6,SK-A-1646,pupil,tier1,Nicolaes Maes,"Portrait of Catharina Pottey, Sister of Willem and Sara Pottey",20,-0.03769768,0.19883252
+A,0.15,sweep_a_015,224,33.6,SK-A-1935,cohort,,,Landschap met stenen brug,20,1.25960137,0.09395926
+A,0.15,sweep_a_015,224,33.6,SK-A-218,pupil,tier2,Jan Lievens,Joost van den Vondel (1587-1679). Dichter,20,-0.16187012,0.19626885
+A,0.15,sweep_a_015,224,33.6,SK-A-246,pupil,tier1,Nicolaes Maes,De spinster,20,0.52152602,0.13104632
+A,0.15,sweep_a_015,224,33.6,SK-A-3066,cohort,,,"Oude lezende vrouw, waarschijnlijk de profetes Hanna",20,-1.02753009,0.20290537
+A,0.15,sweep_a_015,224,33.6,SK-A-3138,cohort,,,Titus in monniksdracht,20,-0.41346268,0.12617668
+A,0.15,sweep_a_015,224,33.6,SK-A-3276,cohort,,,Jeremiah Lamenting the Destruction of Jerusalem,20,-0.09404425,0.23313051
+A,0.15,sweep_a_015,224,33.6,SK-A-3340,cohort,,,Borstbeeld van een man in oosterse kleding,20,-0.30306057,0.32462048
+A,0.15,sweep_a_015,224,33.6,SK-A-3451,pupil,tier1,Govert Flinck,Shepherd,20,-0.52070895,0.05984408
+A,0.15,sweep_a_015,224,33.6,SK-A-3477,cohort,,,Joseph telling his dreams,20,0.92581370,0.19374638
+A,0.15,sweep_a_015,224,33.6,SK-A-3508,pupil,tier1,Nicolaes Maes,Portret van een jonge man,20,-0.35438682,0.22577474
+A,0.15,sweep_a_015,224,33.6,SK-A-3934,validation,,,Borstbeeld van een lachende jonge man,20,-0.85208364,0.17742497
+A,0.15,sweep_a_015,224,33.6,SK-A-4050,cohort,,,Self Portrait as the Apostle Paul,20,-1.46280149,0.14175005
+A,0.15,sweep_a_015,224,33.6,SK-A-4057,cohort,,,Young Woman in Fantasy Costume,20,1.00364832,0.31056608
+A,0.15,sweep_a_015,224,33.6,SK-A-4166,pupil,tier1,Govert Flinck,"Portret van een man, mogelijk Gozen Centen (1611/12-1677)",20,-0.44084258,0.09465343
+A,0.15,sweep_a_015,224,33.6,SK-A-4674,cohort,,,Musical Company,20,1.53588381,0.23057616
+A,0.15,sweep_a_015,224,33.6,SK-A-4717,cohort,,,Tobit and Anna with the Kid,20,2.19337208,0.17964215
+A,0.15,sweep_a_015,224,33.6,SK-A-4833,cohort,,,Portrait van Haesje Jacobsdr van Cleyburgh,20,-0.70481072,0.25544339
+A,0.15,sweep_a_015,224,33.6,SK-A-4881,pupil,tier1,Nicolaes Maes,"Portrait of a young man, possibly Simon van Alphen (1650-1730)",20,0.37407818,0.21639721
+A,0.15,sweep_a_015,224,33.6,SK-A-4888,pupil,tier1,Nicolaes Maes,Portret van Pieter Groenendijk,20,-0.69534428,0.20213916
+A,0.15,sweep_a_015,224,33.6,SK-A-4889,pupil,tier1,Nicolaes Maes,Portret van Petronella Dunois,20,-0.50337922,0.16138264
+A,0.15,sweep_a_015,224,33.6,SK-A-5033,cohort,,,Portrait of Marten Soolmans,20,-0.66099454,0.16104768
+A,0.15,sweep_a_015,224,33.6,SK-A-5092,cohort,,,The Standard Bearer,20,0.18750305,0.24532294
+A,0.15,sweep_a_015,224,33.6,SK-A-582,pupil,tier1,Govert Flinck,"Portret van een man, vermoedelijk Augustijn Wtenbogaert (1577-1655)",20,-0.80559400,0.08916774
+A,0.15,sweep_a_015,224,33.6,SK-A-86,pupil,tier1,Gerrit Dou,Man Smoking a Pipe,20,-0.85227934,0.30297192
+A,0.15,sweep_a_015,224,33.6,SK-A-87,pupil,tier1,Gerrit Dou,The Night School,20,-0.37178288,0.10189678
+A,0.15,sweep_a_015,224,33.6,SK-A-90,pupil,tier1,Gerrit Dou,Portrait of a Couple in a Landscape,20,-1.04459435,0.06961151
+A,0.15,sweep_a_015,224,33.6,SK-C-152,pupil,tier1,Samuel van Hoogstraten,'The Anemic Lady',20,-0.74744518,0.26981299
+A,0.15,sweep_a_015,224,33.6,SK-C-176,pupil,tier1,Nicolaes Maes,De spinster,20,0.58814133,0.27368257
+A,0.15,sweep_a_015,224,33.6,SK-C-1768,cohort,,,Portret van Oopjen Coppit,20,-1.08774881,0.06109062
+A,0.15,sweep_a_015,224,33.6,SK-C-1802,pupil,tier1,Willem Drost,Cimon and Pero (Roman Charity),20,-0.84850839,0.18389846
+A,0.15,sweep_a_015,224,33.6,SK-C-597,cohort,,,"Portrait of a woman, possibly Maria Trip",20,-1.05190834,0.23519309
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-106,pupil,tier1,Gerbrand van den Eeckhout,Christ and the Woman in Adultery,20,-1.04889382,0.12542330
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-1259,pupil,tier1,Nicolaes Maes,"Gerard Röver, Merchant and Shipowner in Amsterdam",20,0.91197429,0.17985786
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-1591,pupil,tier1,Carel Fabritius,Abraham de Potter (1592-1650). Zijdelakenkoopman te Amsterdam,20,0.21582807,0.28570604
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-1612,pupil,tier1,Gerbrand van den Eeckhout,Badende mannen,20,0.38212548,0.16131004
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-1645,pupil,tier1,Nicolaes Maes,"Portrait of Willem Pottey, Lawyer and Accountant-General of Flushing",20,0.23424722,0.13179784
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-1646,pupil,tier1,Nicolaes Maes,"Portrait of Catharina Pottey, Sister of Willem and Sara Pottey",20,0.47141879,0.23568975
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-1935,cohort,,,Landschap met stenen brug,20,1.51995252,0.12283643
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-218,pupil,tier2,Jan Lievens,Joost van den Vondel (1587-1679). Dichter,20,-0.61972491,0.11355503
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-246,pupil,tier1,Nicolaes Maes,De spinster,20,0.52702402,0.10731135
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-3066,cohort,,,"Oude lezende vrouw, waarschijnlijk de profetes Hanna",20,-0.97364412,0.15556804
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-3138,cohort,,,Titus in monniksdracht,20,-0.73820210,0.11317625
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-3276,cohort,,,Jeremiah Lamenting the Destruction of Jerusalem,20,-0.77620929,0.22166418
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-3340,cohort,,,Borstbeeld van een man in oosterse kleding,20,-0.49529833,0.29064333
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-3451,pupil,tier1,Govert Flinck,Shepherd,20,0.06370836,0.21655369
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-3477,cohort,,,Joseph telling his dreams,20,0.71103033,0.16849235
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-3508,pupil,tier1,Nicolaes Maes,Portret van een jonge man,20,-0.23488951,0.08248032
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-3934,validation,,,Borstbeeld van een lachende jonge man,20,-0.51176209,0.10933737
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-4050,cohort,,,Self Portrait as the Apostle Paul,20,-1.29112008,0.06135968
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-4057,cohort,,,Young Woman in Fantasy Costume,20,0.90452903,0.28228734
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-4166,pupil,tier1,Govert Flinck,"Portret van een man, mogelijk Gozen Centen (1611/12-1677)",20,-0.62630022,0.20679781
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-4674,cohort,,,Musical Company,20,1.46311978,0.21929219
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-4717,cohort,,,Tobit and Anna with the Kid,20,2.33673922,0.20061989
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-4833,cohort,,,Portrait van Haesje Jacobsdr van Cleyburgh,20,-0.61408060,0.24255276
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-4881,pupil,tier1,Nicolaes Maes,"Portrait of a young man, possibly Simon van Alphen (1650-1730)",20,0.10591443,0.21151467
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-4888,pupil,tier1,Nicolaes Maes,Portret van Pieter Groenendijk,20,-0.55977957,0.29420374
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-4889,pupil,tier1,Nicolaes Maes,Portret van Petronella Dunois,20,0.19057550,0.19884705
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-5033,cohort,,,Portrait of Marten Soolmans,20,-0.93818625,0.06227338
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-5092,cohort,,,The Standard Bearer,20,0.26161711,0.24908579
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-582,pupil,tier1,Govert Flinck,"Portret van een man, vermoedelijk Augustijn Wtenbogaert (1577-1655)",20,-0.65490804,0.12723763
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-86,pupil,tier1,Gerrit Dou,Man Smoking a Pipe,20,-0.03423829,0.18000984
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-87,pupil,tier1,Gerrit Dou,The Night School,20,-0.40866086,0.16697815
+A,0.20,cnn_tiles_v1,224,44.8,SK-A-90,pupil,tier1,Gerrit Dou,Portrait of a Couple in a Landscape,20,-1.05971924,0.19112000
+A,0.20,cnn_tiles_v1,224,44.8,SK-C-152,pupil,tier1,Samuel van Hoogstraten,'The Anemic Lady',20,0.18959064,0.15314437
+A,0.20,cnn_tiles_v1,224,44.8,SK-C-176,pupil,tier1,Nicolaes Maes,De spinster,20,0.58006916,0.26693572
+A,0.20,cnn_tiles_v1,224,44.8,SK-C-1768,cohort,,,Portret van Oopjen Coppit,20,-0.99252115,0.07443438
+A,0.20,cnn_tiles_v1,224,44.8,SK-C-1802,pupil,tier1,Willem Drost,Cimon and Pero (Roman Charity),20,-0.00534069,0.18746098
+A,0.20,cnn_tiles_v1,224,44.8,SK-C-597,cohort,,,"Portrait of a woman, possibly Maria Trip",20,0.02343931,0.32593951
+A,0.25,sweep_a_025,224,56,SK-A-106,pupil,tier1,Gerbrand van den Eeckhout,Christ and the Woman in Adultery,20,-0.73508585,0.21544196
+A,0.25,sweep_a_025,224,56,SK-A-1259,pupil,tier1,Nicolaes Maes,"Gerard Röver, Merchant and Shipowner in Amsterdam",20,1.18656755,0.17790400
+A,0.25,sweep_a_025,224,56,SK-A-1591,pupil,tier1,Carel Fabritius,Abraham de Potter (1592-1650). Zijdelakenkoopman te Amsterdam,20,0.28365959,0.23448225
+A,0.25,sweep_a_025,224,56,SK-A-1612,pupil,tier1,Gerbrand van den Eeckhout,Badende mannen,20,0.68893466,0.15718277
+A,0.25,sweep_a_025,224,56,SK-A-1645,pupil,tier1,Nicolaes Maes,"Portrait of Willem Pottey, Lawyer and Accountant-General of Flushing",20,0.17709185,0.14388073
+A,0.25,sweep_a_025,224,56,SK-A-1646,pupil,tier1,Nicolaes Maes,"Portrait of Catharina Pottey, Sister of Willem and Sara Pottey",20,-0.05818548,0.30076393
+A,0.25,sweep_a_025,224,56,SK-A-1935,cohort,,,Landschap met stenen brug,20,1.29497001,0.16721038
+A,0.25,sweep_a_025,224,56,SK-A-218,pupil,tier2,Jan Lievens,Joost van den Vondel (1587-1679). Dichter,20,-0.41167443,0.17980912
+A,0.25,sweep_a_025,224,56,SK-A-246,pupil,tier1,Nicolaes Maes,De spinster,20,-0.01094314,0.18123929
+A,0.25,sweep_a_025,224,56,SK-A-3066,cohort,,,"Oude lezende vrouw, waarschijnlijk de profetes Hanna",20,-0.85048861,0.19214898
+A,0.25,sweep_a_025,224,56,SK-A-3138,cohort,,,Titus in monniksdracht,20,-1.23777777,0.08674845
+A,0.25,sweep_a_025,224,56,SK-A-3276,cohort,,,Jeremiah Lamenting the Destruction of Jerusalem,20,0.10857259,0.28062568
+A,0.25,sweep_a_025,224,56,SK-A-3340,cohort,,,Borstbeeld van een man in oosterse kleding,20,0.47404271,0.25028401
+A,0.25,sweep_a_025,224,56,SK-A-3451,pupil,tier1,Govert Flinck,Shepherd,20,-0.08440603,0.15334507
+A,0.25,sweep_a_025,224,56,SK-A-3477,cohort,,,Joseph telling his dreams,20,0.94582900,0.17439410
+A,0.25,sweep_a_025,224,56,SK-A-3508,pupil,tier1,Nicolaes Maes,Portret van een jonge man,20,-0.28624281,0.19153102
+A,0.25,sweep_a_025,224,56,SK-A-3934,validation,,,Borstbeeld van een lachende jonge man,20,-0.90268570,0.14410611
+A,0.25,sweep_a_025,224,56,SK-A-4050,cohort,,,Self Portrait as the Apostle Paul,20,-1.51417000,0.12374936
+A,0.25,sweep_a_025,224,56,SK-A-4057,cohort,,,Young Woman in Fantasy Costume,20,1.43670157,0.25546426
+A,0.25,sweep_a_025,224,56,SK-A-4166,pupil,tier1,Govert Flinck,"Portret van een man, mogelijk Gozen Centen (1611/12-1677)",20,-0.66533341,0.09664277
+A,0.25,sweep_a_025,224,56,SK-A-4674,cohort,,,Musical Company,20,0.66323743,0.23073747
+A,0.25,sweep_a_025,224,56,SK-A-4717,cohort,,,Tobit and Anna with the Kid,20,2.05860775,0.10537007
+A,0.25,sweep_a_025,224,56,SK-A-4833,cohort,,,Portrait van Haesje Jacobsdr van Cleyburgh,20,-0.02071428,0.27171628
+A,0.25,sweep_a_025,224,56,SK-A-4881,pupil,tier1,Nicolaes Maes,"Portrait of a young man, possibly Simon van Alphen (1650-1730)",20,-0.44465880,0.23531840
+A,0.25,sweep_a_025,224,56,SK-A-4888,pupil,tier1,Nicolaes Maes,Portret van Pieter Groenendijk,20,-0.83359620,0.20548808
+A,0.25,sweep_a_025,224,56,SK-A-4889,pupil,tier1,Nicolaes Maes,Portret van Petronella Dunois,20,-0.21476719,0.19245372
+A,0.25,sweep_a_025,224,56,SK-A-5033,cohort,,,Portrait of Marten Soolmans,20,-0.88853106,0.20545200
+A,0.25,sweep_a_025,224,56,SK-A-5092,cohort,,,The Standard Bearer,20,-0.19924526,0.29036538
+A,0.25,sweep_a_025,224,56,SK-A-582,pupil,tier1,Govert Flinck,"Portret van een man, vermoedelijk Augustijn Wtenbogaert (1577-1655)",20,-0.61830785,0.11917857
+A,0.25,sweep_a_025,224,56,SK-A-86,pupil,tier1,Gerrit Dou,Man Smoking a Pipe,20,0.02312595,0.20710774
+A,0.25,sweep_a_025,224,56,SK-A-87,pupil,tier1,Gerrit Dou,The Night School,20,-0.36560161,0.15293881
+A,0.25,sweep_a_025,224,56,SK-A-90,pupil,tier1,Gerrit Dou,Portrait of a Couple in a Landscape,20,-1.20346810,0.11741346
+A,0.25,sweep_a_025,224,56,SK-C-152,pupil,tier1,Samuel van Hoogstraten,'The Anemic Lady',20,0.51873609,0.13167652
+A,0.25,sweep_a_025,224,56,SK-C-176,pupil,tier1,Nicolaes Maes,De spinster,20,1.46859720,0.29631783
+A,0.25,sweep_a_025,224,56,SK-C-1768,cohort,,,Portret van Oopjen Coppit,20,-1.12034515,0.08692797
+A,0.25,sweep_a_025,224,56,SK-C-1802,pupil,tier1,Willem Drost,Cimon and Pero (Roman Charity),20,-0.23703795,0.15415205
+A,0.25,sweep_a_025,224,56,SK-C-597,cohort,,,"Portrait of a woman, possibly Maria Trip",20,-0.98363769,0.18111476
+A,0.30,sweep_a_030,224,67.2,SK-A-106,pupil,tier1,Gerbrand van den Eeckhout,Christ and the Woman in Adultery,20,-0.69776498,0.10964940
+A,0.30,sweep_a_030,224,67.2,SK-A-1259,pupil,tier1,Nicolaes Maes,"Gerard Röver, Merchant and Shipowner in Amsterdam",20,0.86323395,0.20453400
+A,0.30,sweep_a_030,224,67.2,SK-A-1591,pupil,tier1,Carel Fabritius,Abraham de Potter (1592-1650). Zijdelakenkoopman te Amsterdam,20,-0.18505187,0.22016503
+A,0.30,sweep_a_030,224,67.2,SK-A-1612,pupil,tier1,Gerbrand van den Eeckhout,Badende mannen,20,0.05854026,0.15280613
+A,0.30,sweep_a_030,224,67.2,SK-A-1645,pupil,tier1,Nicolaes Maes,"Portrait of Willem Pottey, Lawyer and Accountant-General of Flushing",20,0.45384943,0.12624356
+A,0.30,sweep_a_030,224,67.2,SK-A-1646,pupil,tier1,Nicolaes Maes,"Portrait of Catharina Pottey, Sister of Willem and Sara Pottey",20,0.07904456,0.19207401
+A,0.30,sweep_a_030,224,67.2,SK-A-1935,cohort,,,Landschap met stenen brug,20,1.41105071,0.08248185
+A,0.30,sweep_a_030,224,67.2,SK-A-218,pupil,tier2,Jan Lievens,Joost van den Vondel (1587-1679). Dichter,20,-0.15399142,0.15043294
+A,0.30,sweep_a_030,224,67.2,SK-A-246,pupil,tier1,Nicolaes Maes,De spinster,20,-0.44591220,0.13410633
+A,0.30,sweep_a_030,224,67.2,SK-A-3066,cohort,,,"Oude lezende vrouw, waarschijnlijk de profetes Hanna",20,-0.61241840,0.18589011
+A,0.30,sweep_a_030,224,67.2,SK-A-3138,cohort,,,Titus in monniksdracht,20,-0.99538432,0.08280016
+A,0.30,sweep_a_030,224,67.2,SK-A-3276,cohort,,,Jeremiah Lamenting the Destruction of Jerusalem,20,-0.15100126,0.20984717
+A,0.30,sweep_a_030,224,67.2,SK-A-3340,cohort,,,Borstbeeld van een man in oosterse kleding,20,-0.11018851,0.31570888
+A,0.30,sweep_a_030,224,67.2,SK-A-3451,pupil,tier1,Govert Flinck,Shepherd,20,-0.25571240,0.18622771
+A,0.30,sweep_a_030,224,67.2,SK-A-3477,cohort,,,Joseph telling his dreams,20,0.61112065,0.14010697
+A,0.30,sweep_a_030,224,67.2,SK-A-3508,pupil,tier1,Nicolaes Maes,Portret van een jonge man,20,-0.70318942,0.22248384
+A,0.30,sweep_a_030,224,67.2,SK-A-3934,validation,,,Borstbeeld van een lachende jonge man,20,-0.39738734,0.14311441
+A,0.30,sweep_a_030,224,67.2,SK-A-4050,cohort,,,Self Portrait as the Apostle Paul,20,-1.81289127,0.11390027
+A,0.30,sweep_a_030,224,67.2,SK-A-4057,cohort,,,Young Woman in Fantasy Costume,20,1.84344238,0.19522321
+A,0.30,sweep_a_030,224,67.2,SK-A-4166,pupil,tier1,Govert Flinck,"Portret van een man, mogelijk Gozen Centen (1611/12-1677)",20,-0.43063801,0.08729915
+A,0.30,sweep_a_030,224,67.2,SK-A-4674,cohort,,,Musical Company,20,1.25700545,0.18318605
+A,0.30,sweep_a_030,224,67.2,SK-A-4717,cohort,,,Tobit and Anna with the Kid,20,1.73046484,0.19044021
+A,0.30,sweep_a_030,224,67.2,SK-A-4833,cohort,,,Portrait van Haesje Jacobsdr van Cleyburgh,20,-0.36507359,0.17312357
+A,0.30,sweep_a_030,224,67.2,SK-A-4881,pupil,tier1,Nicolaes Maes,"Portrait of a young man, possibly Simon van Alphen (1650-1730)",20,-0.34769617,0.19970698
+A,0.30,sweep_a_030,224,67.2,SK-A-4888,pupil,tier1,Nicolaes Maes,Portret van Pieter Groenendijk,20,-0.36197550,0.19555085
+A,0.30,sweep_a_030,224,67.2,SK-A-4889,pupil,tier1,Nicolaes Maes,Portret van Petronella Dunois,20,-0.36335227,0.18353850
+A,0.30,sweep_a_030,224,67.2,SK-A-5033,cohort,,,Portrait of Marten Soolmans,20,-0.08693506,0.29027270
+A,0.30,sweep_a_030,224,67.2,SK-A-5092,cohort,,,The Standard Bearer,20,-0.56430858,0.15922647
+A,0.30,sweep_a_030,224,67.2,SK-A-582,pupil,tier1,Govert Flinck,"Portret van een man, vermoedelijk Augustijn Wtenbogaert (1577-1655)",20,-0.77598753,0.12436517
+A,0.30,sweep_a_030,224,67.2,SK-A-86,pupil,tier1,Gerrit Dou,Man Smoking a Pipe,20,-0.09375917,0.14153215
+A,0.30,sweep_a_030,224,67.2,SK-A-87,pupil,tier1,Gerrit Dou,The Night School,20,-0.40502745,0.06914726
+A,0.30,sweep_a_030,224,67.2,SK-A-90,pupil,tier1,Gerrit Dou,Portrait of a Couple in a Landscape,20,-1.41839879,0.11464065
+A,0.30,sweep_a_030,224,67.2,SK-C-152,pupil,tier1,Samuel van Hoogstraten,'The Anemic Lady',20,0.42867732,0.16986716
+A,0.30,sweep_a_030,224,67.2,SK-C-176,pupil,tier1,Nicolaes Maes,De spinster,20,0.59663383,0.19697194
+A,0.30,sweep_a_030,224,67.2,SK-C-1768,cohort,,,Portret van Oopjen Coppit,20,-1.06874073,0.05909995
+A,0.30,sweep_a_030,224,67.2,SK-C-1802,pupil,tier1,Willem Drost,Cimon and Pero (Roman Charity),20,-0.40574336,0.16802078
+A,0.30,sweep_a_030,224,67.2,SK-C-597,cohort,,,"Portrait of a woman, possibly Maria Trip",20,-0.86587158,0.23735381

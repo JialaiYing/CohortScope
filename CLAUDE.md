@@ -6,7 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 CohortScope is a datathon research pipeline: it ranks Rijksmuseum Rembrandt oil paintings by how anomalous they look versus a firm-attribution "cohort", using pretrained ResNet50 embeddings (Signal A) plus 8 handcrafted texture/color features (Signal B). It is a **science deliverable (tables/CSV), not a product**.
 
-**The method does not work, and the repo says so.** Four held-out outcomes: O04 (`weak`, N=1), O06 (**`fail`**, N=67 pupils, AUC 0.419), O09 (**`fail`**, Signal B at a constant 0.20 mm/px, AUC 0.469), O11 (**`fail`**, Signal A at 0.20 mm/px with no resize, AUC 0.523). **Both halves of the method have now been tested on physically commensurable pixels and both failed** — the 35× scale confound was real, D34 removed it, and neither signal moved off chance. In all three pupil tests a resolution column alone out-separates the whole pipeline: `mm_per_px_analyzed` 0.590 in O06, `mm_per_px_native` 0.689 in O09 and 0.705 in O11. Never write code or docs that claim the method works.
+**The method does not work, the repo says so, and the question is closed.** Five held-out outcomes: O04 (`weak`, N=1), O06 (**`fail`**, N=67 pupils, AUC 0.419), O09 (**`fail`**, Signal B at 0.20 mm/px, AUC 0.469), O11 (**`fail`**, Signal A at 0.20 mm/px with no resize, AUC 0.523), O13 (**`fail`**, both signals swept 0.15–0.30 mm/px on a fixed population — all eight points within 0.047 of chance).
+
+The escape hatches are closed in order: the 35× scale confound was real and D34 removed it; both halves were then retested on commensurable pixels and both failed; the sweep then showed 0.20 was not simply the wrong scale. In **all four** pupil tests a digitization column alone out-separates the whole pipeline — `mm_per_px_analyzed` 0.590 (O06), `mm_per_px_native` 0.689 (O09), 0.705 (O11), 0.617 (O13). Never write code or docs that claim the method works, and do not propose a sixth variant of it without new evidence.
 
 ## Commands
 
@@ -35,6 +37,9 @@ python tile_score.py       # → results/tile_scores/ + results/tile_validation_
 python cnn_tiles.py        # → data/tiles/cnn_tiles_v1/ (224 px tiles for Signal A, D36)
 python tile_embed.py       # → data/embeddings/tile_embed_v1/matrix.pt
 python tile_score_a.py     # → results/tile_embedding_report.md (O11)
+python sweep.py --plan     # sweep population census; no network (D37)
+python sweep.py --fetch    # fetch the 4,800 sweep tiles (~85 min, resumable)
+python sweep.py            # → results/sweep/ + results/resolution_sweep_report.md (O13)
 python demo_app.py     # optional read-only Gradio viewer over existing scores
 ```
 
@@ -48,7 +53,7 @@ There is no test suite, linter config, or CI. Verification is by re-running a st
 
 Flat modules at repo root (D15); docs in `docs/`, artifacts in `data/` and `results/`.
 
-**Recipe-ID contract.** Every stage has a frozen `RECIPE_ID` (`preprocess_v1`, `embed_v1`, `features_v1`, `scores_v1`, `tiles_v1`, `tile_features_v1`, `tile_scores_v1`, `cnn_tiles_v1`, `tile_embed_v1`, `tile_scores_a_v1`) that names its output directory and is written into a `manifest.json`. Downstream stages read the upstream manifest, assert `recipe_id`, and use its `object_numbers` / `splits_by_id` as the worklist — they do **not** re-glob the filesystem or re-query SQLite for the worklist. Changing a recipe means bumping the ID and rerunning everything downstream, not editing outputs in place.
+**Recipe-ID contract.** Every stage has a frozen `RECIPE_ID` (`preprocess_v1`, `embed_v1`, `features_v1`, `scores_v1`, `tiles_v1`, `tile_features_v1`, `tile_scores_v1`, `cnn_tiles_v1`, `tile_embed_v1`, `tile_scores_a_v1`, `sweep_v1`) that names its output directory and is written into a `manifest.json`. Downstream stages read the upstream manifest, assert `recipe_id`, and use its `object_numbers` / `splits_by_id` as the worklist — they do **not** re-glob the filesystem or re-query SQLite for the worklist. Changing a recipe means bumping the ID and rerunning everything downstream, not editing outputs in place.
 
 **Two-branch preprocess (D26/D29).** `preprocess.py` writes two disjoint caches from the same JPEG:
 - Branch H `rgb/*.png` — identity/EXIF-corrected RGB, **only** consumer is `features.py` (interpretable features).
@@ -86,6 +91,14 @@ Two rules that look like edge cases and are not: (1) a tile is **never** dropped
 
 The larger tile costs 3 works (64 → 61), all the physically **smallest** — D34's exclusions were the largest, so the two recipes are size-biased in opposite directions. **There is no `combined` on either tile recipe**: Signal A and Signal B now live on different populations (61 vs 64), so summing their z-scores would sum different corpora.
 
+**The resolution sweep (D37, `sweep.py`).** The declared experiment `phase8 §4.5` named as the only legitimate way to vary the locked floor. Three things about it are load-bearing and easy to get wrong if it is ever re-run:
+
+1. **`Recipe.floor_mm_per_px` is per-recipe, not `config.TILE_FLOOR_MM_PER_PX`.** A recipe that requests a finer tile than the source supports would have IIIF **upsample** to fill it — inventing resolution, the one failure this whole line of work exists to prevent. `Recipe.__post_init__` asserts `size_mm == size_px × floor`, so the tile size cannot be chosen independently of the floor.
+2. **The population is fixed across floors**, not re-derived per floor. Eligibility is **not monotonic** in the floor — a coarser floor admits more works by the mm/px test while excluding more by the 20-tiles-must-fit test — so a per-floor population would confound resolution with which paintings entered the sample. The 0.05–0.40 intersection is 6 works for Signal B and **zero** for Signal A, which is why the range is 0.15–0.30.
+3. **Multiplicity is corrected.** 4 floors × 2 signals = 8 tests; the descriptive 95% CI and the Bonferroni 99.375% CI are computed from the *same* draws at *every* point, so the correction cannot be applied selectively to a winner.
+
+`tiles_v1` and `cnn_tiles_v1` are reused as the 0.20 points rather than re-derived, and the run verifies that.
+
 **Geometry changes no score.** D33 is data capture only. `features.py`, `embed.py`, and `score.py` do not read the geometry columns — resampling to a fixed physical resolution is a separate, still-unmade decision (**O07**), and `results/resolution_audit.md` deliberately declines to pick a floor for that reason.
 
 **QC side-channel.** Each stage writes `results/qc_<recipe_id>/` (failures CSV, summary JSON) alongside its data output; failures are logged rather than silently dropped.
@@ -94,7 +107,7 @@ The larger tile costs 3 works (64 → 61), all the physically **smallest** — D
 
 ## Working conventions
 
-- `docs/decisions.md` is the source of truth for locked decisions (D01–D36). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
+- `docs/decisions.md` is the source of truth for locked decisions (D01–D37). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
 - Code and design docs cite decision/task IDs (`D30`, `T043`, `O04`) in docstrings and reports. Keep doing this — the write-up traces back through them.
 - After a phase succeeds: cleanup pass (D24) → git commit + push to `origin/main` (D28). Cleanup logs live at `results/phase*_cleanup_log.md`.
 - Deferred and not to be reopened without strong reason: FastAPI/service layer, DINOv2 or alternate backbones, finetuning, multi-museum cohorts, folding attributed-to works into primary validation.

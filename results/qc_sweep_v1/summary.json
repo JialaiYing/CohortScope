@@ -1,0 +1,13 @@
+{
+  "recipe_id": "sweep_v1",
+  "created_at": "2026-08-23T22:36:50.525783+00:00",
+  "o13_tier": "fail",
+  "confounded": true,
+  "best_signal": "A",
+  "best_floor": 0.2,
+  "best_auc": 0.53,
+  "n_points": 8,
+  "n_tests": 8,
+  "design": "results/phase11_resolution_sweep_design.md",
+  "decision": "D37"
+}
