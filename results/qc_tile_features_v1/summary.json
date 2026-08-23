@@ -1,0 +1,17 @@
+{
+  "recipe_id": "tile_features_v1",
+  "tiles_recipe": "tiles_v1",
+  "created_at": "2026-08-23T00:16:39.722113+00:00",
+  "n_works": 64,
+  "n_tiles_expected": 1280,
+  "n_tiles_featurized": 1280,
+  "n_tile_failures": 0,
+  "n_undefined_cells": 77,
+  "undefined_cells_by_column": {
+    "hue_circ_std": 77
+  },
+  "works_with_undefined_cells": 20,
+  "works_short_of_expected": {},
+  "design": "results/phase9_tile_statistics_design.md",
+  "decision": "D35"
+}

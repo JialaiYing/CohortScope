@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 CohortScope is a datathon research pipeline: it ranks Rijksmuseum Rembrandt oil paintings by how anomalous they look versus a firm-attribution "cohort", using pretrained ResNet50 embeddings (Signal A) plus 8 handcrafted texture/color features (Signal B). It is a **science deliverable (tables/CSV), not a product**.
 
-**The method does not currently work, and the repo says so.** Two held-out tests: O04 (`weak`, N=1, `results/validation_report.md`) and O06 (**`fail`**, N=67 documented Rembrandt pupils, AUC 0.419, `results/pupil_validation_report.md`). Per-signal AUC is at chance for both signals, and mm/px of the source image alone separates the classes better (0.590) than the whole pipeline. Never write code or docs that claim the method works.
+**The method does not currently work, and the repo says so.** Three held-out outcomes: O04 (`weak`, N=1, `results/validation_report.md`), O06 (**`fail`**, N=67 documented pupils, AUC 0.419, `results/pupil_validation_report.md`), and O09 (**`fail`**, N=55 at a constant 0.20 mm/px, AUC 0.469, `results/tile_validation_report.md`). Per-signal AUC is at chance throughout, and in both pupil tests a resolution column alone separates the classes better than the whole pipeline — `mm_per_px_analyzed` at 0.590 in O06, `mm_per_px_native` at 0.689 in O09. Never write code or docs that claim the method works.
 
 ## Commands
 
@@ -30,10 +30,12 @@ python dimensions.py       # backfill geometry onto pre-D33 rows (no-op after a 
 python evaluate_pupils.py  # → results/pupil_validation_report.md (O06)
 python resolution_audit.py # → results/resolution_audit.{md,csv}
 python tiles.py            # → data/tiles/tiles_v1/ + results/tiling_report.md (D34)
+python tile_features.py    # → data/features/tile_features_v1.csv (one row per tile, D35)
+python tile_score.py       # → results/tile_scores/ + results/tile_validation_report.md (O09)
 python demo_app.py     # optional read-only Gradio viewer over existing scores
 ```
 
-All shipped artifacts are committed except `data/preprocessed/` (see below). `preprocess`, `embed`, `features`, `score`, `evaluate_pupils`, and `resolution_audit` **refuse to overwrite** existing outputs unless given `--force`; `dimensions.py` is incremental instead (it only fills gaps). `acquire.py` takes `--dry-run` (no image download / no DB write), `--inventory` (regenerate `results/inventory.*` from the existing DB), and `--pupils-only`. `acquire.py` and `dimensions.py` are the only stages that need network.
+All shipped artifacts are committed except `data/preprocessed/` (see below). `preprocess`, `embed`, `features`, `score`, `evaluate_pupils`, `resolution_audit`, `tile_features`, and `tile_score` **refuse to overwrite** existing outputs unless given `--force`; `dimensions.py` is incremental instead (it only fills gaps). `acquire.py` takes `--dry-run` (no image download / no DB write), `--inventory` (regenerate `results/inventory.*` from the existing DB), and `--pupils-only`. `acquire.py` and `dimensions.py` are the only stages that need network.
 
 `acquire.py --pupils-only` adds the D32 pupil cohort **additively** against an existing DB, migrating the `works` table to the wider split enum and leaving every pre-existing row and image byte-identical. Prefer it over a full re-harvest, which deletes and rebuilds the DB and re-downloads every image.
 
@@ -43,7 +45,7 @@ There is no test suite, linter config, or CI. Verification is by re-running a st
 
 Flat modules at repo root (D15); docs in `docs/`, artifacts in `data/` and `results/`.
 
-**Recipe-ID contract.** Every stage has a frozen `RECIPE_ID` (`preprocess_v1`, `embed_v1`, `features_v1`, `scores_v1`, `tiles_v1`) that names its output directory and is written into a `manifest.json`. Downstream stages read the upstream manifest, assert `recipe_id`, and use its `object_numbers` / `splits_by_id` as the worklist — they do **not** re-glob the filesystem or re-query SQLite for the worklist. Changing a recipe means bumping the ID and rerunning everything downstream, not editing outputs in place.
+**Recipe-ID contract.** Every stage has a frozen `RECIPE_ID` (`preprocess_v1`, `embed_v1`, `features_v1`, `scores_v1`, `tiles_v1`, `tile_features_v1`, `tile_scores_v1`) that names its output directory and is written into a `manifest.json`. Downstream stages read the upstream manifest, assert `recipe_id`, and use its `object_numbers` / `splits_by_id` as the worklist — they do **not** re-glob the filesystem or re-query SQLite for the worklist. Changing a recipe means bumping the ID and rerunning everything downstream, not editing outputs in place.
 
 **Two-branch preprocess (D26/D29).** `preprocess.py` writes two disjoint caches from the same JPEG:
 - Branch H `rgb/*.png` — identity/EXIF-corrected RGB, **only** consumer is `features.py` (interpretable features).
@@ -69,6 +71,12 @@ Works whose `mm_per_px_native` exceeds the 0.20 floor are **below floor**: not t
 
 `data/tiles/` is gitignored (regenerable via `python tiles.py`). `scores_v1` and the whole fixed-1500 chain stay published as the baseline the normalized pipeline gets compared against — deleting them would destroy that comparison.
 
+**Tile statistics (D35, `tile_features.py` + `tile_score.py`).** The Signal-B half of the pipeline recomputed on `tiles_v1`. `tile_features.py` calls the *same* `features.extract_one()` with the *same* constants — the only difference from `features_v1` is what a pixel means, and that is the experimental control. `tile_score.py` aggregates a work by the **median over its 20 tiles**, fits cohort-only LOO normals on the 17 eligible firm Rembrandts, and reports `z_B_tile` = RMS of the 8 z-scores.
+
+**There is no Signal A and no `combined` on this recipe, on purpose.** A 150 px tile cannot enter the 224 px `embed_v1` branch without a resample factor, which is the arbitrariness D34 exists to remove. A result here is evidence about the handcrafted signal only.
+
+Two rules that look like edge cases and are not: (1) a tile is **never** dropped for what it depicts — `hue_circ_std` is undefined on 77 near-grey tiles, and those cells are excluded from that one feature's median while the tile is kept, because dropping the tile is content-based filtering with a class-correlated rate (design §4.1). (2) The report always prints the paired **ΔAUC** against `features_v1` re-fit on the same 55 works, so the pixels are the only thing that differs between the arms.
+
 **Geometry changes no score.** D33 is data capture only. `features.py`, `embed.py`, and `score.py` do not read the geometry columns — resampling to a fixed physical resolution is a separate, still-unmade decision (**O07**), and `results/resolution_audit.md` deliberately declines to pick a floor for that reason.
 
 **QC side-channel.** Each stage writes `results/qc_<recipe_id>/` (failures CSV, summary JSON) alongside its data output; failures are logged rather than silently dropped.
@@ -77,7 +85,7 @@ Works whose `mm_per_px_native` exceeds the 0.20 floor are **below floor**: not t
 
 ## Working conventions
 
-- `docs/decisions.md` is the source of truth for locked decisions (D01–D34). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
+- `docs/decisions.md` is the source of truth for locked decisions (D01–D35). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
 - Code and design docs cite decision/task IDs (`D30`, `T043`, `O04`) in docstrings and reports. Keep doing this — the write-up traces back through them.
 - After a phase succeeds: cleanup pass (D24) → git commit + push to `origin/main` (D28). Cleanup logs live at `results/phase*_cleanup_log.md`.
 - Deferred and not to be reopened without strong reason: FastAPI/service layer, DINOv2 or alternate backbones, finetuning, multi-museum cohorts, folding attributed-to works into primary validation.

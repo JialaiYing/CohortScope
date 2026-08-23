@@ -58,6 +58,39 @@ A work with fewer than 20 written tiles (fetch failures, see `results/qc_tiles_v
 
 There is no content-based tile filtering, no outlier-tile rejection, and no re-selection. Any such filter would be a tunable that could be turned to move the outcome.
 
+### §4.1 Addendum — a feature that is undefined on a tile (added 2026-08-22)
+
+**Recorded before any aggregate, z-score, AUC, or ranking was computed.** The
+per-tile extraction run at commit-time surfaced a case §4 did not anticipate and
+this fills the gap; it is not a change to a rule that was already written.
+
+`hue_circ_std` is defined only over pixels with CIE-Lab chroma >= 5.0
+(`features.HUE_CHROMA_MIN`). On a whole painting some such pixel always exists.
+On a 30 mm x 30 mm patch it need not: **77 of 1,280 tiles (6.0%) across 20 of the
+64 eligible works are entirely near-grey**, so their hue statistic has no value.
+No other feature is ever undefined.
+
+Two candidate rules, and why one is disqualified:
+
+- **Drop the whole tile.** Rejected. Discarding a tile because of what it depicts
+  is content-based tile filtering, which §4 forbids in the sentence directly
+  above, and the affected rate differs by class (7 of 17 cohort works vs 11 of 38
+  Tier-1 works), so it would silently reshape both arms.
+- **Retain the tile; treat that one cell as missing.** Adopted.
+
+**Locked rule.** A tile is never dropped for feature content. Each of the eight
+work-level medians (and the mean and IQR reported with it) is taken over the
+tiles on which that feature is defined. Every output row carries `n_tiles` and,
+where it differs, `n_tiles_hue`, so any reader can see the support behind a
+number. If a feature is undefined on **every** tile of a work, that work is
+dropped from the primary analysis and the loss is recorded in the report rather
+than patched over. No work in `tiles_v1` triggers that clause -- the worst case
+retains 10 of 20 tiles -- but the rule is fixed now, before results, so it cannot
+be chosen later.
+
+The `< 10 written tiles` drop rule in §4 continues to count *written tiles*, not
+per-feature support.
+
 ---
 
 ## 5. Fit and population (locked)

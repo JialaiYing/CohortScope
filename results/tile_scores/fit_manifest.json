@@ -1,0 +1,79 @@
+{
+  "recipe_id": "tile_scores_v1",
+  "tile_features_recipe": "tile_features_v1",
+  "created_at": "2026-08-23T00:23:36.514878+00:00",
+  "design": "results/phase9_tile_statistics_design.md",
+  "decision": "D35",
+  "n_scored": 64,
+  "n_cohort": 17,
+  "fit_on": "split == 'cohort' only, leave-one-out for cohort rows",
+  "aggregation": "median over a work's tiles, per feature (design \u00a74)",
+  "undefined_cell_policy": "design \u00a74.1",
+  "min_tiles": 10,
+  "feature_columns": [
+    "grad_mag_mean",
+    "grad_mag_std",
+    "grad_orient_entropy",
+    "laplacian_var",
+    "lbp_entropy",
+    "glcm_contrast",
+    "lab_chroma_mean",
+    "hue_circ_std"
+  ],
+  "mm_per_px": 0.2,
+  "signal_a": null,
+  "combined": null,
+  "tile_arm": {
+    "source": "data/features/tile_features_v1.csv",
+    "cohort_mu": {
+      "grad_mag_mean": 0.08665518876735294,
+      "grad_mag_std": 0.07297639089941177,
+      "grad_orient_entropy": 2.9668150340588233,
+      "laplacian_var": 0.0026412206493058826,
+      "lbp_entropy": 3.129978297911765,
+      "glcm_contrast": 0.6714326394852943,
+      "lab_chroma_mean": 9.630857116029409,
+      "hue_circ_std": 0.13400577697823532
+    },
+    "cohort_sigma": {
+      "grad_mag_mean": 0.03507884415065941,
+      "grad_mag_std": 0.03467379503704929,
+      "grad_orient_entropy": 0.04098585307237422,
+      "laplacian_var": 0.002878083715397311,
+      "lbp_entropy": 0.08240281300220048,
+      "glcm_contrast": 0.5160997688335517,
+      "lab_chroma_mean": 6.544760805524153,
+      "hue_circ_std": 0.03139186430630281
+    }
+  },
+  "fixed_pixel_arm": {
+    "source": "data/features/features_v1.csv",
+    "note": "features_v1 re-fit from scratch on the same eligible works (design \u00a75)",
+    "cohort_mu": {
+      "grad_mag_mean": 0.09164719563642967,
+      "grad_mag_std": 0.12661257529632566,
+      "grad_orient_entropy": 2.958307834288583,
+      "laplacian_var": 0.0047995148230302945,
+      "lbp_entropy": 3.12213412056441,
+      "glcm_contrast": 1.0366322143328963,
+      "lab_chroma_mean": 9.916290049936071,
+      "hue_circ_std": 0.22967439342845303
+    },
+    "cohort_sigma": {
+      "grad_mag_mean": 0.03383685663641514,
+      "grad_mag_std": 0.04750339630147855,
+      "grad_orient_entropy": 0.05493814860175677,
+      "laplacian_var": 0.006387401160534887,
+      "lbp_entropy": 0.08118376381772996,
+      "glcm_contrast": 0.9355909371841269,
+      "lab_chroma_mean": 4.675415210436825,
+      "hue_circ_std": 0.05945033849178448
+    }
+  },
+  "bootstrap": {
+    "n": 10000,
+    "seed": 20260822,
+    "unit": "works"
+  },
+  "dropped_works": []
+}
