@@ -1,0 +1,62 @@
+object_number,split,pupil_tier,creator,title,n_tiles,d_A_tile_median,d_A_tile_iqr,z_A_tile,z_A_tile_mean_variant,z_A_fixed_refit,rank_z_A_tile,z_B_tile
+SK-A-106,pupil,tier1,Gerbrand van den Eeckhout,Christ and the Woman in Adultery,20,0.25861051,0.11696602,-1.12414586,-0.87549339,-0.48377940,58,0.41146804
+SK-A-1259,pupil,tier1,Nicolaes Maes,"Gerard Röver, Merchant and Shipowner in Amsterdam",20,0.49878285,0.17460990,0.80770354,0.71775926,-0.01885378,8,2.16270619
+SK-A-1591,pupil,tier1,Carel Fabritius,Abraham de Potter (1592-1650). Zijdelakenkoopman te Amsterdam,20,0.40882699,0.25728397,0.08413492,-0.52433323,-0.38940824,27,1.27118408
+SK-A-1612,pupil,tier1,Gerbrand van den Eeckhout,Badende mannen,20,0.43108494,0.15494725,0.26316888,0.53363301,0.89120752,21,0.56110100
+SK-A-1645,pupil,tier1,Nicolaes Maes,"Portrait of Willem Pottey, Lawyer and Accountant-General of Flushing",20,0.41367800,0.12795206,0.12315444,0.13662661,-0.31835606,25,5.95304555
+SK-A-1646,pupil,tier1,Nicolaes Maes,"Portrait of Catharina Pottey, Sister of Willem and Sara Pottey",20,0.44252548,0.22197455,0.35519190,-0.54595106,-1.14846556,19,0.56178294
+SK-A-1935,cohort,,,Landschap met stenen brug,20,0.55147898,0.12138020,1.34366001,2.01517382,2.29114300,4,0.49709971
+SK-A-218,pupil,tier2,Jan Lievens,Joost van den Vondel (1587-1679). Dichter,20,0.30946572,0.10604258,-0.71508707,-0.78908222,-0.88554526,48,0.65161885
+SK-A-245,pupil,tier1,Nicolaes Maes,"Meisje aan het venster, bekend als 'De peinzende'",20,0.29652640,0.07349657,-0.81916573,-0.53564268,-1.31529848,51,0.46846797
+SK-A-246,pupil,tier1,Nicolaes Maes,De spinster,20,0.45379741,0.09277421,0.44585883,0.96362391,0.02682047,17,1.78627951
+SK-A-2507,pupil,tier1,Gerbrand van den Eeckhout,The Last Supper,20,0.26368324,0.11111576,-1.08334284,-0.38168332,-0.24302639,56,0.50357618
+SK-A-2627,pupil,tier1,Gerrit Dou,"Oude vrouw lezend in een lectionarium; zogenaamd portret van Rembrandts moeder, Neeltgen Willemsdr van Zuijdtbroeck (gest 1640)",20,0.40652831,0.18764230,0.06564527,-1.14821681,0.13126106,28,0.75093338
+SK-A-3066,cohort,,,"Oude lezende vrouw, waarschijnlijk de profetes Hanna",20,0.28617048,0.13496294,-0.95814766,-0.93797672,-0.55068797,53,1.44840260
+SK-A-3106,pupil,tier1,Nicolaes Maes,Portrait of a young Woman,20,0.46771346,0.13770001,0.55779387,0.91396647,-0.80771968,13,0.99467125
+SK-A-3138,cohort,,,Titus in monniksdracht,20,0.30771322,0.10273609,-0.76604374,-0.74723786,-0.39826072,50,0.50794605
+SK-A-3254,pupil,tier1,Nicolaes Maes,Groentemarkt,20,0.46700153,0.08659738,0.55206743,0.15403813,-0.54818591,14,0.93641955
+SK-A-3276,cohort,,,Jeremiah Lamenting the Destruction of Jerusalem,20,0.28969792,0.19170910,-0.92626317,-0.97989872,-0.52254935,52,0.55314350
+SK-A-3340,cohort,,,Borstbeeld van een man in oosterse kleding,20,0.31947864,0.27252429,-0.66346703,-1.20417422,-1.52554544,43,0.82652870
+SK-A-3451,pupil,tier1,Govert Flinck,Shepherd,20,0.38777066,0.20016917,-0.08523372,-0.20836789,0.77598011,32,0.49183932
+SK-A-3477,cohort,,,Joseph telling his dreams,20,0.45274631,0.16430727,0.45384199,1.31030895,1.54983273,16,0.93052332
+SK-A-3508,pupil,tier1,Nicolaes Maes,Portret van een jonge man,20,0.37216285,0.07076612,-0.21077666,0.27041773,-0.33561462,37,0.70195671
+SK-A-3516,pupil,tier2,Jacob Backer,"Portrait of Jan Lutma (1584/85-1669), Amsterdam Silversmith",20,0.31431234,0.19616360,-0.67610284,-0.45566017,-0.92005904,45,0.62805425
+SK-A-3517,pupil,tier2,Jacob Backer,"Portrait of Sara de Bie, Jan Lutma's second Wife",20,0.32596610,0.19397001,-0.58236463,-0.49976090,-0.17281443,41,0.44309471
+SK-A-3934,validation,,,Borstbeeld van een lachende jonge man,20,0.31572074,0.11192266,-0.66477425,-0.88585317,-0.17639265,44,0.89202058
+SK-A-3969,pupil,tier1,Aert de Gelder,"Ernestus van Beveren (1660-1722), Lord of West-Ysselmonde and de Lindt, Alderman, Burgomaster and from 1704 on Postmaster of Dordrecht",20,0.39108643,0.21746721,-0.05856299,-0.31799498,-1.70763641,31,0.71851004
+SK-A-397,pupil,tier2,Jacob Backer,Portrait of Machtelt Bas (?-1681),20,0.37047992,0.14347007,-0.22431349,-0.15724639,-1.06163440,38,0.99545690
+SK-A-4047,pupil,tier1,Nicolaes Maes,Woman at a Cradle,20,0.47194385,0.27496690,0.59182146,-0.56712975,-0.33810105,11,0.62492171
+SK-A-4050,cohort,,,Self Portrait as the Apostle Paul,20,0.25080729,0.06111978,-1.28939915,-0.79088054,-1.50318908,60,0.71735308
+SK-A-4057,cohort,,,Young Woman in Fantasy Costume,20,0.49336483,0.28241472,0.80430185,0.65377713,0.83780461,9,1.01411910
+SK-A-4090,pupil,tier2,Jan Lievens,Vanitas Still Life,20,0.33433656,0.25985824,-0.51503607,-0.81364201,-0.29437569,40,0.52712508
+SK-A-4096,ambiguous,,,Simson en Delila,20,0.67028993,0.06091297,2.18723723,3.30104053,0.75081584,1,1.64911571
+SK-A-4166,pupil,tier1,Govert Flinck,"Portret van een man, mogelijk Gozen Centen (1611/12-1677)",20,0.31216794,0.18844816,-0.69335147,-0.75458687,1.46015412,46,0.46229315
+SK-A-43,pupil,tier1,Ferdinand Bol,Portrait of a Man,20,0.37988513,0.10979586,-0.14866173,0.05269741,-1.35382282,35,0.73061379
+SK-A-4674,cohort,,,Musical Company,20,0.54271609,0.21392583,1.25833040,0.54246487,-0.75696957,5,2.86753043
+SK-A-4691,cohort,,,Self Portrait,20,0.56500830,0.11199847,1.47897988,1.13736477,0.83855416,3,0.32999012
+SK-A-4702,pupil,tier2,Jan Lievens,Old Woman Reading,20,0.47011062,0.25233240,0.57707564,-0.44902724,-1.28452511,12,1.55358074
+SK-A-4717,cohort,,,Tobit and Anna with the Kid,20,0.62518803,0.19886083,2.15195768,2.04896414,0.35546488,2,0.93904349
+SK-A-4833,cohort,,,Portrait van Haesje Jacobsdr van Cleyburgh,20,0.31296202,0.21216673,-0.72010113,-0.98353195,0.17945970,49,0.79588680
+SK-A-4853,pupil,tier1,Ferdinand Bol,De vredesonderhandelingen tussen Claudius Civilis en Quintus Petillius Cerealis op de afgebroken brug,20,0.37910745,0.18670847,-0.15491707,-0.60673742,0.39797568,36,0.50904460
+SK-A-4881,pupil,tier1,Nicolaes Maes,"Portrait of a young man, possibly Simon van Alphen (1650-1730)",20,0.40536915,0.20652137,0.05632138,0.23561702,-0.79274189,29,1.14043045
+SK-A-4888,pupil,tier1,Nicolaes Maes,Portret van Pieter Groenendijk,20,0.32158571,0.26812916,-0.61759876,-0.41900558,-1.24410958,42,0.66997457
+SK-A-4889,pupil,tier1,Nicolaes Maes,Portret van Petronella Dunois,20,0.41343244,0.19617502,0.12117925,-0.14095639,-1.12082476,26,0.66989685
+SK-A-5033,cohort,,,Portrait of Marten Soolmans,20,0.28533931,0.06000494,-0.96568727,-0.10852230,0.13811432,54,0.72857898
+SK-A-5092,cohort,,,The Standard Bearer,20,0.41497957,0.23374840,0.13778654,-0.82326102,-1.82211529,24,0.73873060
+SK-A-582,pupil,tier1,Govert Flinck,"Portret van een man, vermoedelijk Augustijn Wtenbogaert (1577-1655)",20,0.31161748,0.11420338,-0.69777916,-0.74872678,-0.50593998,47,0.77012792
+SK-A-683,pupil,tier1,Ferdinand Bol,Roelof Meulenaer (1618/19-1691). Amsterdam Mercantile Courier or Postmaster on the Antwerp Route,20,0.46090204,0.19041343,0.50300560,-0.36605339,1.14491929,15,0.70603733
+SK-A-684,pupil,tier1,Ferdinand Bol,Maria Rey (1630/31-1703). Echtgenote van Roelof Meulenaer,20,0.43050197,0.16797687,0.25847970,-0.47310697,-1.52991121,22,0.59487693
+SK-A-686,pupil,tier1,Gerrit Dou,Johan Wittert van der Aa (1604-1670),20,0.43678723,0.15993532,0.30903578,-0.02842665,-0.65496839,20,0.50967912
+SK-A-714,pupil,tier1,Ferdinand Bol,"Portret van een vrouw, mogelijk Elisabeth Bas",20,0.25488510,0.12556189,-1.15411153,-0.90929833,-1.04671323,59,0.57636083
+SK-A-86,pupil,tier1,Gerrit Dou,Man Smoking a Pipe,20,0.38593366,0.16280338,-0.10000978,-0.57102022,-0.71772038,33,1.17449960
+SK-A-87,pupil,tier1,Gerrit Dou,The Night School,20,0.33740108,0.15561273,-0.49038628,0.28215369,0.07154174,39,4.46912601
+SK-A-90,pupil,tier1,Gerrit Dou,Portrait of a Couple in a Landscape,20,0.26265452,0.16818505,-1.09161746,-0.80580613,-0.73557101,57,1.45964357
+SK-C-107,pupil,tier1,Ferdinand Bol,"Portret van een zee-overste, waarschijnlijk vice-admiraal Aert van Nes (1626-1693)",20,0.47610596,0.13466423,0.62529980,0.20060142,-0.24267095,10,1.02324256
+SK-C-127,pupil,tier1,Gerrit Dou,A Fisherman's Wife,20,0.49979140,0.15794913,0.81581588,0.56490993,0.69987225,7,0.83999910
+SK-C-128,pupil,tier1,Gerrit Dou,A Hermit,20,0.53160445,0.15130458,1.07170722,0.41240661,-0.98022463,6,0.57218366
+SK-C-1467,pupil,tier2,Jan Lievens,"Constantijn Huygens (1596-1687), Lord of Zuylichem. Secretary of the Stadtholder, Prince Frederik Hendrik, and Poet",20,0.23491042,0.06355282,-1.31477982,-0.07751727,-1.10114205,61,0.69179645
+SK-C-152,pupil,tier1,Samuel van Hoogstraten,'The Anemic Lady',20,0.41995049,0.13488984,0.17360782,-0.20588725,0.37428196,23,0.83687737
+SK-C-176,pupil,tier1,Nicolaes Maes,De spinster,20,0.45312653,0.25227551,0.44046253,-0.44314239,-0.48885523,18,0.53225903
+SK-C-1768,cohort,,,Portret van Oopjen Coppit,20,0.27430147,0.06011044,-1.06683805,-0.35133381,0.62199586,55,0.61666142
+SK-C-1802,pupil,tier1,Willem Drost,Cimon and Pero (Roman Charity),20,0.38242578,0.17184126,-0.12822575,-0.62904918,-0.95448783,34,0.58744743
+SK-C-597,cohort,,,"Portrait of a woman, possibly Maria Trip",20,0.40192162,0.29470959,0.02946366,-0.37647737,0.33845165,30,3.49639729

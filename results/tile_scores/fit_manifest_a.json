@@ -1,0 +1,32 @@
+{
+  "recipe_id": "tile_scores_a_v1",
+  "tile_embed_recipe": "tile_embed_v1",
+  "created_at": "2026-08-23T20:19:05.611083+00:00",
+  "design": "results/phase10_tile_embedding_design.md",
+  "decision": "D36",
+  "n_scored": 61,
+  "n_cohort": 16,
+  "n_tiles": 1220,
+  "fit_on": "split == 'cohort' only, leave-one-out for cohort rows",
+  "centroid": "L2-normalized mean of every cohort tile vector; a work's own tiles are excluded from the centroid it is scored against",
+  "aggregation": "median over the work's tile cosine distances (design \u00a74)",
+  "mean_variant": "reported beside the median rule, never in place of it",
+  "min_tiles": 10,
+  "mm_per_px": 0.2,
+  "tile_size_px": 224,
+  "tile_size_mm": 44.8,
+  "resize": null,
+  "crop": null,
+  "combined": null,
+  "signal_b": "not combined -- different population (design \u00a74)",
+  "bootstrap": {
+    "n": 10000,
+    "seed": 20260823,
+    "unit": "works"
+  },
+  "fixed_pixel_arm": {
+    "source": "data/embeddings/embed_v1/matrix.pt",
+    "note": "embed_v1 re-fit from scratch on the same eligible works (design \u00a75)"
+  },
+  "dropped_works": []
+}

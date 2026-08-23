@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 CohortScope is a datathon research pipeline: it ranks Rijksmuseum Rembrandt oil paintings by how anomalous they look versus a firm-attribution "cohort", using pretrained ResNet50 embeddings (Signal A) plus 8 handcrafted texture/color features (Signal B). It is a **science deliverable (tables/CSV), not a product**.
 
-**The method does not currently work, and the repo says so.** Three held-out outcomes: O04 (`weak`, N=1, `results/validation_report.md`), O06 (**`fail`**, N=67 documented pupils, AUC 0.419, `results/pupil_validation_report.md`), and O09 (**`fail`**, N=55 at a constant 0.20 mm/px, AUC 0.469, `results/tile_validation_report.md`). Per-signal AUC is at chance throughout, and in both pupil tests a resolution column alone separates the classes better than the whole pipeline — `mm_per_px_analyzed` at 0.590 in O06, `mm_per_px_native` at 0.689 in O09. Never write code or docs that claim the method works.
+**The method does not work, and the repo says so.** Four held-out outcomes: O04 (`weak`, N=1), O06 (**`fail`**, N=67 pupils, AUC 0.419), O09 (**`fail`**, Signal B at a constant 0.20 mm/px, AUC 0.469), O11 (**`fail`**, Signal A at 0.20 mm/px with no resize, AUC 0.523). **Both halves of the method have now been tested on physically commensurable pixels and both failed** — the 35× scale confound was real, D34 removed it, and neither signal moved off chance. In all three pupil tests a resolution column alone out-separates the whole pipeline: `mm_per_px_analyzed` 0.590 in O06, `mm_per_px_native` 0.689 in O09 and 0.705 in O11. Never write code or docs that claim the method works.
 
 ## Commands
 
@@ -32,10 +32,13 @@ python resolution_audit.py # → results/resolution_audit.{md,csv}
 python tiles.py            # → data/tiles/tiles_v1/ + results/tiling_report.md (D34)
 python tile_features.py    # → data/features/tile_features_v1.csv (one row per tile, D35)
 python tile_score.py       # → results/tile_scores/ + results/tile_validation_report.md (O09)
+python cnn_tiles.py        # → data/tiles/cnn_tiles_v1/ (224 px tiles for Signal A, D36)
+python tile_embed.py       # → data/embeddings/tile_embed_v1/matrix.pt
+python tile_score_a.py     # → results/tile_embedding_report.md (O11)
 python demo_app.py     # optional read-only Gradio viewer over existing scores
 ```
 
-All shipped artifacts are committed except `data/preprocessed/` (see below). `preprocess`, `embed`, `features`, `score`, `evaluate_pupils`, `resolution_audit`, `tile_features`, and `tile_score` **refuse to overwrite** existing outputs unless given `--force`; `dimensions.py` is incremental instead (it only fills gaps). `acquire.py` takes `--dry-run` (no image download / no DB write), `--inventory` (regenerate `results/inventory.*` from the existing DB), and `--pupils-only`. `acquire.py` and `dimensions.py` are the only stages that need network.
+All shipped artifacts are committed except `data/preprocessed/` (see below). `preprocess`, `embed`, `features`, `score`, `evaluate_pupils`, `resolution_audit`, `tile_features`, `tile_score`, `tile_embed`, and `tile_score_a` **refuse to overwrite** existing outputs unless given `--force`; `dimensions.py` is incremental instead (it only fills gaps). `acquire.py` takes `--dry-run` (no image download / no DB write), `--inventory` (regenerate `results/inventory.*` from the existing DB), and `--pupils-only`. `acquire.py` and `dimensions.py` are the only stages that need network.
 
 `acquire.py --pupils-only` adds the D32 pupil cohort **additively** against an existing DB, migrating the `works` table to the wider split enum and leaving every pre-existing row and image byte-identical. Prefer it over a full re-harvest, which deletes and rebuilds the DB and re-downloads every image.
 
@@ -45,7 +48,7 @@ There is no test suite, linter config, or CI. Verification is by re-running a st
 
 Flat modules at repo root (D15); docs in `docs/`, artifacts in `data/` and `results/`.
 
-**Recipe-ID contract.** Every stage has a frozen `RECIPE_ID` (`preprocess_v1`, `embed_v1`, `features_v1`, `scores_v1`, `tiles_v1`, `tile_features_v1`, `tile_scores_v1`) that names its output directory and is written into a `manifest.json`. Downstream stages read the upstream manifest, assert `recipe_id`, and use its `object_numbers` / `splits_by_id` as the worklist — they do **not** re-glob the filesystem or re-query SQLite for the worklist. Changing a recipe means bumping the ID and rerunning everything downstream, not editing outputs in place.
+**Recipe-ID contract.** Every stage has a frozen `RECIPE_ID` (`preprocess_v1`, `embed_v1`, `features_v1`, `scores_v1`, `tiles_v1`, `tile_features_v1`, `tile_scores_v1`, `cnn_tiles_v1`, `tile_embed_v1`, `tile_scores_a_v1`) that names its output directory and is written into a `manifest.json`. Downstream stages read the upstream manifest, assert `recipe_id`, and use its `object_numbers` / `splits_by_id` as the worklist — they do **not** re-glob the filesystem or re-query SQLite for the worklist. Changing a recipe means bumping the ID and rerunning everything downstream, not editing outputs in place.
 
 **Two-branch preprocess (D26/D29).** `preprocess.py` writes two disjoint caches from the same JPEG:
 - Branch H `rgb/*.png` — identity/EXIF-corrected RGB, **only** consumer is `features.py` (interpretable features).
@@ -77,6 +80,12 @@ Works whose `mm_per_px_native` exceeds the 0.20 floor are **below floor**: not t
 
 Two rules that look like edge cases and are not: (1) a tile is **never** dropped for what it depicts — `hue_circ_std` is undefined on 77 near-grey tiles, and those cells are excluded from that one feature's median while the tile is kept, because dropping the tile is content-based filtering with a class-correlated rate (design §4.1). (2) The report always prints the paired **ΔAUC** against `features_v1` re-fit on the same 55 works, so the pixels are the only thing that differs between the arms.
 
+**Signal A on commensurable pixels (D36, `cnn_tiles.py` + `tile_embed.py` + `tile_score_a.py`).** The other half, and the answer to the obstacle D35 §2 named. `tiles.py` carries a `Recipe` dataclass with two instances — `TILES_V1` (150 px / 30 mm, D34) and `CNN_TILES_V1` (224 px / 44.8 mm, D36) — so the deterministic selection rule has **one** implementation and cannot drift between them. Adding a recipe means adding a `Recipe`, never copying the tiler.
+
+**44.8 mm is derived, not chosen:** 224 px (fixed by `config.BACKBONE`) × 0.20 mm/px (locked as O07). Because the region arrives at the backbone's native input size, `tile_embed.py` applies **only ImageNet normalization — no resize, no crop, no interpolation**. It deliberately does *not* call `preprocess.build_cnn_transform()`, whose 256-resize and 224-crop are exactly what makes `embed_v1`'s mm/px vary per work. It reuses `embed.build_model()` rather than constructing its own network, so backbone, weights, and layer cannot diverge from `embed_v1`.
+
+The larger tile costs 3 works (64 → 61), all the physically **smallest** — D34's exclusions were the largest, so the two recipes are size-biased in opposite directions. **There is no `combined` on either tile recipe**: Signal A and Signal B now live on different populations (61 vs 64), so summing their z-scores would sum different corpora.
+
 **Geometry changes no score.** D33 is data capture only. `features.py`, `embed.py`, and `score.py` do not read the geometry columns — resampling to a fixed physical resolution is a separate, still-unmade decision (**O07**), and `results/resolution_audit.md` deliberately declines to pick a floor for that reason.
 
 **QC side-channel.** Each stage writes `results/qc_<recipe_id>/` (failures CSV, summary JSON) alongside its data output; failures are logged rather than silently dropped.
@@ -85,7 +94,7 @@ Two rules that look like edge cases and are not: (1) a tile is **never** dropped
 
 ## Working conventions
 
-- `docs/decisions.md` is the source of truth for locked decisions (D01–D35). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
+- `docs/decisions.md` is the source of truth for locked decisions (D01–D36). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
 - Code and design docs cite decision/task IDs (`D30`, `T043`, `O04`) in docstrings and reports. Keep doing this — the write-up traces back through them.
 - After a phase succeeds: cleanup pass (D24) → git commit + push to `origin/main` (D28). Cleanup logs live at `results/phase*_cleanup_log.md`.
 - Deferred and not to be reopened without strong reason: FastAPI/service layer, DINOv2 or alternate backbones, finetuning, multi-museum cohorts, folding attributed-to works into primary validation.

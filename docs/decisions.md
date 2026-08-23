@@ -3,7 +3,7 @@
 Shared source of truth for locked choices. **Agents must read this before proposing changes.**  
 To change a locked decision: propose in chat, get human approval, then update this file with date + reason.
 
-Last updated: 2026-08-23 (D36 tile embedding pre-registered, O10 resolved, O11 opened)
+Last updated: 2026-08-23 (D36 tile embedding run; O11 resolved = `fail`)
 
 ---
 
@@ -90,7 +90,17 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 
 **O10 resolved (D36) — embed the tile natively, do not resize it.** D35 §2 excluded Signal A because a 150 px tile cannot enter a 224 px CNN without a per-work resample factor. The answer is to request the tile at 224 px in the first place: 224 x 0.20 mm/px = **44.8 mm** of canvas, so the region arrives at both the locked floor and the backbone's native input size and nothing is resized, cropped, or interpolated. Neither number was chosen for this phase — the floor is O07 and 224 is `config.BACKBONE`. Accepted in advance: 3 works fall out (64 -> 61), all of them the physically smallest, because a larger tile fits fewer times inside the inset.
 
-**O11 is open — the outcome of running D36.** Does the embedding separate cohort from Tier-1 pupils when it is finally shown paint at 0.20 mm/px? Tiers, seed (20260823), k values, the paired ΔAUC against `embed_v1` re-fit on the same 52 works, and the fail-closed confound rule are locked in `results/phase10_tile_embedding_design.md` §5–§8. This is the last untested half of the method: `results/resolution_audit.md` showed the CNN has never seen better than 0.586 mm/px on any work, so `z_A`'s 0.427 in O06 has never been a fair test.
+**O11 resolved (D36) — outcome `fail`.** Cohort (16) vs Tier-1 pupils (36) with the CNN fed 224 px tiles at 0.20 mm/px and **no resize or crop anywhere in the path**: `z_A_tile` AUC = **0.523**, bootstrap 95% CI [0.318, 0.727] — chance, with a CI nearly 0.41 wide at N=52. The mean-embedding variant (§4, reported not substituted) gives 0.510. precision@k = 0.200 / 0.500 / 0.700 at k = 5/10/20 against a base rate of 0.692 — the top of the ranking is *worse* than random. Tier-2 sensitivity (7 works) = 0.438.
+
+**ΔAUC = +0.132**, 95% CI [−0.092, +0.352], against `embed_v1` re-fit on the same 52 works (AUC 0.391). This is the largest movement any change has produced and the one place normalization visibly did something: the fixed-pixel arm sat clearly *below* chance and commensurable pixels brought it back to chance. But the CI contains zero, and an arm that lands on chance is not a method.
+
+**Both halves of the method have now been tested on commensurable pixels and both failed.** O09 = `fail` for the eight handcrafted features at 0.20 mm/px; O11 = `fail` for the embedding at the same scale. The scale confound was real and was the best available explanation for O06 — D34 removed it, and what was left underneath is noise in both signals. Cross-signal Spearman ρ between `z_A_tile` and `z_B_tile` is +0.268 over the 61 shared works: close to independent, so neither rescues the other.
+
+**The successor confound fired again, harder.** `mm_per_px_native` separates the classes at **AUC 0.705** (0.689 in O09) with Spearman ρ = −0.422 against `z_A_tile` — a genuine correlation, not a vacuous tie. How far the IIIF server had to downsample to reach the floor still out-predicts the pipeline.
+
+**What O11 does not settle:** ImageNet features are not brushwork features, and a 44.8 mm tile is outside the training distribution of a network trained on whole objects. This is evidence about *this* backbone at *this* scale and is **not** a licence to reopen the deferred DINOv2 / finetuning work. O04, O06, and O09 are unchanged and unamended. See `results/tile_embedding_report.md`.
+
+
 
 **O02 resolved (D30):** `combined = z_A + z_B`; keep per-signal drivers.  
 **O03 resolved (D29):** 8 columns in `results/phase3_feature_shortlist.md` §1.  

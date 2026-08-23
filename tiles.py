@@ -32,6 +32,7 @@ import csv
 import json
 import sqlite3
 import sys
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -40,13 +41,70 @@ import requests
 import config
 import rijks_api
 
-RECIPE_ID = "tiles_v1"
 SCORED_SPLITS = ("cohort", "validation", "ambiguous", "pupil")
 
-TILE_ROOT = config.DATA_DIR / "tiles" / RECIPE_ID
-MANIFEST_PATH = TILE_ROOT / "manifest.json"
-QC_DIR = config.RESULTS_DIR / f"qc_{RECIPE_ID}"
-REPORT_PATH = config.RESULTS_DIR / "tiling_report.md"
+
+@dataclass(frozen=True)
+class Recipe:
+    """One physically-normalized tiling recipe.
+
+    The floor, inset, tile count, and selection rule are shared and locked (D34);
+    a recipe varies only the tile size, and even that is derived rather than
+    chosen -- `size_mm = size_px * floor`. Keeping both recipes on this one class
+    means the deterministic selection rule has exactly one implementation and
+    cannot drift between them.
+    """
+
+    recipe_id: str
+    size_mm: float
+    size_px: int
+    design: str
+    decision: str
+    report_name: str
+
+    @property
+    def root(self) -> Path:
+        return config.DATA_DIR / "tiles" / self.recipe_id
+
+    @property
+    def manifest_path(self) -> Path:
+        return self.root / "manifest.json"
+
+    @property
+    def qc_dir(self) -> Path:
+        return config.RESULTS_DIR / f"qc_{self.recipe_id}"
+
+    @property
+    def report_path(self) -> Path:
+        return config.RESULTS_DIR / self.report_name
+
+
+TILES_V1 = Recipe(
+    recipe_id="tiles_v1",
+    size_mm=config.TILE_SIZE_MM,
+    size_px=config.TILE_SIZE_PX,
+    design="results/phase8_tiling_design.md",
+    decision="D34",
+    report_name="tiling_report.md",
+)
+
+# D36 / O10: same floor, same inset, same count, same selection rule. The tile is
+# larger only because 224 px at 0.20 mm/px is 44.8 mm of canvas.
+CNN_TILES_V1 = Recipe(
+    recipe_id="cnn_tiles_v1",
+    size_mm=config.CNN_TILE_SIZE_MM,
+    size_px=config.CNN_TILE_SIZE_PX,
+    design="results/phase10_tile_embedding_design.md",
+    decision="D36",
+    report_name="cnn_tiling_report.md",
+)
+
+# Backward-compatible module-level aliases for the D34 recipe.
+RECIPE_ID = TILES_V1.recipe_id
+TILE_ROOT = TILES_V1.root
+MANIFEST_PATH = TILES_V1.manifest_path
+QC_DIR = TILES_V1.qc_dir
+REPORT_PATH = TILES_V1.report_path
 
 # Below-floor reason codes (design §3). Fail-closed: anything not provably
 # eligible is excluded with a stated reason.
@@ -66,7 +124,7 @@ def _utc_now() -> str:
 # --------------------------------------------------------------------------
 
 def tile_positions(
-    native_w: int, native_h: int, mm_per_px_native: float
+    native_w: int, native_h: int, mm_per_px_native: float, rec: Recipe = TILES_V1
 ) -> tuple[list[tuple[int, int, int]], int, int, int]:
     """Deterministic tile plan for one work (design §2).
 
@@ -74,7 +132,7 @@ def tile_positions(
     (row, col, side_px) — but the caller derives x/y from row/col so the grid
     stays reconstructible from the manifest alone.
     """
-    side = int(round(config.TILE_SIZE_MM / mm_per_px_native))
+    side = int(round(rec.size_mm / mm_per_px_native))
     if side < 1:
         return [], side, 0, 0
 
@@ -107,7 +165,7 @@ def tile_origin(row: int, col: int, side: int, native_w: int, native_h: int) -> 
     )
 
 
-def assess(work: dict) -> dict:
+def assess(work: dict, rec: Recipe = TILES_V1) -> dict:
     """Eligibility verdict + tile plan for one work. Pure; no network."""
     out = {
         "object_number": work["object_number"],
@@ -136,7 +194,7 @@ def assess(work: dict) -> dict:
         return out
 
     positions, side, rows, cols = tile_positions(
-        work["native_px_width"], work["native_px_height"], work["mm_per_px_native"]
+        work["native_px_width"], work["native_px_height"], work["mm_per_px_native"], rec
     )
     out.update(
         tile_side_native_px=side,
@@ -175,8 +233,8 @@ def load_works() -> list[dict]:
 # fetching
 # --------------------------------------------------------------------------
 
-def tile_path(object_number: str, row: int, col: int) -> Path:
-    return TILE_ROOT / object_number / f"{row:03d}_{col:03d}.jpg"
+def tile_path(object_number: str, row: int, col: int, rec: Recipe = TILES_V1) -> Path:
+    return rec.root / object_number / f"{row:03d}_{col:03d}.jpg"
 
 
 def fetch_tile(
@@ -186,12 +244,13 @@ def fetch_tile(
     side: int,
     dest: Path,
     *,
+    rec: Recipe = TILES_V1,
     retries: int = 2,
 ) -> int:
     url = config.IIIF_REGION_TMPL.format(
         identifier=iiif_id,
         x=x, y=y, w=side, h=side,
-        tw=config.TILE_SIZE_PX, th=config.TILE_SIZE_PX,
+        tw=rec.size_px, th=rec.size_px,
     )
     last: Exception | None = None
     for _ in range(retries + 1):
@@ -207,13 +266,15 @@ def fetch_tile(
     raise last
 
 
-def fetch_work(plan: dict, work: dict, *, force: bool) -> tuple[int, int, list[dict]]:
+def fetch_work(
+    plan: dict, work: dict, *, force: bool, rec: Recipe = TILES_V1
+) -> tuple[int, int, list[dict]]:
     """Fetch this work's planned tiles. Returns (n_ok, n_bytes, failures)."""
     ok = 0
     total_bytes = 0
     failures: list[dict] = []
     for row, col, side in plan["positions"]:
-        dest = tile_path(plan["object_number"], row, col)
+        dest = tile_path(plan["object_number"], row, col, rec)
         if dest.is_file() and not force:
             ok += 1
             total_bytes += dest.stat().st_size
@@ -222,7 +283,7 @@ def fetch_work(plan: dict, work: dict, *, force: bool) -> tuple[int, int, list[d
             row, col, side, work["native_px_width"], work["native_px_height"]
         )
         try:
-            total_bytes += fetch_tile(work["iiif_id"], x, y, side, dest)
+            total_bytes += fetch_tile(work["iiif_id"], x, y, side, dest, rec=rec)
             ok += 1
         except (requests.RequestException, OSError) as exc:
             failures.append(
@@ -243,17 +304,19 @@ def fetch_work(plan: dict, work: dict, *, force: bool) -> tuple[int, int, list[d
 # outputs
 # --------------------------------------------------------------------------
 
-def write_manifest(plans: list[dict], fetched: dict[str, int], total_bytes: int) -> None:
+def write_manifest(
+    plans: list[dict], fetched: dict[str, int], total_bytes: int, rec: Recipe = TILES_V1
+) -> None:
     eligible = [p for p in plans if p["verdict"] == "eligible"]
     payload = {
-        "recipe_id": RECIPE_ID,
+        "recipe_id": rec.recipe_id,
         "created_at": _utc_now(),
-        "design": "results/phase8_tiling_design.md",
-        "decision": "D34",
+        "design": rec.design,
+        "decision": rec.decision,
         "parameters": {
             "floor_mm_per_px": config.TILE_FLOOR_MM_PER_PX,
-            "tile_size_mm": config.TILE_SIZE_MM,
-            "tile_size_px": config.TILE_SIZE_PX,
+            "tile_size_mm": rec.size_mm,
+            "tile_size_px": rec.size_px,
             "edge_inset": config.TILE_EDGE_INSET,
             "tiles_per_work": config.TILES_PER_WORK,
             "selection": "evenly spaced indices over row-major grid enumeration; no RNG",
@@ -285,15 +348,17 @@ def write_manifest(plans: list[dict], fetched: dict[str, int], total_bytes: int)
             for p in plans
         },
     }
-    MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with MANIFEST_PATH.open("w", encoding="utf-8") as f:
+    rec.manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    with rec.manifest_path.open("w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
         f.write("\n")
 
 
-def write_qc(plans: list[dict], fetched: dict[str, int], failures: list[dict]) -> None:
-    QC_DIR.mkdir(parents=True, exist_ok=True)
-    with (QC_DIR / "coverage.csv").open("w", encoding="utf-8", newline="") as f:
+def write_qc(
+    plans: list[dict], fetched: dict[str, int], failures: list[dict], rec: Recipe = TILES_V1
+) -> None:
+    rec.qc_dir.mkdir(parents=True, exist_ok=True)
+    with (rec.qc_dir / "coverage.csv").open("w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
         w.writerow([
             "object_number", "split", "pupil_tier", "verdict", "reason",
@@ -309,7 +374,7 @@ def write_qc(plans: list[dict], fetched: dict[str, int], failures: list[dict]) -
                 p["grid_cols"] or "", p["tiles_available"] or "",
                 p["tiles_planned"], fetched.get(p["object_number"], 0),
             ])
-    with (QC_DIR / "failures.csv").open("w", encoding="utf-8", newline="") as f:
+    with (rec.qc_dir / "failures.csv").open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(
             f, fieldnames=["object_number", "row", "col", "x", "y", "side", "message"]
         )
@@ -318,7 +383,9 @@ def write_qc(plans: list[dict], fetched: dict[str, int], failures: list[dict]) -
             w.writerow(row)
 
 
-def write_report(plans: list[dict], fetched: dict[str, int], total_bytes: int) -> None:
+def write_report(
+    plans: list[dict], fetched: dict[str, int], total_bytes: int, rec: Recipe = TILES_V1
+) -> None:
     def count(pred) -> int:
         return sum(1 for p in plans if pred(p))
 
@@ -337,9 +404,9 @@ def write_report(plans: list[dict], fetched: dict[str, int], total_bytes: int) -
 
     n_elig = count(elig)
     L = [
-        "# Tiling report (`tiles_v1` / D34)",
+        f"# Tiling report (`{rec.recipe_id}` / {rec.decision})",
         "",
-        f"**Design:** [`results/phase8_tiling_design.md`](phase8_tiling_design.md) · "
+        f"**Design:** [`{rec.design}`]({rec.design.split('/')[-1]}) · "
         f"**Generated:** `{_utc_now()}`",
         "",
         "Every tile covers the same physical area of canvas, so one pixel means the "
@@ -350,8 +417,8 @@ def write_report(plans: list[dict], fetched: dict[str, int], total_bytes: int) -
         "| Parameter | Value |",
         "|---|---|",
         f"| resolution floor | **{config.TILE_FLOOR_MM_PER_PX} mm/px** (O07) |",
-        f"| tile size | {config.TILE_SIZE_MM:.0f} mm × {config.TILE_SIZE_MM:.0f} mm "
-        f"= {config.TILE_SIZE_PX} × {config.TILE_SIZE_PX} px |",
+        f"| tile size | {rec.size_mm:g} mm × {rec.size_mm:g} mm "
+        f"= {rec.size_px} × {rec.size_px} px |",
         f"| edge inset | {config.TILE_EDGE_INSET:.0%} of each edge |",
         f"| tiles per work | {config.TILES_PER_WORK}, non-overlapping |",
         "| selection | evenly spaced over the row-major grid; deterministic, no RNG |",
@@ -381,7 +448,8 @@ def write_report(plans: list[dict], fetched: dict[str, int], total_bytes: int) -
     ]
     labels = {
         REASON_COARSER_THAN_FLOOR: f"native resolution coarser than {config.TILE_FLOOR_MM_PER_PX} mm/px",
-        REASON_TOO_FEW_TILES: f"fewer than {config.TILES_PER_WORK} tiles fit inside the inset",
+        REASON_TOO_FEW_TILES: f"fewer than {config.TILES_PER_WORK} tiles of "
+                              f"{rec.size_mm:g} mm fit inside the inset",
         REASON_NO_GEOMETRY: "no catalogued size — run `python dimensions.py`",
         REASON_NO_IIIF: "no IIIF identifier",
     }
@@ -410,32 +478,31 @@ def write_report(plans: list[dict], fetched: dict[str, int], total_bytes: int) -
         "## Verification",
         "",
         f"Every tile is requested as an IIIF region of "
-        f"`tile_side_native_px` square, served at {config.TILE_SIZE_PX} px, so the "
-        f"realized resolution is {config.TILE_SIZE_MM:.0f} mm ÷ {config.TILE_SIZE_PX} px "
+        f"`tile_side_native_px` square, served at {rec.size_px} px, so the "
+        f"realized resolution is {rec.size_mm:g} mm ÷ {rec.size_px} px "
         f"= **{config.TILE_FLOOR_MM_PER_PX:.3f} mm/px for every work**, independent of "
         "painting size. That is the property the fixed-1500 pipeline lacked.",
         "",
-        "Per-work detail: `results/qc_tiles_v1/coverage.csv`. "
-        "Fetch failures: `results/qc_tiles_v1/failures.csv`.",
+        f"Per-work detail: `results/{rec.qc_dir.name}/coverage.csv`. "
+        f"Fetch failures: `results/{rec.qc_dir.name}/failures.csv`.",
         "",
     ]
-    REPORT_PATH.write_text("\n".join(L), encoding="utf-8")
+    rec.report_path.write_text("\n".join(L), encoding="utf-8")
 
 
 # --------------------------------------------------------------------------
 
-def run(*, force: bool, plan_only: bool) -> int:
+def run(*, force: bool, plan_only: bool, rec: Recipe = TILES_V1) -> int:
     works = load_works()
     by_id = {w["object_number"]: w for w in works}
-    plans = [assess(w) for w in works]
+    plans = [assess(w, rec) for w in works]
     eligible = [p for p in plans if p["verdict"] == "eligible"]
 
     print(f"{len(works)} scored works; {len(eligible)} eligible at "
           f"{config.TILE_FLOOR_MM_PER_PX} mm/px; "
           f"{len(works) - len(eligible)} below floor")
-    print(f"planned tiles: {sum(p['tiles_planned'] for p in plans):,} "
-          f"({config.TILE_SIZE_PX}x{config.TILE_SIZE_PX} px, "
-          f"{config.TILE_SIZE_MM:.0f}mm of canvas each)")
+    print(f"{rec.recipe_id}: planned tiles {sum(p['tiles_planned'] for p in plans):,} "
+          f"({rec.size_px}x{rec.size_px} px, {rec.size_mm:g}mm of canvas each)")
 
     if plan_only:
         for p in plans:
@@ -447,7 +514,7 @@ def run(*, force: bool, plan_only: bool) -> int:
     failures: list[dict] = []
     total_bytes = 0
     for i, p in enumerate(eligible, 1):
-        ok, nbytes, fails = fetch_work(p, by_id[p["object_number"]], force=force)
+        ok, nbytes, fails = fetch_work(p, by_id[p["object_number"]], force=force, rec=rec)
         fetched[p["object_number"]] = ok
         failures.extend(fails)
         total_bytes += nbytes
@@ -455,12 +522,12 @@ def run(*, force: bool, plan_only: bool) -> int:
             print(f"  [{i}/{len(eligible)}] {sum(fetched.values()):,} tiles, "
                   f"{total_bytes / 1e6:.1f} MB")
 
-    write_manifest(plans, fetched, total_bytes)
-    write_qc(plans, fetched, failures)
-    write_report(plans, fetched, total_bytes)
-    print(f"Wrote {MANIFEST_PATH}")
-    print(f"Wrote {QC_DIR} (failures={len(failures)})")
-    print(f"Wrote {REPORT_PATH}")
+    write_manifest(plans, fetched, total_bytes, rec)
+    write_qc(plans, fetched, failures, rec)
+    write_report(plans, fetched, total_bytes, rec)
+    print(f"Wrote {rec.manifest_path}")
+    print(f"Wrote {rec.qc_dir} (failures={len(failures)})")
+    print(f"Wrote {rec.report_path}")
 
     short = [oid for oid, n in fetched.items() if n < config.TILES_PER_WORK]
     if short:

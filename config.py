@@ -91,6 +91,14 @@ TILES_PER_WORK = 20           # equal weight per work; bounded by the smallest w
 # Determined, not chosen: 30.0 / 0.20 = 150 px.
 TILE_SIZE_PX = int(round(TILE_SIZE_MM / TILE_FLOOR_MM_PER_PX))
 
+# Signal-A tiling — D36 / O10, locked in results/phase10_tile_embedding_design.md
+# before any 224 px tile was fetched. Both numbers are inherited, not chosen:
+# 224 px is the ResNet50 input size fixed by BACKBONE, and 0.20 mm/px is O07.
+# Their product is the tile size, so the region arrives at the backbone's native
+# input size with no resize, no crop, and no resample factor anywhere.
+CNN_TILE_SIZE_PX = 224
+CNN_TILE_SIZE_MM = round(CNN_TILE_SIZE_PX * TILE_FLOOR_MM_PER_PX, 6)  # 44.8 mm, derived
+
 # Visual embedding backbone (Days 5–7). ResNet50 fits 4 GB VRAM; swap later only if weak.
 BACKBONE = "resnet50"
 BACKBONE_WEIGHTS = "IMAGENET1K_V2"
