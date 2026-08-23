@@ -40,6 +40,7 @@ python tile_score_a.py     # → results/tile_embedding_report.md (O11)
 python sweep.py --plan     # sweep population census; no network (D37)
 python sweep.py --fetch    # fetch the 4,800 sweep tiles (~85 min, resumable)
 python sweep.py            # → results/sweep/ + results/resolution_sweep_report.md (O13)
+python dossier.py          # → results/dossier/index.html (findings page, D38)
 python demo_app.py     # optional read-only Gradio viewer over existing scores
 ```
 
@@ -99,6 +100,19 @@ The larger tile costs 3 works (64 → 61), all the physically **smallest** — D
 
 `tiles_v1` and `cnn_tiles_v1` are reused as the 0.20 points rather than re-derived, and the run verifies that.
 
+**The findings dossier (D38, `dossier.py` + `dossier_template.html`).** The project's
+presentation layer, and the only place the whole result is assembled in one view.
+`dossier.py` reads every figure out of a committed artifact — the manifests, the QC
+summaries, `sweep_curve.csv`, the SQLite geometry — and injects it into the template at a
+single `/*__DOSSIER_DATA__*/` marker. **Never hand-edit a number into the template**: if a
+figure is wrong, the artifact it came from is wrong. Regenerating is the whole update path.
+
+The page presents a **closed negative result**, so anything that would only make sense for
+a working method stays out: no anomaly heatmap (it would render noise at AUC 0.47), no
+precision@k triage widget (precision@k is at or below base rate), no contrastive demo path
+(cherry-picking). The reusable deliverable is the per-work **adequacy verdict** — can this
+question be answered from published imagery, and if not, why — not the ranking.
+
 **Geometry changes no score.** D33 is data capture only. `features.py`, `embed.py`, and `score.py` do not read the geometry columns — resampling to a fixed physical resolution is a separate, still-unmade decision (**O07**), and `results/resolution_audit.md` deliberately declines to pick a floor for that reason.
 
 **QC side-channel.** Each stage writes `results/qc_<recipe_id>/` (failures CSV, summary JSON) alongside its data output; failures are logged rather than silently dropped.
@@ -107,7 +121,7 @@ The larger tile costs 3 works (64 → 61), all the physically **smallest** — D
 
 ## Working conventions
 
-- `docs/decisions.md` is the source of truth for locked decisions (D01–D37). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
+- `docs/decisions.md` is the source of truth for locked decisions (D01–D38). Read it before proposing anything that contradicts a `D##`; changing a locked decision requires human approval plus a dated update to that file. `docs/tasks.md` and `docs/roadmap-phase-plan.md` are the shared task/phase state.
 - Code and design docs cite decision/task IDs (`D30`, `T043`, `O04`) in docstrings and reports. Keep doing this — the write-up traces back through them.
 - After a phase succeeds: cleanup pass (D24) → git commit + push to `origin/main` (D28). Cleanup logs live at `results/phase*_cleanup_log.md`.
 - Deferred and not to be reopened without strong reason: FastAPI/service layer, DINOv2 or alternate backbones, finetuning, multi-museum cohorts, folding attributed-to works into primary validation.

@@ -2,7 +2,8 @@
 CohortScope demo viewer (D31 / T080) — read-only Gradio UI for the human demo video (T072).
 
 Loads precomputed scores + local JPEGs only. Does not import score/embed/acquire
-or recompute anything. Not a product claim: O04 = weak (N=1); O06 = fail (N=67).
+or recompute anything. Not a product claim: the method is closed as a negative
+result (O04 weak, O06/O09/O11/O13 all fail). See results/dossier/ for the findings page.
 Created solely as a presentation aid for the datathon video submission.
 """
 
@@ -25,11 +26,17 @@ VALIDATION_ID = "SK-A-3934"
 AMBIGUOUS_ID = "SK-A-4096"
 
 BANNER_DEFAULT = (
-    "**Demo viewer — O04 = weak (N=1), O06 = fail (N=67). Not a validated product.**\n\n"
-    "Read-only view of `scores_v1.csv` + `data/images/`. "
-    "Scores are not recomputed; science deliverable remains tables/CSV. "
-    "Against 67 documented Rembrandt pupils this ranking scores AUC 0.419 — below "
-    "chance; see `results/pupil_validation_report.md`."
+    "**Demo viewer — the method does not work and this ranking is not usable.**\n\n"
+    "Read-only view of `scores_v1.csv` + `data/images/`; scores are not recomputed. "
+    "Five pre-registered held-out outcomes: O04 `weak` (N=1), then O06, O09, O11 and "
+    "O13 all `fail`. Against 67 documented Rembrandt pupils this ranking scores "
+    "AUC 0.419 — below chance — and it stays at chance after the scale confound is "
+    "removed (O09/O11) and across a 2× resolution sweep (O13). In all four pupil "
+    "tests a single acquisition-metadata column separates the classes better than "
+    "the whole pipeline.\n\n"
+    "The findings page is `results/dossier/` (build with `python dossier.py`); the "
+    "reports are `results/pupil_validation_report.md`, `tile_validation_report.md`, "
+    "`tile_embedding_report.md` and `resolution_sweep_report.md`."
 )
 BANNER_AMBIGUOUS = (
     "**ambiguous — excluded from O04 (D21)**\n\n"

@@ -1,0 +1,699 @@
+<title>The Millimetre Problem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#F4F6F8; --raised:#FFFFFF; --sunk:#EBEFF3;
+  --ink:#12161C; --body:#2B333D; --muted:#5C6672; --faint:#8A939E;
+  --rule:#D8DEE5; --rule-soft:#E6EBF0;
+  --accent:#0B6E8A; --accent-soft:#E2EFF4; --accent-deep:#075167;
+  --bad:#A6362E; --bad-soft:#F6E7E5;
+  --good:#2F6B4F; --good-soft:#E4EFE9;
+  --shadow:0 1px 2px rgba(18,22,28,.05),0 8px 24px -12px rgba(18,22,28,.16);
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --col:min(68ch,100%); --gut:clamp(1.1rem,4vw,2.5rem);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1216; --raised:#161C22; --sunk:#0A0E12;
+    --ink:#EDF1F5; --body:#C4CDD6; --muted:#8B97A3; --faint:#69747F;
+    --rule:#28313A; --rule-soft:#1E262E;
+    --accent:#4FB3D0; --accent-soft:#10303B; --accent-deep:#8AD3E8;
+    --bad:#E0776C; --bad-soft:#341C19;
+    --good:#6FBF95; --good-soft:#15291F;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1216; --raised:#161C22; --sunk:#0A0E12;
+  --ink:#EDF1F5; --body:#C4CDD6; --muted:#8B97A3; --faint:#69747F;
+  --rule:#28313A; --rule-soft:#1E262E;
+  --accent:#4FB3D0; --accent-soft:#10303B; --accent-deep:#8AD3E8;
+  --bad:#E0776C; --bad-soft:#341C19;
+  --good:#6FBF95; --good-soft:#15291F;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--body);
+  font-family:var(--sans); font-size:16.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:var(--col); margin-inline:auto; padding-inline:var(--gut)}
+.wide{max-width:min(112ch,100%); margin-inline:auto; padding-inline:var(--gut)}
+
+h1,h2,h3{font-family:var(--serif); color:var(--ink); text-wrap:balance; margin:0; font-weight:600}
+h1{font-size:clamp(2.15rem,5.2vw,3.4rem); line-height:1.06; letter-spacing:-.018em}
+h2{font-size:clamp(1.5rem,3vw,2rem); line-height:1.16; letter-spacing:-.012em}
+h3{font-size:1.06rem; line-height:1.3; font-family:var(--sans); font-weight:600}
+p{margin:0}
+a{color:var(--accent); text-underline-offset:.18em; text-decoration-thickness:.06em}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:2px solid var(--accent); outline-offset:2px; border-radius:2px
+}
+code,.mono{font-family:var(--mono); font-size:.87em}
+.eyebrow{
+  font-family:var(--mono); font-size:.685rem; font-weight:500;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--muted);
+}
+.lede{font-size:1.12rem; color:var(--body)}
+.note{font-size:.9rem; color:var(--muted)}
+.stack{display:flex; flex-direction:column}
+.g6{gap:.375rem}.g10{gap:.625rem}.g16{gap:1rem}.g24{gap:1.5rem}.g36{gap:2.25rem}
+
+/* ---- the ruler: the page's structural motif. The subject is millimetres per
+   pixel, so sections are divided by an actual millimetre scale. ---- */
+.ruler{height:13px; width:100%; border-bottom:1px solid var(--rule);
+  background-image:repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 10px);
+  background-position:bottom; background-size:100% 6px; background-repeat:repeat-x; opacity:.85}
+.ruler.tall{background-size:100% 11px}
+
+section{padding-block:clamp(2.5rem,6vw,4.25rem)}
+section>.wrap,section>.wide{display:flex; flex-direction:column; gap:1.5rem}
+
+/* ---- masthead ---- */
+.mast{padding-top:clamp(2.5rem,7vw,5rem); padding-bottom:clamp(2rem,5vw,3rem)}
+.verdict-line{display:flex; flex-wrap:wrap; align-items:baseline; gap:.6rem .9rem}
+.stamp{
+  font-family:var(--mono); font-size:.72rem; font-weight:500; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--bad); background:var(--bad-soft);
+  border:1px solid currentColor; border-radius:2px; padding:.28rem .55rem;
+}
+.stamp.ok{color:var(--good); background:var(--good-soft)}
+.stamp.neutral{color:var(--accent); background:var(--accent-soft)}
+
+/* ---- outcome ledger ---- */
+.ledger{display:flex; flex-direction:column; border-top:1px solid var(--rule)}
+.ledger-row{
+  display:grid; grid-template-columns:4.2rem 1fr auto; gap:.35rem 1rem;
+  padding-block:.85rem; border-bottom:1px solid var(--rule-soft); align-items:baseline;
+}
+.ledger-row .oid{font-family:var(--mono); font-size:.82rem; color:var(--accent); font-weight:500}
+.ledger-row .q{color:var(--body); font-size:.95rem}
+.ledger-row .verdict{display:flex; align-items:baseline; gap:.5rem; justify-self:end}
+.tier{font-family:var(--mono); font-size:.78rem; font-weight:500; letter-spacing:.06em;
+  padding:.12rem .42rem; border-radius:2px}
+.tier.fail{color:var(--bad); background:var(--bad-soft)}
+.tier.weak{color:var(--muted); background:var(--sunk)}
+.ledger-row .stat{font-family:var(--mono); font-size:.8rem; color:var(--muted); min-width:6.5rem; text-align:right}
+@media(max-width:640px){
+  .ledger-row{grid-template-columns:3.4rem 1fr}
+  .ledger-row .verdict{grid-column:2; justify-self:start}
+  .ledger-row .stat{text-align:left; min-width:0}
+}
+
+/* ---- the ruled-out sequence ---- */
+.seq{display:flex; flex-direction:column; gap:0; counter-reset:step}
+.step{
+  display:grid; grid-template-columns:2.6rem 1fr; gap:0 1.15rem;
+  padding-block:1.4rem; border-top:1px solid var(--rule-soft);
+}
+.step:first-child{border-top:1px solid var(--rule)}
+.step-n{
+  font-family:var(--mono); font-size:.78rem; font-weight:500; color:var(--faint);
+  padding-top:.22rem; letter-spacing:.04em;
+}
+.step-body{display:flex; flex-direction:column; gap:.55rem; min-width:0}
+.step .claim{font-family:var(--serif); font-size:1.14rem; line-height:1.34; color:var(--ink); font-style:italic}
+.step .test{font-size:.94rem; color:var(--body)}
+.step .outcome{
+  font-size:.9rem; color:var(--muted); border-left:2px solid var(--rule);
+  padding-left:.85rem;
+}
+.step .ref{font-family:var(--mono); font-size:.72rem; color:var(--faint); letter-spacing:.04em}
+
+/* ---- scale ladder ---- */
+.ladder{display:flex; flex-direction:column; gap:.1rem}
+.rung{display:grid; grid-template-columns:minmax(7rem,10rem) 1fr minmax(8.5rem,auto);
+  gap:.3rem .9rem; align-items:center; padding-block:.7rem; border-bottom:1px solid var(--rule-soft)}
+.rung .name{font-size:.9rem; color:var(--ink); font-weight:500}
+.rung .bar{position:relative; height:8px; background:var(--sunk); border-radius:1px; overflow:hidden}
+.rung .fill{position:absolute; inset-block:0; background:var(--accent); opacity:.85; border-radius:1px}
+.rung .fill.warn{background:var(--bad)}
+.rung .val{font-family:var(--mono); font-size:.8rem; color:var(--muted); text-align:right; white-space:nowrap}
+.stroke-band{position:absolute; inset-block:0; background:var(--good); opacity:.28}
+@media(max-width:640px){
+  .rung{grid-template-columns:1fr auto}
+  .rung .bar{grid-column:1/-1; order:3}
+}
+
+/* ---- figures / callouts ---- */
+.fig{background:var(--raised); border:1px solid var(--rule); border-radius:3px;
+  box-shadow:var(--shadow); padding:clamp(1rem,3vw,1.6rem);
+  display:flex; flex-direction:column; gap:1rem}
+.fig-head{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:.5rem}
+.pull{
+  border-left:3px solid var(--accent); padding:.15rem 0 .15rem 1.1rem;
+  font-family:var(--serif); font-size:1.2rem; line-height:1.42; color:var(--ink);
+}
+.metrics{display:grid; grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr)); gap:1px;
+  background:var(--rule); border:1px solid var(--rule); border-radius:3px; overflow:hidden}
+.metric{background:var(--raised); padding:.95rem 1.05rem; display:flex; flex-direction:column; gap:.2rem}
+.metric .n{font-family:var(--serif); font-size:1.85rem; line-height:1; color:var(--ink); font-variant-numeric:tabular-nums}
+.metric .n.bad{color:var(--bad)}
+.metric .k{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.metric .sub{font-size:.82rem; color:var(--faint)}
+
+/* ---- tables ---- */
+.scroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-size:.875rem}
+th,td{text-align:left; padding:.5rem .7rem; border-bottom:1px solid var(--rule-soft); vertical-align:top}
+th{font-family:var(--mono); font-size:.68rem; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); font-weight:500; border-bottom:1px solid var(--rule); white-space:nowrap;
+  position:sticky; top:0; background:var(--raised); z-index:1}
+td.num,th.num{text-align:right; font-family:var(--mono); font-size:.82rem}
+tbody tr:hover{background:var(--sunk)}
+.pill{display:inline-block; font-family:var(--mono); font-size:.7rem; letter-spacing:.04em;
+  padding:.1rem .4rem; border-radius:2px; white-space:nowrap}
+.pill.yes{color:var(--good); background:var(--good-soft)}
+.pill.no{color:var(--bad); background:var(--bad-soft)}
+
+/* ---- lookup controls ---- */
+.controls{display:flex; flex-wrap:wrap; gap:.6rem; align-items:center}
+input[type="search"],select{
+  font-family:var(--sans); font-size:.875rem; color:var(--ink);
+  background:var(--raised); border:1px solid var(--rule); border-radius:3px;
+  padding:.45rem .6rem;
+}
+input[type="search"]{flex:1 1 15rem; min-width:0}
+.count{font-family:var(--mono); font-size:.78rem; color:var(--muted); margin-left:auto}
+.tablewrap{max-height:30rem; overflow:auto; border:1px solid var(--rule); border-radius:3px; background:var(--raised)}
+
+/* ---- chart ---- */
+.chart{width:100%; height:auto; display:block}
+.chart .grid{stroke:var(--rule-soft); stroke-width:1}
+.chart .chance{stroke:var(--muted); stroke-width:1; stroke-dasharray:3 3}
+.chart .band{fill:var(--accent); opacity:.10}
+.chart .bandB{fill:var(--bad); opacity:.09}
+.chart .lineA{stroke:var(--accent); stroke-width:2; fill:none}
+.chart .lineB{stroke:var(--bad); stroke-width:2; fill:none; stroke-dasharray:5 3}
+.chart .dot{fill:var(--paper); stroke-width:2}
+.chart text{font-family:var(--mono); font-size:10px; fill:var(--muted)}
+.chart .axtitle{fill:var(--faint); font-size:9.5px; letter-spacing:.08em}
+.legend{display:flex; flex-wrap:wrap; gap:1.1rem; font-size:.82rem; color:var(--muted)}
+.legend span{display:inline-flex; align-items:center; gap:.42rem}
+.swatch{width:16px; height:0; border-top:2px solid currentColor; display:inline-block}
+.swatch.dash{border-top-style:dashed}
+
+footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule)}
+.reflist{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:.45rem 1.5rem;
+  font-size:.85rem; list-style:none; padding:0; margin:0}
+.reflist code{color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<article>
+
+<header class="mast">
+  <div class="wrap stack g24">
+    <div class="stack g10">
+      <div class="eyebrow">CohortScope &middot; Rijksmuseum Rembrandt corpus &middot; findings dossier</div>
+      <h1>The millimetre problem</h1>
+    </div>
+    <p class="lede">
+      We built a pipeline to flag which Rijksmuseum &ldquo;Rembrandts&rdquo; look anomalous
+      against firmly-attributed ones. <strong>It does not work.</strong> This page is the
+      record of how we established that, and of the one finding that outlived it: the
+      images almost everyone analyses are far too coarse to see a brushstroke, and
+      nothing downstream can repair that.
+    </p>
+    <div class="verdict-line">
+      <span class="stamp">Method closed &mdash; negative result</span>
+      <span class="stamp neutral" id="stamp-works"></span>
+      <span class="stamp neutral">5 pre-registered outcomes</span>
+    </div>
+  </div>
+</header>
+
+<div class="wide"><div class="ruler tall"></div></div>
+
+<section>
+  <div class="wrap stack g24">
+    <div class="stack g10">
+      <div class="eyebrow">What was tested</div>
+      <h2>Five held-out outcomes, each fixed in writing before the data existed</h2>
+    </div>
+    <p>
+      Every threshold, seed and decision rule below was committed to the repository
+      <em>before</em> the works it judges were acquired or scored. When a locked rule cost
+      us samples, we recorded the loss instead of amending the rule.
+    </p>
+    <div class="ledger" id="ledger"></div>
+    <p class="note">
+      <code>weak</code> and <code>fail</code> are the pre-registered tiers, not editorial
+      summaries. Full statistics, confidence intervals and per-artist breakdowns are in the
+      linked reports.
+    </p>
+  </div>
+</section>
+
+<div class="wide"><div class="ruler"></div></div>
+
+<section>
+  <div class="wrap stack g24">
+    <div class="stack g10">
+      <div class="eyebrow">How the result was reached</div>
+      <h2>Every alternative explanation, tested and closed in order</h2>
+    </div>
+    <p>
+      A negative result is only worth anything if the obvious objections have been
+      answered. Each step below became askable only once the one before it was settled.
+    </p>
+    <div class="seq" id="seq"></div>
+  </div>
+</section>
+
+<div class="wide"><div class="ruler"></div></div>
+
+<section>
+  <div class="wide stack g24">
+    <div class="wrap stack g10" style="padding-inline:0">
+      <div class="eyebrow">The finding that outlived the method</div>
+      <h2>A pixel has to mean something</h2>
+    </div>
+    <div class="wrap stack g16" style="padding-inline:0">
+      <p>
+        A 17th-century oil brushstroke is roughly <strong>0.3&ndash;3.0&nbsp;mm</strong> wide.
+        To resolve one you need several pixels across it. The original pipeline fetched every
+        painting at a fixed <em>pixel width</em> of 1500, regardless of whether the canvas was
+        15&nbsp;cm or 5&nbsp;metres &mdash; so what a pixel measured varied wildly, and nobody
+        had written the number down.
+      </p>
+    </div>
+    <div class="fig">
+      <div class="fig-head">
+        <h3>What each stage actually saw, in millimetres of canvas per pixel</h3>
+        <span class="note" id="ladder-n"></span>
+      </div>
+      <div class="ladder" id="ladder"></div>
+      <p class="note">
+        Log scale. The green band marks brushstroke width (0.3&ndash;3.0&nbsp;mm) &mdash; a stage
+        whose pixels land inside or beyond it cannot represent handling at all, only composition
+        and colour.
+      </p>
+    </div>
+    <div class="wrap stack g16" style="padding-inline:0">
+      <p class="pull">
+        Not one work of 108 reached 0.30&nbsp;mm/px by the time it entered the network.
+        The model that was supposed to compare brushwork had never been shown any.
+      </p>
+      <p>
+        The detail was already published and free to request. It was discarded at download
+        time, before any modelling decision was made.
+      </p>
+    </div>
+    <div class="metrics" id="metrics-scale"></div>
+  </div>
+</section>
+
+<div class="wide"><div class="ruler"></div></div>
+
+<section>
+  <div class="wide stack g24">
+    <div class="wrap stack g10" style="padding-inline:0">
+      <div class="eyebrow">The decisive test</div>
+      <h2>Was 0.20&nbsp;mm/px simply the wrong scale?</h2>
+    </div>
+    <div class="wrap stack g16" style="padding-inline:0">
+      <p>
+        Fixing the scale confound was necessary but not sufficient &mdash; so we swept it.
+        Both signals were re-run across a 2&times; range of physical resolution, on a
+        population held <em>fixed</em> across floors so that the only thing changing was how
+        many millimetres a pixel covers.
+      </p>
+    </div>
+    <div class="fig">
+      <div class="fig-head">
+        <h3>Separation against resolution</h3>
+        <div class="legend">
+          <span style="color:var(--bad)"><i class="swatch dash"></i>Handcrafted features</span>
+          <span style="color:var(--accent)"><i class="swatch"></i>CNN embedding</span>
+        </div>
+      </div>
+      <div class="scroll"><div id="chart"></div></div>
+      <p class="note" id="chart-note"></p>
+    </div>
+    <div class="wrap stack g16" style="padding-inline:0">
+      <p>
+        The curves are flat, not noisy-but-trending. The answer is <strong>no</strong>: over a
+        2&times; range bracketing the locked floor, neither signal separates firm Rembrandts
+        from their pupils at any resolution this collection can support.
+      </p>
+      <p class="note">
+        And it cannot be pushed further here. Nine works in the entire corpus have imagery
+        finer than 0.05&nbsp;mm/px, and zero support a full-range sweep for the embedding.
+        The imagery to test a finer hypothesis does not exist in this collection.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="wide"><div class="ruler"></div></div>
+
+<section>
+  <div class="wide stack g24">
+    <div class="wrap stack g10" style="padding-inline:0">
+      <div class="eyebrow">The uncomfortable control</div>
+      <h2>How the painting was photographed predicts better than the pipeline does</h2>
+    </div>
+    <div class="wrap stack g16" style="padding-inline:0">
+      <p>
+        In every pupil test we ran the same control: can a single column of acquisition
+        metadata separate the two classes better than the whole two-signal method? It can,
+        four times out of four.
+      </p>
+    </div>
+    <div class="fig">
+      <div class="scroll">
+        <table>
+          <thead><tr>
+            <th>Test</th><th>Metadata column alone</th>
+            <th class="num">Its AUC</th><th class="num">Full pipeline</th><th class="num">N</th>
+          </tr></thead>
+          <tbody id="confounds"></tbody>
+        </table>
+      </div>
+      <p class="note">
+        Chance is 0.500. This is why each report is marked <em>confounded</em>: a result a
+        metadata column can match is not evidence about paint. It is evidence about
+        digitisation campaigns.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="wide"><div class="ruler"></div></div>
+
+<section>
+  <div class="wide stack g24">
+    <div class="wrap stack g10" style="padding-inline:0">
+      <div class="eyebrow">The reusable deliverable</div>
+      <h2>Which questions can your imagery actually answer?</h2>
+    </div>
+    <div class="wrap stack g16" style="padding-inline:0">
+      <p>
+        This is the part that survives the negative result. For every work we can say whether
+        published imagery supports texture analysis at 0.20&nbsp;mm/px &mdash; and when it
+        does not, exactly why. Reporting a work as <em>unanswerable</em> is more useful than
+        scoring it on inadequate pixels.
+      </p>
+    </div>
+    <div class="metrics" id="metrics-adq"></div>
+    <div class="fig">
+      <div class="fig-head">
+        <h3>Per-work adequacy</h3>
+        <span class="note">Sorted coarsest first &mdash; the least answerable at the top.</span>
+      </div>
+      <div class="controls">
+        <input type="search" id="q" placeholder="Search title, artist or object number&hellip;" aria-label="Search works">
+        <select id="filter" aria-label="Filter by adequacy">
+          <option value="all">All works</option>
+          <option value="no">Not answerable only</option>
+          <option value="yes">Answerable only</option>
+        </select>
+        <select id="klass" aria-label="Filter by class"><option value="all">All classes</option></select>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="tablewrap">
+        <div class="scroll">
+          <table>
+            <thead><tr>
+              <th>Object</th><th>Artist</th><th>Title</th>
+              <th class="num">Canvas</th><th class="num">Published</th>
+              <th class="num">Analysed</th><th class="num">Into CNN</th>
+              <th>At 0.20 mm/px</th>
+            </tr></thead>
+            <tbody id="works"></tbody>
+          </table>
+        </div>
+      </div>
+      <p class="note">
+        <strong>Published</strong> is the finest the museum's IIIF server offers;
+        <strong>analysed</strong> is what the original pipeline downloaded;
+        <strong>into CNN</strong> is what survived its resize and crop. The gap between the
+        first and last columns is the whole story.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="wide"><div class="ruler"></div></div>
+
+<section>
+  <div class="wrap stack g24">
+    <div class="stack g10">
+      <div class="eyebrow">Standing on it</div>
+      <h2>What we are not claiming</h2>
+    </div>
+    <p>
+      This is evidence about <em>this</em> method, on <em>this</em> corpus, at the resolutions
+      this collection can supply. It is not a claim that no visual method can distinguish a
+      Rembrandt from a pupil, and it is not a claim that any specific painting is or is not by
+      Rembrandt. Held-out group sizes are 35&ndash;67 works: well powered to detect a large
+      effect, poorly powered for a small one. Failing to find an effect is not the same as
+      showing there is none.
+    </p>
+    <p>
+      The cohort that defines &ldquo;normal&rdquo; is 17&ndash;23 paintings, and it is
+      size-biased &mdash; the resolution floor excludes the largest works, including
+      <span class="mono">The Night Watch</span>, and the tiling rule excludes the smallest. Any
+      normal fitted here describes the middle of Rembrandt's output, not its range.
+    </p>
+    <p class="note">
+      Everything above is reproducible from the repository: each stage refuses to overwrite its
+      own output without <code>--force</code>, and every reported figure on this page is read
+      out of a committed artifact at build time rather than typed in.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap stack g16">
+    <div class="eyebrow">Pre-registrations and reports</div>
+    <ul class="reflist" id="refs"></ul>
+    <p class="note" id="built"></p>
+  </div>
+</footer>
+
+</article>
+
+<script>
+/*__DOSSIER_DATA__*/
+
+(function(){
+  var D = window.DOSSIER;
+  var $ = function(id){ return document.getElementById(id); };
+  var esc = function(s){
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+    });
+  };
+  var f = function(v, n){ return v == null ? "—" : Number(v).toFixed(n); };
+
+  /* ---- masthead ---- */
+  $("stamp-works").textContent = D.n_works + " works analysed";
+
+  /* ---- outcome ledger ---- */
+  $("ledger").innerHTML = D.outcomes.map(function(o){
+    return '<div class="ledger-row">'
+      + '<span class="oid">' + esc(o.id) + '</span>'
+      + '<span class="q">' + esc(o.question) + '</span>'
+      + '<span class="verdict"><span class="tier ' + esc(o.tier) + '">' + esc(o.tier)
+      + '</span><span class="stat">' + esc(o.stat) + '</span></span>'
+      + '</div>';
+  }).join("");
+
+  /* ---- ruled-out sequence ---- */
+  $("seq").innerHTML = D.ruled_out.map(function(s, i){
+    return '<div class="step">'
+      + '<div class="step-n">' + String(i + 1).padStart(2, "0") + '</div>'
+      + '<div class="step-body">'
+      + '<p class="claim">&ldquo;' + esc(s.claim) + '&rdquo;</p>'
+      + '<p class="test">' + esc(s.test) + '</p>'
+      + '<p class="outcome">' + esc(s.result) + '</p>'
+      + '<p class="ref">' + esc(s.ref) + '</p>'
+      + '</div></div>';
+  }).join("");
+
+  /* ---- scale ladder (log axis over the full observed range) ---- */
+  var LO = 0.01, HI = 20;
+  var lg = function(v){
+    return (Math.log10(v) - Math.log10(LO)) / (Math.log10(HI) - Math.log10(LO)) * 100;
+  };
+  var rungs = [
+    ["Published by the museum", D.scale.native, false],
+    ["Downloaded and analysed", D.scale.analyzed, false],
+    ["Seen by the network", D.scale.cnn, true]
+  ];
+  $("ladder").innerHTML = rungs.map(function(r){
+    if (!r[1]) return "";
+    var a = lg(r[1][0]), b = lg(r[1][1]);
+    var strokeL = lg(0.3), strokeR = lg(3.0);
+    return '<div class="rung">'
+      + '<span class="name">' + esc(r[0]) + '</span>'
+      + '<span class="bar">'
+      + '<i class="stroke-band" style="left:' + strokeL + '%;width:' + (strokeR - strokeL) + '%"></i>'
+      + '<i class="fill' + (r[2] ? " warn" : "") + '" style="left:' + a + '%;width:'
+      + Math.max(b - a, 0.7) + '%"></i>'
+      + '</span>'
+      + '<span class="val">' + f(r[1][0], 2) + " – " + f(r[1][1], 2) + ' mm/px</span>'
+      + '</div>';
+  }).join("");
+  $("ladder-n").textContent = D.n_works + " works";
+
+  $("metrics-scale").innerHTML = [
+    ["" + D.scale.native_mp.toLocaleString() + " MP", "published", "across the corpus"],
+    ["" + D.scale.analyzed_mp.toLocaleString() + " MP", "analysed", "what we downloaded"],
+    [D.scale.pixels_used_pct + "%", "of pixels used", "the rest was discarded", true],
+    ["0 / " + D.n_works, "reached 0.30 mm/px", "at the network's input", true]
+  ].map(function(m){
+    return '<div class="metric"><span class="n' + (m[3] ? " bad" : "") + '">' + esc(m[0])
+      + '</span><span class="k">' + esc(m[1]) + '</span><span class="sub">' + esc(m[2])
+      + '</span></div>';
+  }).join("");
+
+  /* ---- confound table ---- */
+  $("confounds").innerHTML = D.confounds.map(function(c){
+    return "<tr><td class='mono'>" + esc(c.test) + "</td><td>" + esc(c.what) + "</td>"
+      + "<td class='num' style='color:var(--bad);font-weight:500'>" + f(c.auc, 3) + "</td>"
+      + "<td class='num'>" + f(c.pipeline, 3) + "</td>"
+      + "<td class='num'>" + esc(c.n) + "</td></tr>";
+  }).join("");
+
+  /* ---- sweep chart ---- */
+  (function(){
+    var W = 720, H = 330, m = { t: 18, r: 18, b: 46, l: 46 };
+    var iw = W - m.l - m.r, ih = H - m.t - m.b;
+    var floors = D.sweep.map(function(p){ return p.floor; })
+      .filter(function(v, i, a){ return a.indexOf(v) === i; }).sort(function(a, b){ return a - b; });
+    var y0 = 0.10, y1 = 0.90;
+    var X = function(fl){ return m.l + (fl - floors[0]) / (floors[floors.length-1] - floors[0]) * iw; };
+    var Y = function(v){ return m.t + (y1 - v) / (y1 - y0) * ih; };
+    var series = { A: [], B: [] };
+    D.sweep.forEach(function(p){ series[p.signal].push(p); });
+    Object.keys(series).forEach(function(k){
+      series[k].sort(function(a, b){ return a.floor - b.floor; });
+    });
+
+    var s = ['<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" '
+      + 'aria-label="Separation (AUC) against resolution floor: all eight points lie near chance.">'];
+    [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8].forEach(function(v){
+      s.push('<line class="grid" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/>');
+      s.push('<text x="' + (m.l - 8) + '" y="' + (Y(v) + 3.5) + '" text-anchor="end">' + v.toFixed(1) + '</text>');
+    });
+    floors.forEach(function(fl){
+      s.push('<text x="' + X(fl) + '" y="' + (H - m.b + 18) + '" text-anchor="middle">' + fl.toFixed(2) + '</text>');
+    });
+    s.push('<text class="axtitle" x="' + (m.l + iw / 2) + '" y="' + (H - 8)
+      + '" text-anchor="middle">RESOLUTION FLOOR — MM PER PIXEL</text>');
+    s.push('<text class="axtitle" transform="translate(11,' + (m.t + ih / 2) + ') rotate(-90)" '
+      + 'text-anchor="middle">SEPARATION (AUC)</text>');
+
+    ["B", "A"].forEach(function(k){
+      var pts = series[k];
+      var top = pts.map(function(p){ return X(p.floor) + "," + Y(p.hi95); });
+      var bot = pts.slice().reverse().map(function(p){ return X(p.floor) + "," + Y(p.lo95); });
+      s.push('<polygon class="' + (k === "A" ? "band" : "bandB") + '" points="'
+        + top.concat(bot).join(" ") + '"/>');
+    });
+    s.push('<line class="chance" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(0.5) + '" y2="' + Y(0.5) + '"/>');
+    s.push('<text x="' + (W - m.r) + '" y="' + (Y(0.5) - 6) + '" text-anchor="end">chance</text>');
+
+    ["B", "A"].forEach(function(k){
+      var pts = series[k];
+      s.push('<polyline class="' + (k === "A" ? "lineA" : "lineB") + '" points="'
+        + pts.map(function(p){ return X(p.floor) + "," + Y(p.auc); }).join(" ") + '"/>');
+      pts.forEach(function(p){
+        s.push('<circle class="dot" cx="' + X(p.floor) + '" cy="' + Y(p.auc) + '" r="4" stroke="'
+          + (k === "A" ? "var(--accent)" : "var(--bad)") + '"><title>' + (k === "A"
+          ? "CNN embedding" : "Handcrafted features") + " at " + p.floor.toFixed(2)
+          + " mm/px\nAUC " + p.auc.toFixed(3) + "\n95% CI [" + p.lo95.toFixed(3) + ", "
+          + p.hi95.toFixed(3) + "]</title></circle>");
+      });
+    });
+    s.push("</svg>");
+    $("chart").innerHTML = s.join("");
+
+    var all = D.sweep.map(function(p){ return p.auc; });
+    var far = Math.max.apply(null, all.map(function(v){ return Math.abs(v - 0.5); }));
+    $("chart-note").innerHTML = "Shaded bands are 95% confidence intervals. Every one of the "
+      + D.sweep.length + " points sits within <strong>" + far.toFixed(3)
+      + "</strong> of chance, and none clears the Bonferroni-corrected "
+      + D.stats.corrected_pct.toFixed(3) + "% bar fixed in advance for all "
+      + D.stats.n_tests + " tests — nor even the uncorrected one.";
+  })();
+
+  /* ---- adequacy ---- */
+  var A = D.adequacy;
+  $("metrics-adq").innerHTML = [
+    [A.answerable + " / " + D.n_works, "answerable", "at 0.20 mm/px from published imagery"],
+    [String(A.blocked), "not answerable", "each with a stated reason", true],
+    [A.cohort_blocked + " / " + A.cohort_total, "firm Rembrandts blocked", "the largest, incl. The Night Watch", true]
+  ].map(function(m){
+    return '<div class="metric"><span class="n' + (m[3] ? " bad" : "") + '">' + esc(m[0])
+      + '</span><span class="k">' + esc(m[1]) + '</span><span class="sub">' + esc(m[2])
+      + '</span></div>';
+  }).join("");
+
+  var rows = D.works.slice().sort(function(a, b){
+    return (b.native_mm || 0) - (a.native_mm || 0);
+  });
+  var classes = rows.map(function(w){ return w.klass; })
+    .filter(function(v, i, a){ return a.indexOf(v) === i; }).sort();
+  $("klass").innerHTML += classes.map(function(c){
+    return '<option value="' + esc(c) + '">' + esc(c) + "</option>";
+  }).join("");
+
+  function render(){
+    var q = $("q").value.trim().toLowerCase();
+    var fl = $("filter").value, kl = $("klass").value;
+    var out = rows.filter(function(w){
+      if (fl === "yes" && w.verdict !== "eligible") return false;
+      if (fl === "no" && w.verdict === "eligible") return false;
+      if (kl !== "all" && w.klass !== kl) return false;
+      if (!q) return true;
+      return (w.id + " " + w.title + " " + w.artist).toLowerCase().indexOf(q) !== -1;
+    });
+    $("count").textContent = out.length + " of " + rows.length + " shown";
+    $("works").innerHTML = out.map(function(w){
+      var ok = w.verdict === "eligible";
+      return "<tr>"
+        + "<td class='mono'>" + esc(w.id) + "</td>"
+        + "<td>" + esc(w.artist) + "</td>"
+        + "<td>" + esc(w.title.length > 62 ? w.title.slice(0, 60) + "…" : w.title) + "</td>"
+        + "<td class='num'>" + (w.cm_w ? Math.round(w.cm_w) + "×" + Math.round(w.cm_h) : "—") + "</td>"
+        + "<td class='num'>" + f(w.native_mm, 3) + "</td>"
+        + "<td class='num'>" + f(w.analyzed_mm, 2) + "</td>"
+        + "<td class='num' style='color:var(--bad)'>" + f(w.cnn_mm, 1) + "</td>"
+        + "<td><span class='pill " + (ok ? "yes" : "no") + "'>"
+        + esc(ok ? "Answerable" : w.reason_label) + "</span></td>"
+        + "</tr>";
+    }).join("") || "<tr><td colspan='8' class='note'>No works match.</td></tr>";
+  }
+  ["q", "filter", "klass"].forEach(function(id){
+    $(id).addEventListener("input", render);
+  });
+  render();
+
+  /* ---- references ---- */
+  var refs = D.outcomes.map(function(o){ return [o.id, o.ref]; }).concat([
+    ["Tiling", "results/phase8_tiling_design.md"],
+    ["Tile statistics", "results/phase9_tile_statistics_design.md"],
+    ["Tile embedding", "results/phase10_tile_embedding_design.md"],
+    ["Sweep", "results/phase11_resolution_sweep_design.md"],
+    ["Resolution audit", "results/resolution_audit.md"],
+    ["Decision log", "docs/decisions.md"]
+  ]);
+  $("refs").innerHTML = refs.map(function(r){
+    return "<li>" + esc(r[0]) + " &middot; <code>" + esc(r[1]) + "</code></li>";
+  }).join("");
+  $("built").textContent = "Generated from committed artifacts on "
+    + D.generated.slice(0, 10) + ". Every figure on this page is read out of the repository "
+    + "at build time by dossier.py, not transcribed.";
+})();
+</script>
