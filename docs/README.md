@@ -17,6 +17,6 @@ Project documentation hub. Code stays at repo root; docs live here.
 | Path | Purpose |
 |---|---|
 | [agents/](agents/) | Full role documents (responsibilities, done-when) |
-| [launch/](launch/) | **Copy-paste prompts** to start each specialist chat |
+
 
 **Default contact:** Project Manager (`agents/project-manager.md`) — this is who you ask for status and routing.

@@ -180,9 +180,9 @@ Last updated: 2026-08-22 (Phase 7/8 backfilled; Phase 9 pre-registered — D35 /
 | Role key | Agent | Launch |
 |---|---|---|
 | `any` | Project Manager (default chat) | `docs/agents/project-manager.md` |
-| `data` | Data Engineer | `docs/launch/data-engineer.md` |
-| `cv` | Computer Vision | `docs/launch/computer-vision.md` |
-| `features` | Feature Engineering | `docs/launch/feature-engineering.md` |
-| `stats` | Statistics | `docs/launch/statistics.md` |
-| `literature` | Literature | `docs/launch/literature.md` |
-| `review` | Code Reviewer | `docs/launch/code-reviewer.md` |
+| `data` | Data Engineer | `docs/agents/data-engineer.md` |
+| `cv` | Computer Vision | `docs/agents/computer-vision.md` |
+| `features` | Feature Engineering | `docs/agents/feature-engineering.md` |
+| `stats` | Statistics | `docs/agents/statistics.md` |
+| `literature` | Literature | `docs/agents/literature.md` |
+| `review` | Code Reviewer | `docs/agents/code-reviewer.md` |

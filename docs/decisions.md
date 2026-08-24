@@ -71,7 +71,7 @@ This project uses a **pretrained** ResNet50 (no finetune by default) + handcraft
 | P01 | Storage = SQLite at `data/cohortscope.sqlite` | **Locked for Phase 1 as D22** |
 | P02 | Main cohort query creator = `Rembrandt van Rijn` | ~24 oil paintings with images |
 | P03 | Exclude attributed/circle labels from cohort **statistics** even if they appear in Rembrandt search | Reinforced by D19–D21 |
-| P04 | Agent roster = Project Manager + 6 specialists (see `docs/agents/`, launch via `docs/launch/`) | Manager routes; specialists execute |
+| P04 | Agent roster = Project Manager + 6 specialists (see `docs/agents/`) | Manager routes; specialists execute |
 | P05 | Description probes may omit `material` for discovery; exclude if known non-oil after resolve | Aligns Phase 0 smoke with D10 intent |
 
 ## Open

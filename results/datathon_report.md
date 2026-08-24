@@ -3,10 +3,25 @@
 **Working name:** Cohortscope  
 **Repo:** https://github.com/JialaiYing/CohortScope.git  
 **Report path:** `results/datathon_report.md` (folds T071 + T051 + T052)  
-**Date:** 2026-08-08  
+**Date:** 2026-08-08, superseded 2026-08-23  
 **Scores recipe:** `scores_v1` (D30)
 
-**Headline:** End-to-end pipeline delivered a decomposable ranked anomaly table. Pre-registered held-out check **O04 = `weak`** on the sole validation work. **We do not claim the method works or passes.**
+> **Status note (2026-08-23).** This document is the Phase 0-5 snapshot, written when
+> O04 was the only held-out result the project had. Four further pre-registered tests
+> have run since, and all four returned `fail`. Sections 1-3 (problem, method, decisions)
+> still describe the shipped pipeline accurately; sections 4-10 describe a state of
+> knowledge the project has moved past. Read section 4.1 first, then go to
+> `results/dossier/index.html` for the assembled current record.
+
+**Headline (2026-08-23):** The method does not work and the question is closed. Five
+pre-registered held-out outcomes: O04 `weak` on a single work, then O06, O09, O11 and O13
+all `fail`. Neither half of the pipeline separates firm Rembrandts from their documented
+pupils, at any of four physical resolutions, and in all four pupil tests a single
+digitization column out-predicts the whole pipeline.
+
+*Original headline, 2026-08-08:* End-to-end pipeline delivered a decomposable ranked
+anomaly table. Pre-registered held-out check **O04 = `weak`** on the sole validation work.
+**We do not claim the method works or passes.**
 
 ---
 
@@ -84,6 +99,38 @@ Full ledger: `docs/decisions.md`.
 ## 4. Results
 
 Primary artifacts: `results/scores/scores_v1.csv`, `results/validation_report.md`, `results/phase4_results_narrative.md`.
+
+### 4.1 What the four later tests found (2026-08-23)
+
+Written after this report's original body. The numbers below come from the reports named
+at the end of this subsection, not from anything else in this document.
+
+| Outcome | What it tested | Works ranked | AUC | Verdict |
+|---|---|---:|---:|---|
+| O04 | one circle/workshop work against the cohort | 1 | n/a | `weak` |
+| O06 | 67 documented Rembrandt pupils, fixed-1500 px pipeline | 67 | 0.419 | **`fail`** |
+| O09 | Signal B on tiles held at a constant 0.20 mm/px | 55 | 0.469 | **`fail`** |
+| O11 | Signal A on 224 px tiles with no resize and no crop | 52 | 0.523 | **`fail`** |
+| O13 | both signals swept over 0.15 / 0.20 / 0.25 / 0.30 mm/px | 40 and 35 | 0.453-0.530 | **`fail`** |
+
+Three escape hatches were opened and closed in order. Too few samples: N went from 1 to 67
+and the result got worse. A scale confound: the images really did vary 35-fold in
+millimetres of canvas per pixel, D34 removed that by fetching fixed physical areas instead
+of fixed pixel counts, and both halves of the method were then retested on commensurable
+pixels. The wrong scale: the sweep covered a 2x range with the population held fixed, and
+all eight points landed within 0.047 of chance.
+
+What survives is a negative result with a clear cause. Camera metadata, specifically
+`mm_per_px_native`, separates the two classes better than the model in every pupil test
+run: 0.590 in O06, 0.689 in O09, 0.705 in O11, 0.617 in O13. The published imagery does not
+carry brushwork at the scale the hypothesis needs, and for 44 of 108 works, the Night Watch
+among them, it never can at the resolution the museum currently publishes.
+
+Reports, each with a design document committed before its data existed:
+`pupil_validation_report.md`, `tile_validation_report.md`, `tile_embedding_report.md`,
+`resolution_sweep_report.md`.
+
+---
 
 ### O04 held-out check — **`weak`**
 
@@ -221,4 +268,19 @@ Demo video: **human-owned** (T072). UI: tables-only (T054).
 
 ## 10. Closing statement
 
-Cohortscope ships a transparent, decomposable anomaly-ranking pipeline on a live Rembrandt oil cohort from the Rijksmuseum. Under the locked success rule, the single held-out validation work scores **`weak`** (rank 10/25; above median, below p95). **The method is not claimed to work.** The useful outcome for judges is methodological honesty: reproducible ranks, named drivers, explicit tiny-N and prior-art limits, and a clear design path to a second artist without rewriting the core stages.
+**Closing statement, 2026-08-23.** The ranking does not work and should not be used. What
+the project produced instead is a measurement and a tool. The measurement: on this corpus,
+model-based attribution triage is limited not by architecture and not by sample size but by
+how much canvas a published pixel covers, and that quantity turns out to be recorded,
+auditable, and worse than most people assume. The tool: `python tiles.py --plan` reads the
+museum's own IIIF metadata and returns a per-work verdict on whether the question can be
+answered from published imagery at all, with a stated reason when it cannot. That verdict
+is reusable on any IIIF collection and does not depend on the ranking being right.
+
+Five outcomes, five design documents committed before their data, no threshold edited after
+the fact. The whole record is assembled in `results/dossier/index.html`.
+
+*(Original 2026-08-08 closing, kept for the record: "Cohortscope ships a transparent,
+decomposable anomaly-ranking pipeline on a live Rembrandt oil cohort from the Rijksmuseum.
+Under the locked success rule, the single held-out validation work scores `weak`
+(rank 10/25; above median, below p95). The method is not claimed to work.")*

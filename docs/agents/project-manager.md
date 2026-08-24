@@ -47,12 +47,12 @@ Then stop and wait for specialist outputs / human decisions unless the human exp
 
 | Need | Launch |
 |---|---|
-| Prior art / novelty / method recommendations | `docs/launch/literature.md` |
-| API, download, splits, storage | `docs/launch/data-engineer.md` |
-| Preprocess, embeddings | `docs/launch/computer-vision.md` |
-| Hand-built interpretable features | `docs/launch/feature-engineering.md` |
-| Scoring, validation design | `docs/launch/statistics.md` |
-| Bugs, leakage, integration | `docs/launch/code-reviewer.md` |
+| Prior art / novelty / method recommendations | `docs/agents/literature.md` |
+| API, download, splits, storage | `docs/agents/data-engineer.md` |
+| Preprocess, embeddings | `docs/agents/computer-vision.md` |
+| Hand-built interpretable features | `docs/agents/feature-engineering.md` |
+| Scoring, validation design | `docs/agents/statistics.md` |
+| Bugs, leakage, integration | `docs/agents/code-reviewer.md` |
 
 ## Out of scope as default
 

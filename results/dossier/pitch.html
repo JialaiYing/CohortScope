@@ -1,0 +1,302 @@
+<title>Run of Show</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+/* Deliberately single-theme: this is read off a laptop in a dark room while
+   presenting, so it commits to a stage-cue palette and paints every colour. */
+:root{
+  --stage:#131519; --card:#1B1E25; --card2:#22262E; --edge:#2C313A;
+  --text:#ECEEF2; --dim:#98A0AC; --faint:#6C7480;
+  --cue:#E8A33D; --cue-dim:#3A2E19;
+  --say:#7FD6C0;
+  --stop:#E8695C; --stop-dim:#38211E;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--stage); color:var(--text); font-family:var(--sans);
+  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:60rem; margin-inline:auto; padding:clamp(1.5rem,4vw,3rem) clamp(1rem,4vw,2rem) 4rem}
+h1,h2{margin:0; font-weight:700; letter-spacing:-.02em; text-wrap:balance; color:var(--text)}
+h1{font-size:clamp(2rem,5vw,2.9rem); line-height:1.02}
+h2{font-size:1.15rem; line-height:1.2}
+p{margin:0}
+.lab{font-family:var(--mono); font-size:.66rem; font-weight:700; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--faint)}
+.stack{display:flex; flex-direction:column}
+.g8{gap:.5rem}.g14{gap:.875rem}.g20{gap:1.25rem}.g32{gap:2rem}.g48{gap:3rem}
+
+header{padding-bottom:1.75rem; border-bottom:2px solid var(--edge)}
+.verdict{
+  background:var(--stop-dim); border:1px solid var(--stop); border-radius:4px;
+  padding:1rem 1.15rem; display:flex; flex-direction:column; gap:.4rem;
+}
+.verdict .h{font-family:var(--mono); font-size:.72rem; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--stop)}
+.verdict p{color:var(--text); font-size:1.02rem}
+
+/* prep */
+.prep{display:flex; flex-direction:column; gap:1px; background:var(--edge);
+  border:1px solid var(--edge); border-radius:4px; overflow:hidden}
+.prep-row{background:var(--card); padding:.8rem 1rem; display:grid;
+  grid-template-columns:4.2rem 1fr; gap:.2rem 1rem; align-items:baseline}
+.prep-row .t{font-family:var(--mono); font-size:.78rem; color:var(--cue); font-weight:500}
+.prep-row .d{color:var(--text); font-size:.94rem}
+.prep-row .d em{color:var(--dim); font-style:normal; display:block; font-size:.85rem; margin-top:.15rem}
+@media(max-width:560px){.prep-row{grid-template-columns:1fr}}
+
+/* beats */
+.beat{background:var(--card); border:1px solid var(--edge); border-radius:5px; overflow:hidden}
+.beat-head{display:flex; align-items:baseline; gap:.85rem; padding:.75rem 1.1rem;
+  background:var(--card2); border-bottom:1px solid var(--edge); flex-wrap:wrap}
+.clock{font-family:var(--mono); font-size:.82rem; font-weight:700; color:var(--cue);
+  letter-spacing:.02em; white-space:nowrap}
+.beat-head h2{font-size:1rem; font-weight:600}
+.dur{font-family:var(--mono); font-size:.7rem; color:var(--faint); margin-left:auto}
+.beat-body{padding:1.1rem; display:flex; flex-direction:column; gap:.95rem}
+
+.do{display:grid; grid-template-columns:auto 1fr; gap:.55rem .7rem; align-items:start}
+.do .tag{font-family:var(--mono); font-size:.65rem; font-weight:700; letter-spacing:.12em;
+  color:var(--cue); background:var(--cue-dim); border-radius:3px; padding:.2rem .4rem; white-space:nowrap}
+.do .what{color:var(--text); font-size:.93rem}
+.cmd{font-family:var(--mono); font-size:.85rem; color:var(--cue); background:#0D0F12;
+  border:1px solid var(--edge); border-left:3px solid var(--cue); border-radius:3px;
+  padding:.55rem .75rem; overflow-x:auto; white-space:pre; display:block}
+
+.say{border-left:3px solid var(--say); padding:.1rem 0 .1rem 1rem; display:flex;
+  flex-direction:column; gap:.5rem}
+.say .lab{color:var(--say)}
+.say p{font-size:1.06rem; line-height:1.5; color:var(--text)}
+.say strong{color:#FFF; font-weight:700}
+.beat-note{font-size:.85rem; color:var(--dim)}
+
+/* qa */
+.qa{display:flex; flex-direction:column; gap:1px; background:var(--edge);
+  border:1px solid var(--edge); border-radius:4px; overflow:hidden}
+.qa-item{background:var(--card); padding:.95rem 1.1rem; display:flex; flex-direction:column; gap:.4rem}
+.qa-item .q{font-weight:600; color:var(--text); font-size:.95rem}
+.qa-item .a{color:var(--dim); font-size:.92rem}
+.qa-item .a strong{color:var(--text); font-weight:600}
+
+.never{background:var(--stop-dim); border:1px solid var(--stop); border-radius:4px; padding:1.1rem;
+  display:flex; flex-direction:column; gap:.55rem}
+.never .lab{color:var(--stop)}
+.never ul{margin:0; padding-left:1.1rem; display:flex; flex-direction:column; gap:.35rem}
+.never li{color:var(--text); font-size:.93rem}
+.never li span{color:var(--dim)}
+
+.fallback{background:var(--card); border:1px dashed var(--edge); border-radius:4px;
+  padding:1rem 1.1rem; display:flex; flex-direction:column; gap:.5rem}
+a{color:var(--say)}
+a:focus-visible{outline:2px solid var(--cue); outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap stack g48">
+
+<header class="stack g20">
+  <div class="stack g8">
+    <div class="lab">CohortScope &middot; 4-minute pitch &middot; run of show</div>
+    <h1>Run of show</h1>
+  </div>
+  <div class="verdict">
+    <span class="h">Answer to &ldquo;can I make it a working product?&rdquo; &mdash; No</span>
+    <p>
+      Not a time problem. Five pre-registered tests say the signal isn't there, so
+      &ldquo;making it work&rdquo; means retuning thresholds or cherry-picking &mdash; which
+      destroys the only thing here that can't be copied. <strong>You already have a working
+      product:</strong> the adequacy checker. It runs offline in half a second and answers a
+      question a curator actually has. Present that.
+    </p>
+  </div>
+</header>
+
+<section class="stack g20">
+  <div class="lab">Before you present &mdash; 40 minutes, in this order</div>
+  <div class="prep">
+    <div class="prep-row"><span class="t">10 min</span><span class="d">Open everything now, in this order, and don't touch it again.
+      <em>Terminal at the repo root &middot; the dossier page in a browser tab &middot; a second tab on the sweep chart section</em></span></div>
+    <div class="prep-row"><span class="t">5 min</span><span class="d">Dry-run both commands once. Confirm they print.
+      <em>If the terminal font is small, make it big now. Judges will squint otherwise.</em></span></div>
+    <div class="prep-row"><span class="t">20 min</span><span class="d">Rehearse out loud twice with a timer. Not in your head &mdash; out loud.
+      <em>First run will be long. The second is the real one.</em></span></div>
+    <div class="prep-row"><span class="t">5 min</span><span class="d">Memorise only the first sentence and the last sentence. Improvise the middle.
+      <em>Everything else you can read off this page.</em></span></div>
+  </div>
+</section>
+
+<section class="stack g20">
+  <div class="lab">The pitch</div>
+
+  <div class="beat">
+    <div class="beat-head"><span class="clock">0:00</span><h2>Open on the finding, not the failure</h2><span class="dur">25s</span></div>
+    <div class="beat-body">
+      <div class="do"><span class="tag">DO</span><span class="what">Stand still. Nothing on screen yet, or the dossier title.</span></div>
+      <div class="say">
+        <span class="lab">Say</span>
+        <p>&ldquo;Museums publish gigapixel scans of their paintings. Almost every AI analysis
+        of those paintings throws that resolution away at download time. <strong>We measured
+        what's actually left, and it isn't a brushstroke &mdash; not on one painting out of a
+        hundred and eight.</strong>&rdquo;</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-head"><span class="clock">0:25</span><h2>Say what you built and take the turn</h2><span class="dur">35s</span></div>
+    <div class="beat-body">
+      <div class="say">
+        <span class="lab">Say</span>
+        <p>&ldquo;We set out to flag which Rijksmuseum &lsquo;Rembrandts&rsquo; look anomalous
+        against firmly attributed ones. <strong>It does not work.</strong> So I'm going to show
+        you two things: how we know that to a standard most projects won't have &mdash; and the
+        thing we found along the way that does work.&rdquo;</p>
+      </div>
+      <p class="beat-note">Say &ldquo;it does not work&rdquo; flatly and keep going. Do not soften it,
+      do not apologise. The confidence is the pitch.</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-head"><span class="clock">1:00</span><h2>Live demo &mdash; the thing that works</h2><span class="dur">60s</span></div>
+    <div class="beat-body">
+      <div class="do"><span class="tag">RUN</span><span class="what">Offline, no network, finishes in about half a second.</span></div>
+      <code class="cmd">python tiles.py --plan</code>
+      <div class="say">
+        <span class="lab">Say &mdash; while it prints</span>
+        <p>&ldquo;A hundred and eight paintings. <strong>Sixty-four can be answered</strong> at
+        brushstroke resolution from what the museum publishes. <strong>Forty-four cannot</strong>
+        &mdash; and every one comes with a stated reason, not a silent drop.&rdquo;</p>
+        <p>&ldquo;The Night Watch is in the second group. Its published imagery is 0.31 mm per
+        pixel and you need 0.20. <strong>That is a real answer to give a curator:</strong> we
+        cannot answer this from your images, here is the number, and here is what you'd have to
+        re-shoot.&rdquo;</p>
+      </div>
+      <div class="do"><span class="tag">THEN</span><span class="what">Switch to the dossier tab, scroll to the per-work table, type <b>night</b> in the search box.</span></div>
+      <p class="beat-note">This beat is your product demo. Give it the full minute &mdash; it is the
+      only part a judge can imagine someone using tomorrow.</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-head"><span class="clock">2:00</span><h2>The proof nobody else will have</h2><span class="dur">50s</span></div>
+    <div class="beat-body">
+      <div class="do"><span class="tag">RUN</span><span class="what">Back to the terminal. Let them read the pattern in the subject lines.</span></div>
+      <code class="cmd">git log --oneline -12</code>
+      <div class="say">
+        <span class="lab">Say</span>
+        <p>&ldquo;Every experiment in this repo has a design document <strong>committed before
+        the data existed.</strong> Read the log: pre-register, then result. Pre-register, then
+        result. Five times.&rdquo;</p>
+        <p>&ldquo;The thresholds, the random seed, the decision rule &mdash; all transcribed from
+        those documents and <strong>never edited to move an outcome.</strong> When a locked rule
+        cost us samples, we recorded the loss instead of changing the rule. <strong>You can check
+        that with timestamps.</strong>&rdquo;</p>
+      </div>
+      <p class="beat-note">If one judge leans in, this is the beat they lean in on. It is the part
+      that cannot be reproduced after the fact by anyone who didn't do it.</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-head"><span class="clock">2:50</span><h2>The result, fast</h2><span class="dur">40s</span></div>
+    <div class="beat-body">
+      <div class="do"><span class="tag">SHOW</span><span class="what">Dossier tab &rarr; the sweep chart, then scroll one section to the confound table.</span></div>
+      <div class="say">
+        <span class="lab">Say</span>
+        <p>&ldquo;Five held-out tests, all fail. But each one killed a specific excuse: too few
+        samples, then the wrong scale, then the features, then the network never saw brushwork,
+        then &mdash; maybe we just picked the wrong resolution.&rdquo;</p>
+        <p>&ldquo;So we swept it. <strong>Eight points, all at chance.</strong> And in all four
+        tests, <strong>a single column of camera metadata separates the paintings better than our
+        entire pipeline.</strong> What the model was really learning was how the photograph was
+        taken.&rdquo;</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-head"><span class="clock">3:30</span><h2>Close</h2><span class="dur">30s</span></div>
+    <div class="beat-body">
+      <div class="say">
+        <span class="lab">Say &mdash; memorise this one</span>
+        <p>&ldquo;The model is ordinary. Anyone here could fit a ResNet against a centroid.
+        <strong>What isn't ordinary is that we can prove what we predicted before we saw the
+        answer, and that we shipped the negative result instead of tuning until something looked
+        good.</strong>&rdquo;</p>
+        <p>&ldquo;And the useful thing survived it: <strong>tell me your collection, and I'll tell
+        you which questions your imagery can actually answer.</strong> That part works today.&rdquo;</p>
+      </div>
+      <div class="do"><span class="tag">THEN</span><span class="what">Stop talking. Do not add a summary. Let the silence sit.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="stack g20">
+  <div class="lab">Questions you will get</div>
+  <div class="qa">
+    <div class="qa-item">
+      <p class="q">&ldquo;So&hellip; it failed?&rdquo;</p>
+      <p class="a"><strong>&ldquo;The method failed. The experiment worked.&rdquo;</strong> A result you
+      can trust that says no is worth more than a demo you can't check that says yes. Then pivot
+      straight to the adequacy checker.</p>
+    </div>
+    <div class="qa-item">
+      <p class="q">&ldquo;Why not just use a better model &mdash; a transformer, a fine-tune?&rdquo;</p>
+      <p class="a">&ldquo;Might help. But we'd be fitting a bigger model to <strong>the same
+      inadequate pixels</strong>, and we now know exactly how inadequate they are. Fix the input
+      before you upgrade the model &mdash; that's the whole finding.&rdquo;</p>
+    </div>
+    <div class="qa-item">
+      <p class="q">&ldquo;Isn't this just data cleaning?&rdquo;</p>
+      <p class="a">&ldquo;It's a measurement error that <strong>every downstream number inherits.</strong>
+      Our texture features were comparing 0.1 mm on one painting to 3.5 mm on another and calling
+      it the same feature. That's not cleaning, that's the experiment being invalid.&rdquo;</p>
+    </div>
+    <div class="qa-item">
+      <p class="q">&ldquo;How do we know you didn't just tune until it failed / succeeded?&rdquo;</p>
+      <p class="a">&ldquo;Check the git log &mdash; <strong>design documents are committed before
+      the data.</strong> And for the sweep we fixed the multiple-comparison correction in advance,
+      for all eight tests, before computing any of them.&rdquo;</p>
+    </div>
+    <div class="qa-item">
+      <p class="q">&ldquo;What would you do with more time?&rdquo;</p>
+      <p class="a">&ldquo;Not another model. <strong>Better imagery</strong> &mdash; and we can name
+      exactly which 23 paintings would need re-shooting and at what resolution. Nine works in the
+      whole collection beat 0.05 mm per pixel. The data to test a finer hypothesis doesn't exist
+      yet.&rdquo;</p>
+    </div>
+    <div class="qa-item">
+      <p class="q">&ldquo;Who would use this?&rdquo;</p>
+      <p class="a">&ldquo;A collection holder planning a digitisation budget, and any research group
+      about to point a model at museum images. <strong>Right now they'd find out after the
+      analysis. This tells them before.</strong>&rdquo;</p>
+    </div>
+  </div>
+</section>
+
+<section class="stack g20">
+  <div class="never">
+    <span class="lab">Do not, under any circumstances</span>
+    <ul>
+      <li>Apologise, or say &ldquo;unfortunately&rdquo;. <span>You have a result. Deliver it like one.</span></li>
+      <li>Promise it would work with more time. <span>You tested that. It doesn't.</span></li>
+      <li>Run anything that needs the network. <span>Venue wifi will betray you. Both demo commands are offline.</span></li>
+      <li>Re-run the pipeline live. <span>Tiling takes 85 minutes. Show the finished artifacts.</span></li>
+      <li>Read the long explanations aloud. <span>Judges read faster than you talk. Point, then say the one line.</span></li>
+    </ul>
+  </div>
+  <div class="fallback">
+    <span class="lab">If the laptop dies</span>
+    <p>The whole pitch works with no screen at all: <strong>108 paintings, 64 answerable,
+    44 not, including the Night Watch. Five pre-registered tests, all negative. A camera-metadata
+    column beat our model four times out of four.</strong> Those five numbers are the pitch.</p>
+  </div>
+</section>
+
+</div>

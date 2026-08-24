@@ -1,6 +1,6 @@
 # Agent roster
 
-Specialists run in **separate chats**. Start each with the matching file in `docs/launch/` (copy the text below the line).
+Specialists run in **separate chats**. Start each with the matching role file in this folder (copy the text below the horizontal rule).
 
 The **Project Manager** is the default/overall chat (`docs/agents/project-manager.md`) — status, routing, phase gates.
 
@@ -18,7 +18,7 @@ The **Project Manager** is the default/overall chat (`docs/agents/project-manage
 
 1. Keep one chat as Project Manager (general help / progress).
 2. For each specialist needed now, open a new Agent chat.
-3. Paste the contents **below the horizontal rule** from that role’s `docs/launch/*.md` file (or `@` the launch file and say “follow this”).
+3. Paste the contents **below the horizontal rule** from that role’s file in this folder (or `@` it and say “follow this”).
 4. Point them at the current phase in `docs/tasks.md`.
 
 Do **not** invent extra generalist engineering agents beyond this roster.

@@ -32,7 +32,7 @@ Phase 0 consumed part of Days 1–2. Acquisition must still finish inside the Da
 
 ## 3. Multi-agent operating model
 
-One Project Manager (default chat) plus six specialists. Narrow scopes. Shared state in `docs/tasks.md` + `docs/decisions.md`. Launch specialists with `docs/launch/*.md`.
+One Project Manager (default chat) plus six specialists. Narrow scopes. Shared state in `docs/tasks.md` + `docs/decisions.md`. Role briefs live in `docs/agents/`.
 
 | Agent | Owns | Does not own |
 |---|---|---|
