@@ -184,6 +184,68 @@ input[type="search"]{flex:1 1 15rem; min-width:0}
 .count{font-family:var(--mono); font-size:.78rem; color:var(--muted); margin-left:auto}
 .tablewrap{max-height:30rem; overflow:auto; border:1px solid var(--rule); border-radius:3px; background:var(--raised)}
 
+/* ---- filmstrip: the corpus sorted coarsest to finest, left to right ---- */
+.strip{position:relative; margin-top:.2rem}
+.strip-rail{
+  display:flex; gap:.7rem; overflow-x:auto; overflow-y:hidden;
+  padding:.15rem .15rem .8rem; scroll-snap-type:x proximity;
+  scrollbar-width:thin; scrollbar-color:var(--rule) transparent;
+}
+.strip-rail::-webkit-scrollbar{height:9px}
+.strip-rail::-webkit-scrollbar-thumb{background:var(--rule); border-radius:9px}
+.strip-rail::-webkit-scrollbar-track{background:transparent}
+.card{
+  flex:0 0 auto; width:9.4rem; scroll-snap-align:start; cursor:pointer;
+  background:var(--raised); border:1px solid var(--rule); border-radius:3px;
+  padding:0; text-align:left; font:inherit; color:inherit; overflow:hidden;
+  transition:border-color .12s, transform .12s;
+}
+.card:hover{border-color:var(--accent); transform:translateY(-2px)}
+.card[aria-current="true"]{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-soft)}
+.card .thumb{
+  width:100%; aspect-ratio:1/1; object-fit:cover; display:block;
+  background:var(--sunk); border-bottom:1px solid var(--rule-soft);
+}
+.card .thumb.none{
+  display:grid; place-items:center; font-family:var(--mono);
+  font-size:.62rem; color:var(--faint); text-align:center; padding:.4rem;
+}
+.card .meta{padding:.45rem .5rem .5rem; display:flex; flex-direction:column; gap:.22rem}
+.card .cid{font-family:var(--mono); font-size:.66rem; color:var(--muted)}
+.card .cmm{font-family:var(--mono); font-size:.78rem; color:var(--ink); font-weight:500}
+.card .bar{height:3px; border-radius:2px; background:var(--good)}
+.card .bar.no{background:var(--bad)}
+.strip-legend{display:flex; justify-content:space-between; gap:1rem;
+  font-family:var(--mono); font-size:.7rem; color:var(--faint); padding-top:.1rem}
+
+/* ---- detail panel ---- */
+.detail{
+  display:grid; gap:1.1rem; grid-template-columns:minmax(0,15rem) minmax(0,1fr);
+  align-items:start; border:1px solid var(--rule); border-radius:3px;
+  background:var(--raised); padding:1rem; margin-top:.9rem;
+}
+@media (max-width:640px){.detail{grid-template-columns:minmax(0,1fr)}}
+.detail .plate{
+  width:100%; border-radius:2px; display:block; background:var(--sunk);
+  border:1px solid var(--rule-soft);
+}
+.detail .plate-none{
+  width:100%; aspect-ratio:4/5; display:grid; place-items:center; border-radius:2px;
+  background:var(--sunk); border:1px solid var(--rule-soft);
+  font-family:var(--mono); font-size:.72rem; color:var(--faint); text-align:center; padding:1rem;
+}
+.detail h4{margin:0; font-family:var(--serif); font-size:1.24rem; font-weight:600;
+  color:var(--ink); line-height:1.22; letter-spacing:-.01em}
+.detail .who{font-size:.86rem; color:var(--muted); margin-top:.15rem}
+.detail dl{display:grid; grid-template-columns:auto 1fr; gap:.3rem .9rem; margin:.85rem 0 0}
+.detail dt{font-size:.78rem; color:var(--muted)}
+.detail dd{margin:0; font-family:var(--mono); font-size:.82rem; color:var(--ink)}
+.detail .verdictline{margin-top:.9rem; padding-top:.75rem; border-top:1px solid var(--rule-soft);
+  font-size:.88rem; color:var(--body)}
+.detail .hint{font-size:.78rem; color:var(--faint); margin-top:.5rem}
+tbody tr{cursor:pointer}
+tbody tr[aria-current="true"]{background:var(--accent-soft)}
+
 /* ---- chart ---- */
 .chart{width:100%; height:auto; display:block}
 .chart .grid{stroke:var(--rule-soft); stroke-width:1}
@@ -409,7 +471,16 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule)}
         <h3>Per-work adequacy</h3>
         <span class="note">Sorted coarsest first &mdash; the least answerable at the top.</span>
       </div>
-      <div class="controls">
+      <div class="strip">
+        <div class="strip-rail" id="strip" role="list" tabindex="0"
+             aria-label="Every scored work, coarsest published resolution first. Scroll sideways."></div>
+        <div class="strip-legend">
+          <span>&larr; coarsest published imagery &middot; not answerable</span>
+          <span>finest &middot; answerable &rarr;</span>
+        </div>
+      </div>
+      <div class="detail" id="detail"></div>
+      <div class="controls" style="margin-top:1.1rem">
         <input type="search" id="q" placeholder="Search title, artist or object number&hellip;" aria-label="Search works">
         <select id="filter" aria-label="Filter by adequacy">
           <option value="all">All works</option>
@@ -433,7 +504,7 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule)}
         </div>
       </div>
       <p class="note">
-        <strong>Published</strong> is the finest the museum's IIIF server offers;
+        Click any card above or any row here to see the painting alongside its numbers. <strong>Published</strong> is the finest the museum's IIIF server offers;
         <strong>analysed</strong> is what the original pipeline downloaded;
         <strong>into CNN</strong> is what survived its resize and crop. The gap between the
         first and last columns is the whole story.
@@ -662,7 +733,7 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule)}
     $("count").textContent = out.length + " of " + rows.length + " shown";
     $("works").innerHTML = out.map(function(w){
       var ok = w.verdict === "eligible";
-      return "<tr>"
+      return "<tr data-oid='" + esc(w.id) + "'>"
         + "<td class='mono'>" + esc(w.id) + "</td>"
         + "<td>" + esc(w.artist) + "</td>"
         + "<td>" + esc(w.title.length > 62 ? w.title.slice(0, 60) + "…" : w.title) + "</td>"
@@ -678,7 +749,84 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule)}
   ["q", "filter", "klass"].forEach(function(id){
     $(id).addEventListener("input", render);
   });
+
+  /* ---- filmstrip + detail ----------------------------------------------
+     `rows` is already sorted coarsest-first, which is the same order the table
+     uses and is stated on the page. Left to right the verdict bars flip from
+     red to green: that progression IS the finding, so the strip is not a
+     gallery and the order is not a curatorial choice. */
+  var selected = null;
+
+  function mm(v, d){ return v == null ? "not catalogued" : v.toFixed(d) + " mm/px"; }
+
+  function detailHTML(w){
+    var ok = w.verdict === "eligible";
+    var plate = w.img
+      ? '<img class="plate" src="' + esc(w.img) + '" alt="' + esc(w.title) + '" loading="lazy">'
+      : '<div class="plate-none">no image committed<br>for ' + esc(w.id) + "</div>";
+    var verdict = ok
+      ? "Answerable. Published imagery supports texture analysis at 0.20&nbsp;mm/px, "
+        + "so this work carries a score on the normalized recipe."
+      : "<strong>Not answerable.</strong> " + esc(w.reason_label)
+        + ". Rather than score it on pixels that cannot support the question, "
+        + "the pipeline reports it as unanswerable and says why.";
+    return plate
+      + "<div>"
+      + '<span class="pill ' + (ok ? "yes" : "no") + '">'
+      + esc(ok ? "Answerable at 0.20 mm/px" : w.reason_label) + "</span>"
+      + "<h4>" + esc(w.title || w.id) + "</h4>"
+      + '<div class="who">' + esc(w.artist) + " &middot; " + esc(w.klass)
+      + ' &middot; <span class="mono">' + esc(w.id) + "</span></div>"
+      + "<dl>"
+      + "<dt>Canvas</dt><dd>" + (w.cm_w ? Math.round(w.cm_w) + " &times; " + Math.round(w.cm_h) + " cm" : "not catalogued") + "</dd>"
+      + "<dt>Published by the museum</dt><dd>" + mm(w.native_mm, 3)
+      + (w.native_px ? ' <span style="color:var(--muted)">(' + w.native_px + " px wide)</span>" : "") + "</dd>"
+      + "<dt>What the pipeline analysed</dt><dd>" + mm(w.analyzed_mm, 2) + "</dd>"
+      + '<dt>What reached the CNN</dt><dd style="color:var(--bad)">' + mm(w.cnn_mm, 1) + "</dd>"
+      + "</dl>"
+      + '<p class="verdictline">' + verdict + "</p>"
+      + '<p class="hint">A brushstroke is 0.3&ndash;3&nbsp;mm wide. Compare the last row against that.</p>'
+      + "</div>";
+  }
+
+  function select(id){
+    var w = null;
+    for (var i = 0; i < rows.length; i++){ if (rows[i].id === id){ w = rows[i]; break; } }
+    if (!w) return;
+    selected = id;
+    $("detail").innerHTML = detailHTML(w);
+    var nodes = document.querySelectorAll('[data-oid]');
+    for (var j = 0; j < nodes.length; j++){
+      nodes[j].setAttribute("aria-current", nodes[j].getAttribute("data-oid") === id ? "true" : "false");
+    }
+  }
+
+  $("strip").innerHTML = rows.map(function(w){
+    var ok = w.verdict === "eligible";
+    var thumb = w.img
+      ? '<img class="thumb" src="' + esc(w.img) + '" alt="" loading="lazy" decoding="async">'
+      : '<div class="thumb none">no image</div>';
+    return '<button class="card" type="button" role="listitem" data-oid="' + esc(w.id) + '"'
+      + ' title="' + esc(w.id + " \u00b7 " + w.title) + '">'
+      + thumb
+      + '<div class="meta"><span class="cid">' + esc(w.id) + "</span>"
+      + '<span class="cmm">' + (w.native_mm == null ? "&mdash;" : w.native_mm.toFixed(3)) + "</span>"
+      + '<span class="bar' + (ok ? "" : " no") + '"></span></div></button>';
+  }).join("");
+
+  $("strip").addEventListener("click", function(e){
+    var card = e.target.closest ? e.target.closest("[data-oid]") : null;
+    if (card) select(card.getAttribute("data-oid"));
+  });
+  $("works").addEventListener("click", function(e){
+    var tr = e.target.closest ? e.target.closest("[data-oid]") : null;
+    if (tr) select(tr.getAttribute("data-oid"));
+  });
+
   render();
+  /* Open on the coarsest work in the corpus. It is first in the existing sort
+     order, so this is not a hand-picked example. */
+  select(rows[0].id);
 
   /* ---- references ---- */
   var refs = D.outcomes.map(function(o){ return [o.id, o.ref]; }).concat([

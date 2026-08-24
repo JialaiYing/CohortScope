@@ -179,6 +179,10 @@ def build_works(geo: dict, tiles_man: dict, cnn_man: dict, cnn_mm: dict) -> list
             "reason": t.get("reason", "no_geometry"),
             "reason_label": REASON_LABEL.get(t.get("reason", "no_geometry"), t.get("reason", "")),
             "cnn_eligible": c.get("verdict") == "eligible",
+            # Relative to results/dossier/index.html. Emitted only when the JPEG is
+            # actually committed, so the page can distinguish "no image" from a 404.
+            "img": (f"../../data/images/{oid}.jpg"
+                    if (config.IMAGES_DIR / f"{oid}.jpg").is_file() else None),
         })
     return out
 
