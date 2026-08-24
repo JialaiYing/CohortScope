@@ -145,7 +145,7 @@ section>.wrap,section>.wide{display:flex; flex-direction:column; gap:1.5rem}
 /* ---- figures / callouts ---- */
 .fig{background:var(--raised); border:1px solid var(--rule); border-radius:3px;
   box-shadow:var(--shadow); padding:clamp(1rem,3vw,1.6rem);
-  display:flex; flex-direction:column; gap:1rem}
+  display:flex; flex-direction:column; gap:1rem; min-width:0}
 .fig-head{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:.5rem}
 .pull{
   border-left:3px solid var(--accent); padding:.15rem 0 .15rem 1.1rem;
@@ -185,13 +185,16 @@ input[type="search"]{flex:1 1 15rem; min-width:0}
 .tablewrap{max-height:30rem; overflow:auto; border:1px solid var(--rule); border-radius:3px; background:var(--raised)}
 
 /* ---- filmstrip: the corpus sorted coarsest to finest, left to right ---- */
-/* min-width:0 is load-bearing: .fig is a column flexbox, so without it this
-   item keeps its 108-card content width and overflow-x never engages. */
-.strip{position:relative; margin-top:.2rem; min-width:0; max-width:100%}
+/* width:100% is load-bearing, and max-width:100% is not enough. .strip sits in
+   two nested column flexboxes (.wide > .fig); a max-width can still lose to a
+   content-derived used width, so the rail grew to hold all 108 cards and
+   overflow-x never engaged. A percentage width resolves against a definite
+   containing block and cannot be expanded by content. */
+.strip{position:relative; margin-top:.2rem; width:100%; min-width:0; max-width:100%}
 .strip-rail{
-  display:flex; gap:.7rem; overflow-x:auto; overflow-y:hidden;
+  display:flex; flex-wrap:nowrap; gap:.7rem; overflow-x:auto; overflow-y:hidden;
   padding:.15rem .15rem .8rem; scroll-snap-type:x proximity;
-  min-width:0; max-width:100%; overscroll-behavior-x:contain;
+  width:100%; min-width:0; max-width:100%; overscroll-behavior-x:contain;
   scrollbar-width:thin; scrollbar-color:var(--rule) transparent;
 }
 .strip-rail::-webkit-scrollbar{height:9px}
@@ -235,7 +238,9 @@ input[type="search"]{flex:1 1 15rem; min-width:0}
 .strip-nav:hover{border-color:var(--accent); background:var(--accent-soft)}
 .strip-nav.prev{left:-.4rem}
 .strip-nav.next{right:-.4rem}
-.strip-nav[disabled]{opacity:0; pointer-events:none}
+/* Dimmed, never hidden. An arrow that removes itself is indistinguishable
+   from an arrow that failed to render. */
+.strip-nav[disabled]{opacity:.3; cursor:default}
 @media (max-width:520px){.strip-nav.prev{left:.15rem} .strip-nav.next{right:.15rem}}
 
 /* ---- detail panel ---- */
