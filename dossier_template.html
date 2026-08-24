@@ -185,10 +185,13 @@ input[type="search"]{flex:1 1 15rem; min-width:0}
 .tablewrap{max-height:30rem; overflow:auto; border:1px solid var(--rule); border-radius:3px; background:var(--raised)}
 
 /* ---- filmstrip: the corpus sorted coarsest to finest, left to right ---- */
-.strip{position:relative; margin-top:.2rem}
+/* min-width:0 is load-bearing: .fig is a column flexbox, so without it this
+   item keeps its 108-card content width and overflow-x never engages. */
+.strip{position:relative; margin-top:.2rem; min-width:0; max-width:100%}
 .strip-rail{
   display:flex; gap:.7rem; overflow-x:auto; overflow-y:hidden;
   padding:.15rem .15rem .8rem; scroll-snap-type:x proximity;
+  min-width:0; max-width:100%; overscroll-behavior-x:contain;
   scrollbar-width:thin; scrollbar-color:var(--rule) transparent;
 }
 .strip-rail::-webkit-scrollbar{height:9px}
@@ -222,7 +225,7 @@ input[type="search"]{flex:1 1 15rem; min-width:0}
 .detail{
   display:grid; gap:1.1rem; grid-template-columns:minmax(0,15rem) minmax(0,1fr);
   align-items:start; border:1px solid var(--rule); border-radius:3px;
-  background:var(--raised); padding:1rem; margin-top:.9rem;
+  background:var(--raised); padding:1rem; margin-top:.9rem; min-width:0;
 }
 @media (max-width:640px){.detail{grid-template-columns:minmax(0,1fr)}}
 .detail .plate{
