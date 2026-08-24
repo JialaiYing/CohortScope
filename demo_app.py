@@ -9,6 +9,9 @@ Created solely as a presentation aid for the datathon video submission.
 
 from __future__ import annotations
 
+import argparse
+import socket
+import sys
 from pathlib import Path
 
 import gradio as gr
@@ -199,9 +202,86 @@ def build_app() -> gr.Blocks:
     return demo
 
 
+PAGES_URL = "https://jialaiying.github.io/CohortScope/"
+
+SHARE_BLOCKED_HELP = f"""
+Gradio's public share link could not start.
+
+Gradio tunnels through a helper binary (frpc) that it downloads from Hugging Face.
+On this machine Windows Application Control / Smart App Control refuses to execute
+that binary (OSError WinError 4557, "Potentially unwanted application"), so the
+tunnel process never starts. The binary is present and the tunnel server is
+reachable; the operating system is blocking the launch, and nothing in this
+repository can work around that.
+
+Three things that do give you a URL:
+
+  1. The findings page is static HTML and is already published:
+         {PAGES_URL}
+     That is the deliverable. It needs no tunnel and no running process.
+
+  2. To show this viewer on another device on the same network, run:
+         python demo_app.py --host 0.0.0.0
+     and open http://<this machine's LAN IP>:7860 from the other device.
+
+  3. If you specifically need a gradio.live link, run it from a machine without
+     Application Control, or from Colab / Codespaces / WSL.
+"""
+
+
+def lan_ip() -> str:
+    """Best-effort local address, for the --host 0.0.0.0 hint. No traffic is sent."""
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(("10.255.255.255", 1))
+        return s.getsockname()[0]
+    except OSError:
+        return "127.0.0.1"
+    finally:
+        s.close()
+
+
 def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument(
+        "--share",
+        action="store_true",
+        help="attempt a public gradio.live tunnel (blocked by Application Control on "
+             "some Windows machines; see --help output on failure)",
+    )
+    ap.add_argument(
+        "--host",
+        default="127.0.0.1",
+        help="bind address; use 0.0.0.0 to reach the viewer from another device on "
+             "the same network (default: 127.0.0.1)",
+    )
+    # Default None so Gradio scans upward from 7860 instead of dying on a stale server.
+    ap.add_argument("--port", type=int, default=None, help="bind port (default: first free from 7860)")
+    args = ap.parse_args()
+
     app = build_app()
-    app.launch(share=False)
+
+    if args.host == "0.0.0.0":
+        print(f"Reachable on this network at http://{lan_ip()}:{args.port or 7860} "
+              "(check the port Gradio prints below)")
+
+    # Gradio does not raise when the tunnel fails; it prints a one-line warning and
+    # serves locally anyway, which is what made this look like it "just doesn't work".
+    # Launch without blocking, inspect whether a share URL actually materialised, say
+    # something useful if it did not, then block.
+    app.launch(
+        share=args.share,
+        server_name=args.host,
+        server_port=args.port,
+        prevent_thread_lock=True,
+    )
+
+    if args.share and not getattr(app, "share_url", None):
+        print(SHARE_BLOCKED_HELP, file=sys.stderr)
+    elif args.share:
+        print(f"Public URL: {app.share_url}")
+
+    app.block_thread()
 
 
 if __name__ == "__main__":

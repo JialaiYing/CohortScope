@@ -11,7 +11,11 @@ in every report, in the decision log, and on the findings page.
 The useful output is not the ranking. It is the reason the ranking cannot work: for most of
 this collection, the published image does not carry a brushstroke.
 
-**Findings page:** `results/dossier/index.html` (build with `python dossier.py`)
+**Report:** [`results/datathon_report.md`](results/datathon_report.md), the full write-up of
+results, methodology, the reasoning behind each crucial decision, and an evaluation of the
+modelling process.
+**Findings page:** `results/dossier/index.html`, the same result as one browsable page.
+Published at https://jialaiying.github.io/CohortScope/ and rebuilt with `python dossier.py`.
 **Repo:** https://github.com/JialaiYing/CohortScope.git
 
 ---
@@ -222,8 +226,14 @@ leave-one-out so no painting contributes to the normal it is measured against.
 ## Demo viewer (optional)
 
 ```bash
-python demo_app.py
+python demo_app.py                  # local only, http://127.0.0.1:7860
+python demo_app.py --host 0.0.0.0   # reachable from other devices on the same network
+python demo_app.py --share          # attempts a public gradio.live tunnel
 ```
+
+`--share` depends on a helper binary that Windows Application Control blocks on some
+machines. When that happens the app now says so explicitly and points at the published
+findings page, rather than printing a one-line warning and quietly serving locally.
 
 A read-only Gradio view over `results/scores/scores_v1.csv` and `data/images/`. It recomputes
 nothing and its banner states the outcome plainly. It exists as a presentation aid, not as a
