@@ -107,6 +107,13 @@ more honest and more useful answer than scoring it on pixels that cannot support
 Eligibility is derived at query time and never stored on the `works` table, because the table
 holds measured facts while the floor is policy, and cached policy goes stale without saying so.
 
+The same verdict is browsable on the findings page. All 108 works sit in a filmstrip sorted by
+how finely the museum published them, coarsest first, and the bar under each card flips from red
+to green as the published resolution improves. Clicking a card or a table row opens the painting
+beside its four measurements: catalogued canvas size, what the museum publishes, what the
+pipeline analysed, and what survived into the CNN. The brushstroke range is printed underneath so
+the last number can be read against it.
+
 ---
 
 ## Setup

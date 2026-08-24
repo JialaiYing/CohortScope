@@ -221,6 +221,23 @@ input[type="search"]{flex:1 1 15rem; min-width:0}
 .strip-legend{display:flex; justify-content:space-between; gap:1rem;
   font-family:var(--mono); font-size:.7rem; color:var(--faint); padding-top:.1rem}
 
+/* Arrow buttons. A trackpad user can swipe the rail, but a mouse user has no
+   affordance at all, and neither reads as clickable on a recorded demo. */
+.strip-nav{
+  position:absolute; top:calc(50% - 1.4rem); transform:translateY(-50%);
+  width:2.3rem; height:2.3rem; border-radius:50%; z-index:2;
+  display:grid; place-items:center; cursor:pointer;
+  background:var(--raised); color:var(--ink);
+  border:1px solid var(--rule); box-shadow:var(--shadow);
+  font-family:var(--sans); font-size:1rem; line-height:1; padding:0;
+  transition:opacity .15s, border-color .12s, background .12s;
+}
+.strip-nav:hover{border-color:var(--accent); background:var(--accent-soft)}
+.strip-nav.prev{left:-.4rem}
+.strip-nav.next{right:-.4rem}
+.strip-nav[disabled]{opacity:0; pointer-events:none}
+@media (max-width:520px){.strip-nav.prev{left:.15rem} .strip-nav.next{right:.15rem}}
+
 /* ---- detail panel ---- */
 .detail{
   display:grid; gap:1.1rem; grid-template-columns:minmax(0,15rem) minmax(0,1fr);
@@ -475,10 +492,12 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule)}
         <span class="note">Sorted coarsest first &mdash; the least answerable at the top.</span>
       </div>
       <div class="strip">
+        <button class="strip-nav prev" id="strip-prev" type="button" aria-label="Scroll to finer imagery">&#8592;</button>
+        <button class="strip-nav next" id="strip-next" type="button" aria-label="Scroll to coarser imagery">&#8594;</button>
         <div class="strip-rail" id="strip" role="list" tabindex="0"
              aria-label="Every scored work, coarsest published resolution first. Scroll sideways."></div>
         <div class="strip-legend">
-          <span>&larr; coarsest published imagery &middot; not answerable</span>
+          <span>&larr; coarsest published imagery &middot; not answerable &middot; use the arrows</span>
           <span>finest &middot; answerable &rarr;</span>
         </div>
       </div>
@@ -821,6 +840,26 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule)}
     var card = e.target.closest ? e.target.closest("[data-oid]") : null;
     if (card) select(card.getAttribute("data-oid"));
   });
+
+  /* Arrows: page the rail by roughly one screenful, and hide whichever one has
+     nothing left to reveal so the control never lies about being available. */
+  var rail = $("strip");
+  function page(dir){
+    rail.scrollBy({ left: dir * Math.max(rail.clientWidth - 60, 160), behavior: "smooth" });
+  }
+  function syncNav(){
+    var max = rail.scrollWidth - rail.clientWidth;
+    $("strip-prev").disabled = rail.scrollLeft <= 4;
+    $("strip-next").disabled = rail.scrollLeft >= max - 4;
+  }
+  $("strip-prev").addEventListener("click", function(){ page(-1); });
+  $("strip-next").addEventListener("click", function(){ page(1); });
+  rail.addEventListener("scroll", syncNav, { passive: true });
+  window.addEventListener("resize", syncNav);
+  rail.addEventListener("keydown", function(e){
+    if (e.key === "ArrowRight"){ e.preventDefault(); page(1); }
+    if (e.key === "ArrowLeft"){ e.preventDefault(); page(-1); }
+  });
   $("works").addEventListener("click", function(e){
     var tr = e.target.closest ? e.target.closest("[data-oid]") : null;
     if (tr) select(tr.getAttribute("data-oid"));
@@ -830,6 +869,7 @@ footer{padding-block:2.5rem 3.5rem; border-top:1px solid var(--rule)}
   /* Open on the coarsest work in the corpus. It is first in the existing sort
      order, so this is not a hand-picked example. */
   select(rows[0].id);
+  syncNav();
 
   /* ---- references ---- */
   var refs = D.outcomes.map(function(o){ return [o.id, o.ref]; }).concat([
